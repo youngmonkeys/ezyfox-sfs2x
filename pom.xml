@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+        <groupId>com.jcabi</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.43</version>
+    </parent>
+    
+	<groupId>com.tvd12</groupId>
+	<artifactId>ezyfox-sfs2x</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<name>sfs2x-adapter</name>
+	<url>http://www.tvd12.com/java/projects/ezyfox-sfs2x</url>
+	<description>
+		A project support to create a server side game application more efficiently and more quickly 
+	</description>
+	
+	<organization>
+		<name>Young Monkeys</name>
+		<url>http://www.tvd12.com</url>
+	</organization>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss</maven.build.timestamp.format>
+		<sfs2x.version>2.9.0</sfs2x.version>
+	</properties>
+	
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<name>Ta Van Dung</name>
+			<email>itprono3@gmail.com</email>
+			<organization>Young Monkeys</organization>
+			<organizationUrl>http://www.tvd12.com</organizationUrl>
+		</developer>
+	</developers>
+	
+	<scm>
+		<connection>scm:git:git@github.com:youngmonkeys/ezyfox-sfs2x.git</connection>
+		<developerConnection>scm:git:git@github.com:youngmonkeys/ezyfox-sfs2x.git</developerConnection>
+		<url>https://github.com/youngmonkeys/ezyfox-sfs2x</url>
+	</scm>
+	
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/youngmonkeys/ezyfox-sfs2x/issues</url>
+	</issueManagement>
+	
+	<ciManagement>
+		<system>travis</system>
+		<url>https://travis-ci.org/youngmonkeys/ezyfox-sfs2x</url>
+	</ciManagement>
+	
+	<distributionManagement>
+		<site>
+			<id>tvd12</id>
+			<url>http://www.tvd12.com/</url>
+		</site>
+	</distributionManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.tvd12</groupId>
+			<artifactId>ezyfox-core</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		<dependency>
+			<groupId>com.smartfoxserver</groupId>
+			<artifactId>sfs2x-v2</artifactId>
+			<version>${sfs2x.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/sfs2x.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.smartfoxserver</groupId>
+			<artifactId>sfs2x-core</artifactId>
+			<version>${sfs2x.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/sfs2x-core.jar</systemPath>
+		</dependency>
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.smartfoxserver</groupId>
+			<artifactId>sfs2x-boot</artifactId>
+			<version>${sfs2x.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/boot.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.mozilla</groupId>
+			<artifactId>rhino</artifactId>
+			<version>1.7.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-vfs</groupId>
+			<artifactId>commons-vfs</artifactId>
+			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.tvd12</groupId>
+			<artifactId>test-util</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.3</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<!-- or whatever version you use -->
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+					<compilerArgs>
+						<arg>-Xlint</arg>
+						<!-- <arg>-Werror</arg> -->
+						<arg>-Xlint:-path</arg>
+						<!-- @see https://blogs.oracle.com/darcy/entry/bootclasspath_older_source -->
+						<arg>-Xlint:-options</arg>
+						<!-- @see http://netbeans.org/bugzilla/show_bug.cgi?format=multiple&id=208666 -->
+						<!-- this is to avoid a problem with ANTLR and JDK7 -->
+						<arg>-Xlint:-classfile</arg>
+						<!-- ignore APT warnings -->
+						<arg>-Xlint:-processing</arg>
+					</compilerArgs>
+					<testExcludes>
+						<exclude>**/package-info.java</exclude>
+					</testExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.1.0</version>
+				<configuration>
+					<timestampFormat>${maven.build.timestamp.format}</timestampFormat>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
+                        <goals><goal>report</goal></goals>
+                    </execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19.1</version>
+					<configuration>
+						<!-- <redirectTestOutputToFile>true</redirectTestOutputToFile> -->
+						<suiteXmlFiles>
+							<suiteXmlFile>src/test/resources/AllTests.tng.xml</suiteXmlFile>
+						</suiteXmlFiles>
+					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											buildnumber-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.4,)
+										</versionRange>
+										<goals>
+											<goal>
+												create-timestamp
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

@@ -1,0 +1,114 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="SFS2X-Adapter-AllTests">
+
+    <method-selectors>
+        <method-selector>
+            <selector-class name="com.tvd12.ezyfox.sfs2x.testing.MethodTestSelector"/>
+        </method-selector>
+    </method-selectors>
+
+    <test name="AppContextType">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.appcontext.type"/>
+        </packages>
+    </test>
+    
+    <test name="ParameterParser">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.parameterparser"/>
+        </packages>
+    </test>
+    
+    <test name="ParameterUnwrapper">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.parameterunwrapper"/>
+        </packages>
+    </test>
+    
+    <test name="ParamTypeParser">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.paramtypeparser"/>
+        </packages>
+    </test>
+    
+    <test name="ResponseParamParser">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.responseparameterparser"/>
+        </packages>
+    </test>
+    
+    <test name="UserAgentUnwrapper">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.useragentunwrapper"/>
+        </packages>
+    </test>
+    
+    <test name="UserAgentWrapper">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.useragentwrapper"/>
+        </packages>
+    </test>
+    
+    <test name="AnyTest">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.any"/>
+        </packages>
+    </test>
+    
+    <test name="Parser">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.parser"/>
+        </packages>
+    </test>
+    
+    <test name="Utilities">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.utilities"/>
+        </packages>
+    </test>
+    
+    <test name="Model">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.model"/>
+        </packages>
+    </test>
+    
+    <test name="ContextImpl">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.context"/>
+        </packages>
+    </test>
+    
+    <test name="ClientHandler">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.clienthandler"/>
+        </packages>
+    </test>
+    
+    <test name="ServerHandler">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.serverhandler"/>
+        </packages>
+    </test>
+    
+    <test name="Command">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.command"/>
+        </packages>
+    </test>
+    
+    <test name="Extension">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.extension"/>
+        </packages>
+    </test>
+    
+    <test name="Serializer">
+    	<packages>
+    		<package name="com.tvd12.ezyfox.sfs2x.testing.serializer" />
+    		<package name="com.tvd12.ezyfox.sfs2x.testing.data" />
+    	</packages>
+    </test>
+    
+</suite>
