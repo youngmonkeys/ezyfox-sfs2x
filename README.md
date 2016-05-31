@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/youngmonkeys/ezyfox-sfs2x.svg?branch=master)](https://travis-ci.org/youngmonkeys/ezyfox-sfs2x)
-[![Dependency Status](https://www.versioneye.com/user/projects/5749e142138081000ea4f078/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5749e142138081000ea4f078)
+[![Dependency Status](https://www.versioneye.com/user/projects/574d34c8193d44000d50dd82/badge.svg?style=flat)](https://www.versioneye.com/user/projects/574d34c8193d44000d50dd82)
 [![Coverage Status](https://coveralls.io/repos/github/youngmonkeys/ezyfox-sfs2x/badge.svg?branch=master)](https://coveralls.io/github/youngmonkeys/ezyfox-sfs2x?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.tvd12/ezyfox-sfs2x/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.tvd12/ezyfox-sfs2x)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.tvd12/ezyfox-sfs2x/badge.svg)](http://www.javadoc.io/doc/com.tvd12/ezyfox-sfs2x)
