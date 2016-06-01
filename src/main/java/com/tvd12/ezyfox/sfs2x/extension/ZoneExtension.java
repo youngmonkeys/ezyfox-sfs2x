@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smartfoxserver.v2.core.SFSEventType;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 import com.tvd12.ezyfox.core.config.APIKey;
@@ -21,30 +18,45 @@ import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerInitializingEventHandler;
 
+/**
+ * Application entry point, any extensions should extends this class
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
 public class ZoneExtension extends SFSExtension {
 
+    // application context
 	protected AppContextImpl context;
 	
-	private static final Logger LOGGER = 
-			LoggerFactory.getLogger(ZoneExtension.class);
-	
+	/**
+	 * @see SFSExtension#init()
+	 */
 	@Override
 	public void init() {
-		LOGGER.info("================ start init " + getName() + "===========");
 		initContext();
 		before();
 		addServerEventHandlers();
-		addClientEventHandlers();
+		addClientRequestHandlers();
 		addZoneAgent();
 		startServerInitializingEventHandler();
 		after();
-		LOGGER.info("================ end init " + getName() + "===========");
 	}
 	
+	/**
+	 * Invoke after initializing application and before initialize anything
+	 */
 	protected void before() {}
 	
+	/**
+	 * Invoke after initialized all
+	 */
 	protected void after() {}
 	
+	/**
+	 * Add server event handlers
+	 */
 	protected void addServerEventHandlers() {
 		Map<Object, Class<?>> handlers = ServerEventHandlerProvider
 				.provide(getClass());
@@ -58,12 +70,22 @@ public class ZoneExtension extends SFSExtension {
 		}
 	}
 	
+	/**
+	 * Handle initializing event
+	 */
 	protected void startServerInitializingEventHandler() {
 		ServerInitializingEventHandler handler = 
 				new ServerInitializingEventHandler(context);
 		handler.handle();
 	}
 	
+	/**
+	 * Create server event handler by type and handler class
+	 * 
+	 * @param type event type
+	 * @param clazz handler class
+	 * @return a ServerEventHandler object 
+	 */
 	private ServerEventHandler createServerEventHandler(
 			SFSEventType type, Class<?> clazz) {
 		try {
@@ -76,6 +98,9 @@ public class ZoneExtension extends SFSExtension {
 		}
 	}
 	
+	/**
+	 * Initialize application context
+	 */
 	private void initContext() {
 		context = (AppContextImpl)ContextProvider
 				.getInstance()
@@ -83,21 +108,37 @@ public class ZoneExtension extends SFSExtension {
 		context.setApi(getApi());
 	}
 	
-	protected void addClientEventHandlers() {
+	/**
+	 * Add client request handlers
+	 */
+	protected void addClientRequestHandlers() {
 		Set<String> commands = 
-				context.clientActionCommands();
+				context.clientRequestCommands();
 		for(String command : commands)
-			addClientEventHandler(command);
+			addClientRequestHandler(command);
 	}
 	
-	protected void addClientEventHandler(String command) {
-		addClientEventHandler(new ClientEventHandler(context, command));
+	/**
+	 * Add client request handler and map its to the command
+	 * 
+	 * @param command the command
+	 */
+	protected void addClientRequestHandler(String command) {
+		addClientRequestHandler(new ClientEventHandler(context, command));
 	}
 	
-	protected void addClientEventHandler(ClientRequestHandler handler) {
+	/**
+	 * Add client request handle
+	 * 
+	 * @param handler client request handle
+	 */
+	protected void addClientRequestHandler(ClientRequestHandler handler) {
 		addRequestHandler(handler.getCommand(), handler);
 	}
 	
+	/**
+	 * Initialize ApiZone object and bind it to smartfox zone
+	 */
 	private void addZoneAgent() {
 		getParentZone().setProperty(APIKey.ZONE, 
 				new ApiZoneImpl(getParentZone()));

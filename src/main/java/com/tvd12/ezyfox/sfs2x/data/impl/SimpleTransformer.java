@@ -26,19 +26,32 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
 
 /**
+ * Support to transform a primitive type value, wrapper type value, array of values or list of value  
+ * to SFSDataWrapper object
+ * 
  * @author tavandung12
  * Created on May 28, 2016
  *
  */
 public class SimpleTransformer {
 
+    // map of types their transformer
     private Map<Class<?>, Transformer> transformers
          = new HashMap<>();
     
+    /**
+     * Call initialize map of transformers in default constructor
+     */
     public SimpleTransformer() {
         init();
     }
     
+    /**
+     * Transform the value to SFSDataWrapper object
+     * 
+     * @param value the value
+     * @return a SFSDataWrapper object
+     */
     public SFSDataWrapper transform(Object value) {
         if(value == null)   
             return new SFSDataWrapper(SFSDataType.NULL, value);
@@ -48,6 +61,12 @@ public class SimpleTransformer {
         return transformObjectOrArray(value);
     }
 
+    /**
+     * Transform a collection of value to SFSDataWrapper object 
+     * 
+     * @param value the collection of value
+     * @return a SFSDataWrapper object
+     */
     @SuppressWarnings("unchecked")
     protected SFSDataWrapper transformCollection(Object value) {
         Collection<?> collection = (Collection<?>)value;
@@ -77,10 +96,22 @@ public class SimpleTransformer {
         throw new IllegalArgumentException("Can not transform value of " + value.getClass());
     }
     
+    /**
+     * Transform a value or array of values to SFSDataWrapper object
+     * 
+     * @param value a value or array of values
+     * @return a SFSDataWrapper object
+     */
     protected SFSDataWrapper transformObjectOrArray(Object value) {
         return findTransformer(value.getClass()).transform(value);
     }
     
+    /**
+     * Find transformer of a type
+     * 
+     * @param clazz the type
+     * @return a transformer reference
+     */
     protected Transformer findTransformer(Class<?> clazz) {
         Transformer answer = transformers.get(clazz);
         if(answer == null)
@@ -88,6 +119,9 @@ public class SimpleTransformer {
         return answer;
     }
     
+    /**
+     * Initialize map of transformers
+     */
     protected void init() {
         initWithWrapperType();
         initWithPrimitiveTypeArray();
@@ -95,6 +129,9 @@ public class SimpleTransformer {
         initWithStringType();
     }
     
+    /**
+     * Add transformers of wrapper type to the map
+     */
     protected void initWithWrapperType() {
      // =========== wrapper type ==============
         transformers.put(Boolean.class, new Transformer() {
@@ -147,6 +184,9 @@ public class SimpleTransformer {
         });
     }
     
+    /**
+     * Add transformers of array of primitive values to the map
+     */
     protected void initWithPrimitiveTypeArray() {
      // =========== primitve array type ==============
         transformers.put(boolean[].class, new Transformer() {
@@ -199,6 +239,9 @@ public class SimpleTransformer {
         });
     }
     
+    /**
+     * Add transformers of array of wrapper values to the map
+     */
     protected void initWithWrapperTypArray() {
      // =========== wrapper array type ==============
         transformers.put(Boolean[].class, new Transformer() {
@@ -251,6 +294,9 @@ public class SimpleTransformer {
         });
     }
  
+    /**
+     * Add transformer of string and transformer of array of strings to the map
+     */
     protected void initWithStringType() {
         transformers.put(String.class, new Transformer() {
             @Override

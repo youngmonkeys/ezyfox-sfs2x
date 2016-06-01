@@ -2,18 +2,32 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.exceptions.SFSException;
+import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
 import com.tvd12.ezyfox.core.annotation.parser.ConfigPropertyParser;
 import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * Support to handle server ready event
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
 public class ServerReadyEventHandler extends ServerBaseEventHandler {
     
+    /**
+     * @param context
+     */
 	public ServerReadyEventHandler(AppContextImpl context) {
 		super(context);
 	}
 	
+	/**
+	 * @see BaseServerEventHandler#handleServerEvent(ISFSEvent)
+	 */
 	@Override
 	public void handleServerEvent(ISFSEvent event) throws SFSException {
 		AppContextImpl appContext = (AppContextImpl)context;
@@ -32,6 +46,12 @@ public class ServerReadyEventHandler extends ServerBaseEventHandler {
                 instance, context);
 	}
 	
+	/**
+	 * Map configuration properties to handler object
+	 * 
+	 * @param handler structure of handler class
+	 * @param instance a handler instance
+	 */
 	protected void assignDataToHandler(ServerHandlerClass handler, Object instance) {
 	    if(getParentExtension().getConfigProperties() != null) {
 	        ConfigPropertyParser.assignValue(
@@ -41,6 +61,9 @@ public class ServerReadyEventHandler extends ServerBaseEventHandler {
 	    }
     }
 	
+	/**
+	 * @see ServerBaseEventHandler#eventName()
+	 */
 	@Override
 	public String eventName() {
 		return ServerEvent.SERVER_READY;

@@ -6,10 +6,12 @@ import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.serializer.RequestParamParser;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
+ * Support to handle event related to message
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -23,6 +25,12 @@ public abstract class MessageEventHandler extends ServerBaseEventHandler {
         super(context);
     }
 
+    /**
+     * Propagate event to handlers
+     * 
+     * @param message message data
+     * @param params addition data to send
+     */
     protected void notifyToHandlers(Object message, ISFSObject params) {
         if(params == null) params = new SFSObject();
         for(ServerHandlerClass handler : handlers) {
@@ -30,16 +38,23 @@ public abstract class MessageEventHandler extends ServerBaseEventHandler {
         }
     }
     
+    /**
+     * Propagate event to handler
+     * 
+     * @param handler structure of handler class
+     * @param message message data
+     * @param params addition data to send
+     */
     protected void notifyToHandler(ServerHandlerClass handler, 
             Object message, ISFSObject params) {
         Object object = handler.newInstance();
         MessageParamsClass paramsClass = context.getMessageParamsClass(object.getClass());
         if(paramsClass == null) paramsClass = new MessageParamsClass(object.getClass());
-        RequestParamParser.getInstance().assignValues(paramsClass.getWrapper(), params, object);
+        RequestParamDeserializer.getInstance().deserialize(paramsClass.getWrapper(), params, object);
         ReflectMethodUtil.invokeHandleMethod(
                 handler.getHandleMethod(), 
                 object,  context, message);
-        ResponseParamParser.getInstance().parse(paramsClass.getUnwrapper(), object, params);
+        ResponseParamSerializer.getInstance().object2params(paramsClass.getUnwrapper(), object, params);
     }
     
 }

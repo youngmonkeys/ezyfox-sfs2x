@@ -10,6 +10,8 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see BlockBuddy
+ * 
  * @author tavandung12
  * 
  * Created on May 26, 2016

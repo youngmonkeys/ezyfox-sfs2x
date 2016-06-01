@@ -14,6 +14,9 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
  */
 public class UserDisconnectEventHandler extends UserActionEventHandler {
 
+    /**
+     * @param context
+     */
     public UserDisconnectEventHandler(AppContextImpl context) {
         super(context);
     }

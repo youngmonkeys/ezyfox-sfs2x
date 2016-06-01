@@ -1,6 +1,6 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.UserAgentUnwrapper.userAgentUnwrapper;
+import static com.tvd12.ezyfox.sfs2x.serializer.UserAgentSerializer.userAgentSerializer;
 
 import java.util.List;
 
@@ -14,15 +14,30 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * @see UpdateUser
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
 public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 
 	private ApiBaseUser agent;
 	private boolean toClient = true;
 	
+	/**
+	 * @param context
+	 * @param api
+	 * @param extension
+	 */
 	public UpdateUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
 	}
 
+	/**
+	 * Execute to update user variables
+	 */
 	@SuppressWarnings("unchecked")
     @Override
 	public <T> T execute() {
@@ -31,7 +46,7 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 		try {
 		    AgentClassUnwrapper unwrapper = context.getUserAgentClass(agent.getClass())
 		            .getUnwrapper();
-			List<UserVariable> variables = userAgentUnwrapper().unwrap(unwrapper, agent);
+			List<UserVariable> variables = userAgentSerializer().serialize(unwrapper, agent);
 			
 			//update user variables on server and notify to client
 			if(toClient) api.setUserVariables(sfsUser, variables);
@@ -45,6 +60,9 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 		return (T)agent;
 	}
 
+	/**
+	 * @see UpdateUser#toClient(boolean)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateUser toClient(boolean value) {
@@ -52,6 +70,9 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 		return this;
 	}
 
+	/**
+	 * @see UpdateUser#user(ApiBaseUser)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateUser user(ApiBaseUser user) {

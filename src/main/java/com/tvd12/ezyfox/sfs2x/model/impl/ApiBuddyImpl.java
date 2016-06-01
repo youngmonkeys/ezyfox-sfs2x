@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * @see SFSBuddy
+ * @see ApiBuddy
+ * 
  * @author tavandung12
  *
  */
@@ -21,6 +24,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     
     @Getter @Setter
     private ApiUser user;
+    
     @Getter @Setter
     private ApiUser owner;
     

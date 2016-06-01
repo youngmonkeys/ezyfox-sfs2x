@@ -17,6 +17,8 @@ import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyMessageImpl;
 
 /**
+ * Support to handle buddy message event
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -36,7 +38,7 @@ public class BuddyMessageEventHandler extends MessageEventHandler {
     @Override
     protected void init() {
         handlers = new ServerEventHandlerCenter()
-                .addListeners(handlerClasses, ApiBuddyMessage.class);
+                .addHandlers(handlerClasses, ApiBuddyMessage.class);
     }
 
     /* (non-Javadoc)

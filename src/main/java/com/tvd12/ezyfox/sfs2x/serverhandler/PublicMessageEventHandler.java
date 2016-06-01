@@ -18,6 +18,8 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiMessageImpl;
 
 /**
+ * Support to handle public message event
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -38,7 +40,7 @@ public class PublicMessageEventHandler extends MessageEventHandler {
     @Override
     protected void init() {
         handlers = new ServerEventHandlerCenter()
-                .addListeners(handlerClasses, ApiMessage.class);
+                .addHandlers(handlerClasses, ApiMessage.class);
     }
     
     /* (non-Javadoc)

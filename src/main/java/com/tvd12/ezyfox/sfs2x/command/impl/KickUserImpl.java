@@ -7,6 +7,13 @@ import com.tvd12.ezyfox.core.command.KickUser;
 import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * @see KickUser
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
 public class KickUserImpl extends BaseCommandImpl implements KickUser {
 
     private String userToKick;
@@ -14,6 +21,11 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     private String kickMessage = "";
     private int delaySeconds = 0;
     
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
     public KickUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
     }

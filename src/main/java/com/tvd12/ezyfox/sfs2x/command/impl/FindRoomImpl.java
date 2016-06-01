@@ -16,11 +16,18 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see FindRoom
+ * 
  * @author tavandung12
  *
  */
 public class FindRoomImpl extends BaseCommandImpl implements FindRoom {
 
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
     public FindRoomImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
     }

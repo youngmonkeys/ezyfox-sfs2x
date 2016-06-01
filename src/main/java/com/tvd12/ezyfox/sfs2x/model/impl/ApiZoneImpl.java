@@ -12,79 +12,131 @@ import com.tvd12.ezyfox.core.model.ApiRoom;
 import com.tvd12.ezyfox.core.model.ApiUser;
 import com.tvd12.ezyfox.core.model.ApiZone;
 
+/**
+ * This a proxy class
+ * 
+ * @see ApiZone
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
 public class ApiZoneImpl implements ApiZone {
 
+    // smartfox zone object
 	private Zone sfsZone;
 	
 	public ApiZoneImpl(Zone sfsZone) {
 		this.sfsZone = sfsZone;
 	}
 
+	/**
+	 * @see ApiZone#getId()
+	 */
 	@Override
 	public int getId() {
 		return sfsZone.getId();
 	}
 
+	/**
+	 * @see ApiZone#getMaxAllowedRooms()
+	 */
 	@Override
 	public int getMaxAllowedRooms() {
 		return sfsZone.getMaxAllowedRooms();
 	}
 
+	/**
+	 * @see ApiZone#getMaxAllowedUsers()
+	 */
 	@Override
 	public int getMaxAllowedUsers() {
 		return sfsZone.getMaxAllowedUsers();
 	}
 
+	/**
+	 * @see ApiZone#getMaxRoomNameChars()
+	 */
 	@Override
 	public int getMaxRoomNameChars() {
 		return sfsZone.getMaxRoomNameChars();
 	}
 
+	/**
+	 * @see ApiZone#getMaxRoomsCreatedPerUserLimit()
+	 */
 	@Override
 	public int getMaxRoomsCreatedPerUserLimit() {
 		return sfsZone.getMaxRoomsCreatedPerUserLimit();
 	}
 
+	/**
+	 * @see ApiZone#getMaxRoomVariablesAllowed()
+	 */
 	@Override
 	public int getMaxRoomVariablesAllowed() {
 		return sfsZone.getMaxRoomVariablesAllowed();
 	}
 
+	/**
+	 * @see ApiZone#getMaxUserIdleTime()
+	 */
 	@Override
 	public int getMaxUserIdleTime() {
 		return sfsZone.getMaxUserIdleTime();
 	}
 
+	/**
+	 * @see ApiZone#getMaxUserVariablesAllowed()
+	 */
 	@Override
 	public int getMaxUserVariablesAllowed() {
 		return sfsZone.getMaxUserVariablesAllowed();
 	}
 
+	/**
+	 * @see ApiZone#getMinRoomNameChars()
+	 */
 	@Override
 	public int getMinRoomNameChars() {
 		return sfsZone.getMinRoomNameChars();
 	}
 
+	/**
+	 * @see ApiZone#getTotalRoomCount()
+	 */
 	@Override
 	public int getTotalRoomCount() {
 		return sfsZone.getTotalRoomCount();
 	}
 
+	/**
+	 * @see ApiZone#getUserCount()
+	 */
 	@Override
 	public int getUserCount() {
 		return sfsZone.getUserCount();
 	}
 
+	/**
+	 * @see ApiZone#getUserReconnectionSeconds()
+	 */
 	@Override
 	public int getUserReconnectionSeconds() {
 		return sfsZone.getUserReconnectionSeconds();
 	}
 
+	/**
+	 * @see ApiZone#isActive()
+	 */
 	@Override
 	public boolean isActive() {
 		return sfsZone.isActive();
 	}
 
+	/**
+	 * @see ApiZone#getName()
+	 */
 	@Override
 	public String getName() {
 		return sfsZone.getName();

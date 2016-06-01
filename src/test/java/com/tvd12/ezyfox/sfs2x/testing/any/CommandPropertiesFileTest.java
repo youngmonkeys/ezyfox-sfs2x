@@ -13,7 +13,7 @@ public class CommandPropertiesFileTest {
 
 	@Test
 	public void test() throws IOException {
-		File file = new File(FileUtils.getFile("").getAbsolutePath() + "/src/main/resources/ezyfox/config/command-implementations.properties");
+		File file = new File(FileUtils.getFile("").getAbsolutePath() + "/src/main/resources/ezyfox/config/commands.properties");
 		FileUtils.write(file, Base64Coder.encodeString(InterfaceClassPairGenerater.pairs("com.tvd12.ezyfox.sfs2x.command.impl")));
 	}
 	

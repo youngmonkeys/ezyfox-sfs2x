@@ -11,6 +11,8 @@ import com.tvd12.ezyfox.core.model.ApiBuddy;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see FetchBuddyList
+ * 
  * @author tavandung12
  * Created on May 27, 2016
  *

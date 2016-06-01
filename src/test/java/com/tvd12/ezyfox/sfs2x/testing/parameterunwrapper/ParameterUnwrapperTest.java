@@ -17,8 +17,8 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
-import com.tvd12.ezyfox.sfs2x.serializer.ParameterUnwrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.ParameterSerializer;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 import com.tvd12.ezyfox.sfs2x.testing.responseparameterparser.ResponseParamParserTest;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
@@ -32,10 +32,10 @@ public class ParameterUnwrapperTest {
 	
 	public void getValueTestPerformance() throws ExtensionException {
 		final Method method = ReflectMethodUtil.getMethod("getValue", 
-				ParameterUnwrapper.class, 
+				ParameterSerializer.class, 
 				Class.class, Object.class);
 		method.setAccessible(true);
-		final Object obj = ResponseParamParser.getInstance();
+		final Object obj = ResponseParamSerializer.getInstance();
 		long time = Performance.create()
 				.test(new Script() {
                     @Override
@@ -53,10 +53,10 @@ public class ParameterUnwrapperTest {
 	
 	public void arrayToCollectionPerformance() throws ExtensionException {
 		final Method method = ReflectMethodUtil.getMethod("arrayToCollection", 
-				ParameterUnwrapper.class, 
+				ParameterSerializer.class, 
 				Object.class, Class.class);
 		method.setAccessible(true);
-		final Object obj = ResponseParamParser.getInstance();
+		final Object obj = ResponseParamSerializer.getInstance();
 		final String[] strs = {"dung", "duong"};
 		long time = Performance.create()
 				.test(new Script() {
@@ -75,11 +75,11 @@ public class ParameterUnwrapperTest {
 	
 	public void parseCollectionPerformance() throws ExtensionException {
 		final Method method = ReflectMethodUtil.getMethod("parseCollection", 
-				ParameterUnwrapper.class, 
+				ParameterSerializer.class, 
 				Field.class, Object.class);
 		method.setAccessible(true);
 		final ClassA classA = new ClassA();
-		final Object obj = ResponseParamParser.getInstance();
+		final Object obj = ResponseParamSerializer.getInstance();
 		final Field field = ReflectFieldUtil.getField("strings", ClassA.class);
 		long time = Performance.create()
 				.test(new Script() {
@@ -98,11 +98,11 @@ public class ParameterUnwrapperTest {
 	
 	public void assignValuePerformance() throws ExtensionException {
 		final Method method = ReflectMethodUtil.getMethod("assignValue", 
-				ParameterUnwrapper.class, 
+				ParameterSerializer.class, 
 				ISFSObject.class, Entry.class, Object.class);
 		method.setAccessible(true);
 		final ClassA classA = new ClassA();
-		final Object obj = ResponseParamParser.getInstance();
+		final Object obj = ResponseParamSerializer.getInstance();
 		final Field field = ReflectFieldUtil.getField("strings", ClassA.class);
 		@SuppressWarnings("unchecked")
 		final Entry<String, Field> entry = mock(Entry.class);

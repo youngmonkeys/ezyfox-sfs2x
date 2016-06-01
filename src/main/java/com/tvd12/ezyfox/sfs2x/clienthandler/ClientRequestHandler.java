@@ -10,11 +10,20 @@ import lombok.Getter;
 
 public abstract class ClientRequestHandler extends BaseClientRequestHandler {
 
+    // request's command
     @Getter
     protected final String command;
+    
+    // application context
 	protected AppContextImpl context;
+	
+	// list of listeners
 	protected final List<RequestResponseClass> listeners;
 	
+	/**
+	 * @param context application context
+	 * @param command listener's command
+	 */
 	public ClientRequestHandler(AppContextImpl context, 
 			String command) {
 		this.context = context;

@@ -31,6 +31,8 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
 
 /**
+ * @see AddBuddy
+ * 
  * @author tavandung12
  *
  */
@@ -130,6 +132,9 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
         return this;
     }
     
+    /**
+     * Execute to add a buddy to list
+     */
     @SuppressWarnings("unchecked")
     public ApiBuddy execute() {
         User sfsOwner = api.getUserByName(owner);
@@ -168,8 +173,10 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     }
     
     /**
-     * @param buddyListManager
-     * @param sfsOwner
+     * Check whether buddy manager is active
+     * 
+     * @param buddyListManager manager object
+     * @param sfsOwner buddy's owner
      */
     private void checkBuddyManagerIsActive(BuddyListManager buddyListManager, User sfsOwner) {
         if (!buddyListManager.isActive()) {
@@ -178,6 +185,12 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
           }
     }
 
+    /**
+     * Get user agent reference
+     * 
+     * @param name name of user agent
+     * @return user agent object
+     */
     public ApiUser getUser(String name) {
         User sfsUser = CommandUtil.getSfsUser(name, api);
         if(sfsUser == null)

@@ -8,6 +8,8 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see BanUser
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -29,7 +31,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
      */
     public BanUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        // TODO Auto-generated constructor stub
     }
 
     /* (non-Javadoc)

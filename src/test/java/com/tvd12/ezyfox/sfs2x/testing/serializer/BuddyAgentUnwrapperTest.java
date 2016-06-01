@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import com.smartfoxserver.v2.buddylist.BuddyVariable;
 import com.tvd12.ezyfox.core.structure.BuddyClassUnwrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.BuddyAgentUnwrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.BuddyAgentSerializer;
 import com.tvd12.test.base.BaseTest;
 
 import lombok.Data;
@@ -23,9 +23,9 @@ public class BuddyAgentUnwrapperTest extends BaseTest {
     @SuppressWarnings("unchecked")
     @Test
     public void test() {
-        BuddyAgentUnwrapper.buddyAgentUnwrapper();
-        List<BuddyVariable> vars = BuddyAgentUnwrapper.buddyAgentUnwrapper()
-                .unwrap(new BuddyClassUnwrapper(ClassBuddy.class), new ClassBuddy());
+        BuddyAgentSerializer.buddyAgentSerializer();
+        List<BuddyVariable> vars = BuddyAgentSerializer.buddyAgentSerializer()
+                .serialize(new BuddyClassUnwrapper(ClassBuddy.class), new ClassBuddy());
         assertEquals(vars.size(), 2);
     }
     

@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.ResponseParam;
 import com.tvd12.ezyfox.core.structure.ResponseHandlerClass;
-import com.tvd12.ezyfox.sfs2x.serializer.ParameterUnwrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.ParameterSerializer;
 import com.tvd12.test.base.BaseTest;
 
 import lombok.Data;
@@ -18,7 +18,7 @@ public class ParameterUnwrapperTest extends BaseTest {
     @Test
     public void test() {
         ResponseHandlerClass clazz = new ResponseHandlerClass(ClassA.class);
-        new ParameterUnwrapper().parse(clazz, new ClassA());
+        new ParameterSerializer().object2params(clazz, new ClassA());
     }
 
     @Data

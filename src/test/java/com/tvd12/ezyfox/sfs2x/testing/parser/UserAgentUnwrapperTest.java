@@ -9,7 +9,7 @@ import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.Variable;
 import com.tvd12.ezyfox.core.annotation.VariableParam;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.UserAgentUnwrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.UserAgentSerializer;
 import com.tvd12.test.base.BaseTest;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
@@ -25,13 +25,13 @@ public class UserAgentUnwrapperTest extends BaseTest {
     public void test() {
         unwrapper 
             = new AgentClassUnwrapper(ClassA.class);
-        UserAgentUnwrapper.userAgentUnwrapper()
-            .unwrap(unwrapper, new ClassA());
+        UserAgentSerializer.userAgentSerializer()
+            .serialize(unwrapper, new ClassA());
     }
     
     @Override
     public Class<?> getTestClass() {
-        return UserAgentUnwrapper.class;
+        return UserAgentSerializer.class;
     }
     
     @Data
@@ -196,8 +196,8 @@ public class UserAgentUnwrapperTest extends BaseTest {
                 .test(new Script() {
                     @Override
                     public void execute() {
-                        UserAgentUnwrapper.getInstance()
-                        .unwrap(unwrapper, new ClassC());
+                        UserAgentSerializer.getInstance()
+                        .object2params(unwrapper, new ClassC());
                     }
                 }).getTime();
         INFO("testing time = " + time);

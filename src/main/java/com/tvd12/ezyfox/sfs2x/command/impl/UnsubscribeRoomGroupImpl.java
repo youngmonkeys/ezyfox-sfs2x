@@ -7,6 +7,8 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see UnsubscribeRoomGroup
+ * 
  * @author tavandung12
  * Created on May 27, 2016
  *
