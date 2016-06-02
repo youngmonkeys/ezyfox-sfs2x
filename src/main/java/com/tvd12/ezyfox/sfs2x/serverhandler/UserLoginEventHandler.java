@@ -109,7 +109,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
                 instance,
                 context, username, password);
         responseParamSerializer()
-            .object2params(handler.getResponseHandlerClass(), instance);
+            .object2params(handler.getResponseHandlerClass(), instance, outData);
     }
 
     /*

@@ -2,6 +2,7 @@ package com.tvd12.ezyfox.sfs2x.testing.serverhandler;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.testng.Assert.*;
 
 import java.util.List;
 
@@ -64,10 +65,30 @@ public class UserLoginEventHandlerTest extends BaseHandlerTest {
         handler.handleServerEvent(event);
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test(priority = 5)
+    public void test5() throws SFSException {
+        context = mock(AppContextImpl.class);
+        when(context.serverEventHandlerClasses(ServerEvent.USER_LOGIN))
+            .thenReturn((List)Lists.newArrayList(ClassA.class));
+        UserLoginEventHandler handler = new UserLoginEventHandler(context);
+        ISFSEvent event = mock(ISFSEvent.class);
+        when(event.getParameter(SFSEventParam.LOGIN_NAME)).thenReturn("username");
+        when(event.getParameter(SFSEventParam.LOGIN_PASSWORD)).thenReturn("password");
+        when(event.getParameter(SFSEventParam.LOGIN_IN_DATA)).thenReturn(new SFSObject());
+        when(event.getParameter(SFSEventParam.LOGIN_OUT_DATA)).thenReturn(new SFSObject());
+        try {
+            handler.handleServerEvent(event);
+        }
+        catch(SFSLoginException e) {
+            assertEquals(e.getErrorData().getCode().getId(), (short)1);
+        }
+    }
+    
     @ServerEventHandler(event = ServerEvent.USER_LOGIN)
     public static class ClassA {
         public void handle(AppContext context, String username, String password) throws Exception {
-            throw new BadRequestException();
+            throw new BadRequestException(1);
         }
     }
     
