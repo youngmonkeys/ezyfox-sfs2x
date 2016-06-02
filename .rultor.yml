@@ -2,9 +2,9 @@ decrypt:
   settings.xml: "repo/settings.xml.asc"
   pubring.gpg: "repo/pubring.gpg.asc"
   secring.gpg: "repo/secring.gpg.asc"
-commanders:
-  - tvd12
 release:
+  commanders:
+  - tvd12
   script: |
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
