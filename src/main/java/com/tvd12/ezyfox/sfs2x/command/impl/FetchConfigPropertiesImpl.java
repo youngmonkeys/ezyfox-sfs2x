@@ -8,6 +8,8 @@ import com.tvd12.ezyfox.core.command.FetchConfigProperties;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see FetchConfigProperties
+ * 
  * @author tavandung12
  * Created on May 30, 2016
  *

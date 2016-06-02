@@ -14,6 +14,8 @@ import com.tvd12.ezyfox.core.model.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see RemoveBuddy
+ * 
  * @author tavandung12
  *
  */

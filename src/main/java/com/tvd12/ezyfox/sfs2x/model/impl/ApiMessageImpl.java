@@ -6,6 +6,9 @@ import com.tvd12.ezyfox.core.model.ApiRoom;
 import lombok.Setter;
 
 /**
+ * @see ApiBaseMessageImpl
+ * @see ApiMessage
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *

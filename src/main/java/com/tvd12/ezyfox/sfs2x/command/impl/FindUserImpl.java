@@ -7,8 +7,20 @@ import com.tvd12.ezyfox.core.command.FindUser;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * @see FindUser
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
 public class FindUserImpl extends BaseCommandImpl implements FindUser {
 	
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
 	public FindUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
 	}

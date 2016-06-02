@@ -7,14 +7,37 @@ import com.smartfoxserver.v2.entities.variables.Variable;
 import com.tvd12.ezyfox.core.structure.AgentClassWrapper;
 import com.tvd12.ezyfox.core.structure.SetterMethodCover;
 
-public class AgentWrapper extends ParameterWrapper {
+/**
+ * Support to deserialize list of smartfox variables to agent object
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
+
+public class AgentDeserializer extends ParameterDeserializer {
     
-    public <T extends Variable> Object wrap(AgentClassWrapper wrapper, 
+    /**
+     * Deserialize list of smartfox variables to agent object
+     * 
+     * @param wrapper structure of agent class
+     * @param variables list of smartfox variables
+     * @return a agent object
+     */
+    public <T extends Variable> Object deserialize(AgentClassWrapper wrapper, 
             List<T> variables) {
-        return wrap(wrapper, wrapper.newInstance(), variables);
+        return deserialize(wrapper, wrapper.newInstance(), variables);
     }
     
-    protected <T extends Variable> Object wrap(AgentClassWrapper wrapper, 
+    /**
+     * Deserialize list of smartfox variables to agent object
+     * 
+     * @param wrapper structure of agent class
+     * @param agent the agent object
+     * @param variables list of smartfox variables
+     * @return the agent object
+     */
+    protected <T extends Variable> Object deserialize(AgentClassWrapper wrapper, 
             Object agent, List<T> variables) {
         for(T variable : variables) {
             SetterMethodCover method = wrapper.getMethod(variable.getName());
@@ -24,6 +47,13 @@ public class AgentWrapper extends ParameterWrapper {
         return agent;
     }
     
+    /**
+     * Get value from the variable
+     * 
+     * @param method structure of setter method
+     * @param variable the variable
+     * @return a value
+     */
     protected Object getValue(SetterMethodCover method, Variable variable) {
         Object value = variable.getValue();
         if(method.isArray()) {

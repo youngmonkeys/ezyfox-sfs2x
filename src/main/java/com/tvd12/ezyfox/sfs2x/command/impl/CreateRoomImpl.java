@@ -13,30 +13,57 @@ import com.tvd12.ezyfox.core.model.ApiRoom;
 import com.tvd12.ezyfox.core.structure.AgentClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * @see CreateRoom
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
 public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
 
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
 	public CreateRoomImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
 	}
 
 	private ApiRoom[] agents;
 	
+	/**
+	 * @see CreateRoom#agents(ApiRoom...)
+	 */
     @Override
 	public CreateRoom agents(ApiRoom... agents) {
 		this.agents = agents;
 		return this;
 	}
 	
+    /**
+     * Validate room agent class to check whether room agent be annotated with {@code RoomAgent}
+     * annotation or not
+     * 
+     * @param agent room agent object
+     * @return structure of room agent class
+     * @throws IllegalStateException when agent class be not annotated with {@code RoomAgent}
+     */
     private AgentClass validateRoomAgentClass(ApiRoom agent) {
 	    AgentClass roomAgentClass = context
 	            .getRoomAgentClasses().get(agent.getClass());
 	    if(roomAgentClass == null)
-	        throw new RuntimeException("You mus annotate class " + agent.getClass()
+	        throw new IllegalStateException("You mus annotate class " + agent.getClass()
 	                + " with @" + RoomAgent.class.getSimpleName());
 	    return roomAgentClass;
 	}
 	
+    /**
+     * Execute to create list of room
+     */
     @SuppressWarnings("unchecked")
+    @Override
     public Boolean execute() {
         for(int i = 0 ; i < agents.length ; i++) {
             createRoom(i);
@@ -44,6 +71,11 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
         return Boolean.TRUE;
     }
 	
+    /**
+     * Create a room at index
+     * 
+     * @param index index
+     */
     private void createRoom(int index) {
         ApiRoom agent = agents[index];
         try {
@@ -58,6 +90,12 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
         }
     }
 	
+    /**
+     * Create smartfox CreateRoomSettings object
+     * 
+     * @param agent room agent object
+     * @return CreateRoomSettings object
+     */
     private CreateRoomSettings createRoomSettings(ApiRoom agent) {
         validateRoomAgentClass(agent);
 	    CreateRoomSettings settings = new CreateRoomSettings();

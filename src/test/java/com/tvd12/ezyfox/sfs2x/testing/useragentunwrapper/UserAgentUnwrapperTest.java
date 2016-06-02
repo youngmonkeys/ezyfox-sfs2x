@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.UserAgentUnwrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.UserAgentSerializer;
 
 import static org.testng.Assert.*;
 
@@ -18,9 +18,9 @@ public class UserAgentUnwrapperTest {
 	public void testValidCase() throws ExtensionException {
 		UserAgentForUnwrapper userAgent = new UserAgentForUnwrapper();
 		AgentClassUnwrapper clazz = new AgentClassUnwrapper(UserAgentForUnwrapper.class);
-		List<UserVariable> variables = UserAgentUnwrapper
+		List<UserVariable> variables = UserAgentSerializer
 				.getInstance()
-				.unwrap(clazz, userAgent);
+				.serialize(clazz, userAgent);
 		assertNotNull(variables);
 		assertEquals(3, variables.size());
 		assertEquals("dzung", variables.get(0).getStringValue());

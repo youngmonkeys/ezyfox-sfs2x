@@ -19,7 +19,7 @@ import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.structure.AgentClassWrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.AgentWrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.AgentDeserializer;
 import com.tvd12.ezyfox.sfs2x.testing.ExampleUser;
 
 public class UserAgentWrapperTest {
@@ -48,7 +48,7 @@ public class UserAgentWrapperTest {
 	@Test
 	public void testInvalidCase() throws ExtensionException {
 	    AgentClassWrapper clazz = new AgentClassWrapper(ExampleUser.class);
-		ExampleUser exUser = (ExampleUser) new AgentWrapper().wrap(clazz, user.getVariables());
+		ExampleUser exUser = (ExampleUser) new AgentDeserializer().deserialize(clazz, user.getVariables());
 		assertNotNull(exUser);
 		assertEquals(new Long(1000L), exUser.getMoney());
 		assertEquals("Nguyen", exUser.getFirstName());

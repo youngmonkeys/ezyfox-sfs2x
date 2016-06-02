@@ -21,9 +21,11 @@ import com.tvd12.ezyfox.core.command.Response;
 import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
+ * @see Response
+ * 
  * @author tavandung12
  *
  */
@@ -37,6 +39,11 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     private Map<String, SFSDataWrapper> addition 
             = new HashMap<>();
     
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
     public ResponseImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
     }
@@ -119,16 +126,26 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
         return Boolean.TRUE;
     }
     
+    /**
+     * Create smartfox object to response to client
+     * 
+     * @return smartfox parameter object
+     */
     private ISFSObject createResponseParams() {
         ISFSObject answer = (data != null) 
-                ? ResponseParamParser.getInstance()
-                        .parse(context.getResponseParamsClass(data.getClass()), data)
+                ? ResponseParamSerializer.getInstance()
+                        .object2params(context.getResponseParamsClass(data.getClass()), data)
                 : new SFSObject();
         for(Entry<String, SFSDataWrapper> entry : addition.entrySet())
             answer.put(entry.getKey(), entry.getValue());
         return answer;
     }
     
+    /**
+     * Validate command
+     * 
+     * @throws IllegalStateException when command is null or empty
+     */
     private void validateCommand() {
         if(command == null || command.trim().isEmpty())
             throw new IllegalStateException("Invalid command");

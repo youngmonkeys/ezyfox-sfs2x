@@ -48,7 +48,7 @@ public class AppContextImplTest {
         assertNotNull(context.getRoomAgentClass(PokerRoom.class));
         assertNotNull(context.getUserAgentClass(PokerUser.class));
         assertNotNull(context.getUserAgentClass(AppUser.class));
-        assertTrue(context.clientActionCommands().size() > 0);
+        assertTrue(context.clientRequestCommands().size() > 0);
         assertTrue(context.serverEventHandlerClasses(ServerEvent.PUBLIC_MESSAGE).size() > 0);
         
         assertNotNull(context.command(CreateRoom.class));

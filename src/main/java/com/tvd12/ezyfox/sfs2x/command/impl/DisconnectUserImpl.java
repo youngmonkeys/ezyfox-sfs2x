@@ -12,6 +12,8 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see DisconnectUser
+ * 
  * @author tavandung12
  *
  */
@@ -20,6 +22,11 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     private String username;
     private byte reasonId = -1;
     
+    /**
+     * @param context
+     * @param api
+     * @param extension
+     */
     public DisconnectUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
     }

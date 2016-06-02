@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.RequestParam;
 import com.tvd12.ezyfox.core.structure.RequestListenerClass;
-import com.tvd12.ezyfox.sfs2x.serializer.ParameterWrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.ParameterDeserializer;
 
 import lombok.Data;
 
@@ -170,7 +170,7 @@ public class ParameterWrapperTest {
         params.putSFSArray("a64", array);
         
         RequestListenerClass wrapper = new RequestListenerClass(ClassA.class);
-        new ParameterWrapper().assignValues(wrapper, params);
+        new ParameterDeserializer().deserialize(wrapper, params);
     }
     
     @Data

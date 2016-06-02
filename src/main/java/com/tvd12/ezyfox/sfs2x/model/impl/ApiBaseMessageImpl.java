@@ -7,6 +7,8 @@ import com.tvd12.ezyfox.core.model.ApiZone;
 import lombok.Setter;
 
 /**
+ * @see ApiBaseMessage
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *

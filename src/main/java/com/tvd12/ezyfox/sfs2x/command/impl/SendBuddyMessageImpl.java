@@ -10,9 +10,11 @@ import com.tvd12.ezyfox.core.command.SendBuddyMessage;
 import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
+ * @see SendBuddyMessage
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -48,7 +50,7 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
         if(params != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(params.getClass());
             if(clazz != null) 
-                sfsParams = ResponseParamParser.getInstance().parse(clazz.getUnwrapper(), params);
+                sfsParams = ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), params);
         }
         if(sfsParams == null) sfsParams = new SFSObject();
         try {

@@ -8,6 +8,8 @@ import com.tvd12.ezyfox.core.model.ApiBuddy;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see FindBuddy
+ * 
  * @author tavandung12
  * Created on May 28, 2016
  *

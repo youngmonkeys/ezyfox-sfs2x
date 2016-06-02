@@ -7,6 +7,8 @@ import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * Support to handle buddy add event
+ * 
  * @author tavandung12
  *
  */

@@ -23,16 +23,37 @@ import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.core.structure.ResponseParamsClass;
 import com.tvd12.ezyfox.core.structure.UserAgentClass;
 
+/**
+ * @see AppContext
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
+
 public class AppContextImpl implements AppContext {
 
+    // extension configuration object
 	private ExtensionConfiguration extensionConfig;
-	private RequestListenerCenter actionListenerCenter;
+	
+	// holds all request listeners's structure
+	private RequestListenerCenter requestListenerCenter;
+	
+	// holds all structures of server event handler classes
 	private ServerEventHandlerClasses serverEventHandlerClasses;
 	
+	// map of interface names and constructs of command implementation classes
 	private Map<Object, Constructor<?>> commands;
+	
+	// properties object
 	private Map<Object, Object> properties
 	        = new ConcurrentHashMap<>();
 	
+	/**
+	 * Application entry point's class
+	 * 
+	 * @param entryPoint entry point's class
+	 */
 	public AppContextImpl(Class<?> entryPoint) {
 		this.initExtensionConfig(entryPoint);
 		this.initEventHandlerClasses();
@@ -42,90 +63,176 @@ public class AppContextImpl implements AppContext {
 		this.initProperties();
 	}
 	
+	/**
+	 * @see AppContext#set(Object, Object)
+	 */
 	@Override
 	public void set(Object key, Object value) {
 		properties.put(key, value);
 	}
 	
+	/**
+	 * @see AppContext#get(Object, Class)
+	 */
 	@Override
 	public <T> T get(Object key, Class<T> clazz) {
 		return clazz.cast(properties.get(key));
 	}
 	
+	/**
+	 * Get structure of user agent class
+	 * 
+	 * @return structure of user agent class
+	 */
 	public UserAgentClass getUserAgentClass() {
 		return extensionConfig.getUserAgentClass();
 	}
 	
+	/**
+	 * Get map of user agent classes and their structure
+	 * 
+	 * @return a map
+	 */
 	public Map<Class<?>, AgentClass> getRoomAgentClasses() {
 		return extensionConfig.getRoomAgentClasses();
 	}
 	
+	/**
+	 * Get map of game user agent classes and their structure
+	 * 
+	 * @return a map
+	 */
 	public Map<Class<?>, UserAgentClass> getGameUserAgentClasses() {
 	    return extensionConfig.getGameUserAgentClasses();
 	}
 	
+	/**
+	 * Get structure of room agent class map to the class
+	 * 
+	 * @param clazz room agent class
+	 * @return structure of room agent class
+	 */
 	public AgentClass getRoomAgentClass(Class<?> clazz) {
 	    return getRoomAgentClasses().get(clazz);
 	}
 	
+	/**
+	 * Get structure of user agent class map to the class
+	 * 
+	 * @param clazz room agent class
+	 * @return structure of user agent class
+	 */
 	public UserAgentClass getUserAgentClass(Class<?> clazz) {
 	    if(clazz == getUserClass())
 	        return getUserAgentClass();
 	    return getGameUserAgentClasses().get(clazz);
 	}
 	
+	/**
+	 * @return user agent's class
+	 */
     public Class<?> getUserClass() {
         return extensionConfig.getUserClass();
     }
     
+    /**
+     * @return list of room agent classes
+     */
     public List<Class<?>> getRoomClasses() {
         return extensionConfig.getRoomClasses();
     }
     
+    /**
+     * @return list of game user agent classes
+     */
     public List<Class<?>> getGameUserClasses() {
         return extensionConfig.getGameUserClasses();
     }
     
+    /**
+     * @return map of response parameter classes and their structure
+     */
     public Map<Class<?>, ResponseParamsClass> getResponseParamsClasses() {
         return extensionConfig.getResponseParamsClasses();
     }
     
+    /**
+     * Get structure of response parameter class map to the class
+     * 
+     * @param clazz response parameter class
+     * @return structure of response parameter class
+     */
     public ResponseParamsClass getResponseParamsClass(Class<?> clazz) {
         return getResponseParamsClasses().get(clazz);
     }
     
+    /**
+     * @return map of message parameter classes and their structure
+     */
     public Map<Class<?>, MessageParamsClass> getMessageParamsClasses() {
         return extensionConfig.getMessageParamsClasses();
     }
     
+    /**
+     * Get structure of message parameter class map to the class
+     * 
+     * @param clazz message parameter class
+     * @return structure of message parameter class
+     */
     public MessageParamsClass getMessageParamsClass(Class<?> clazz) {
         return getMessageParamsClasses().get(clazz);
     }
 	
+    /**
+     * Get list of request listeners related to the command
+     * 
+     * @param command request's command
+     * @return list of request listeners
+     */
 	public List<RequestResponseClass> clientRequestListeners(String command) {
-		return actionListenerCenter.getListeners(command);
+		return requestListenerCenter.getListeners(command);
 	}
 	
+	/**
+	 * Get list of server event handler classes related to the event
+	 * 
+	 * @param event the event
+	 * @return list of server event handler classes
+	 */
     public List<Class<?>> serverEventHandlerClasses(String event) {
         return serverEventHandlerClasses.getHandlers(event);
     }
 
-	public Set<String> clientActionCommands() {
-		return actionListenerCenter.getCommands();
+    /**
+     * @return set of client request commands
+     */
+	public Set<String> clientRequestCommands() {
+		return requestListenerCenter.getCommands();
 	}
 	
+	/**
+	 * Initialize extension configuration
+	 * 
+	 * @param entryPoint application's entry point class
+	 */
 	private void initExtensionConfig(Class<?> entryPoint) {
 		extensionConfig = new ExtensionConfiguration();
 		extensionConfig.load(entryPoint);
 	}
 	
+	/**
+	 * Get all request listener classes and read their structure
+	 */
 	private void initRequestListenerCenter() {
-		actionListenerCenter
+		requestListenerCenter
 			= new RequestListenerCenter();
-		actionListenerCenter.addListeners(extensionConfig
+		requestListenerCenter.addListeners(extensionConfig
 				.getRequestResponseClientClasses());
 	}
 	
+	/**
+	 * Get all event handler classes and read their structure
+	 */
 	private void initEventHandlerClasses() {
 		serverEventHandlerClasses 
             = new ServerEventHandlerClasses();
@@ -133,6 +240,9 @@ public class AppContextImpl implements AppContext {
             .getServerEventHandlerClasses());
 	}
 	
+	/**
+	 * Read configuration file and add all constructors to map
+	 */
 	private void initCommands() {
 	    Map<Object, Class<?>> commandsClass 
 	            = CommandProvider.provide(getClass());
@@ -143,10 +253,19 @@ public class AppContextImpl implements AppContext {
 	    }
 	}
 	
+	/**
+	 * initialize properties object
+	 */
 	private void initProperties() {
 		properties = new HashMap<>();
 	}
 	
+	/**
+	 * Get constructor of the command implementation class
+	 * 
+	 * @param commandClass command implementation class
+	 * @return a constructor object
+	 */
 	private Constructor<?> getCommandConstructor(Class<?> commandClass) {
 	    try {
             return ReflectClassUtil.getConstructor(
@@ -158,6 +277,12 @@ public class AppContextImpl implements AppContext {
         }
 	}
 	
+	/**
+	 * Get command by interface class
+	 * 
+	 * @param clazz interface class
+	 * @return a command instance
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> T getCommand(Class<T> clazz) {
 		Constructor<?> constructor = commands.get(clazz.getName());
@@ -171,15 +296,33 @@ public class AppContextImpl implements AppContext {
 		}
 	}
 	
+	/**
+	 * Get command by interface class
+	 */
 	public <T> T command(Class<T> clazz) {
 		return getCommand(clazz);
 	}
 	
+	// smartfox api
 	private ISFSApi api;
+	
+	// smartfox extension
 	private ISFSExtension extension;
+	
+	/**
+	 * Set smartfox api
+	 * 
+	 * @param api smartfox api
+	 */
 	public void setApi(ISFSApi api) {
 		this.api = api;
 	}
+	
+	/**
+	 * Set smartfox extension
+	 * 
+	 * @param extension smartfox extension
+	 */
 	public void setExtension(ISFSExtension extension) {
 		this.extension = extension;
 	}

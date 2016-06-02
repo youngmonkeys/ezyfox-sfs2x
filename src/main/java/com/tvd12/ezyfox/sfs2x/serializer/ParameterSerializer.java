@@ -31,13 +31,35 @@ import com.tvd12.ezyfox.core.structure.ClassUnwrapper;
 import com.tvd12.ezyfox.core.structure.GetterMethodCover;
 import com.tvd12.ezyfox.core.structure.MethodCover;
 
-public class ParameterUnwrapper {
+/**
+ * Support to serialize a java object to a SFSObject
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
+public class ParameterSerializer {
 	
-    public ISFSObject parse(ClassUnwrapper unwrapper, Object object) {
+    /**
+     * Serialize a java object to a SFSObject
+     * 
+     * @param unwrapper structure of java class
+     * @param object the java object
+     * @return a SFSObject
+     */
+    public ISFSObject object2params(ClassUnwrapper unwrapper, Object object) {
         return parseMethods(unwrapper, object);
     }
     
-    public ISFSObject parse(ClassUnwrapper unwrapper,
+    /**
+     * Serialize a java object to a SFSObject
+     * 
+     * @param unwrapper structure of java class
+     * @param object java object
+     * @param result the SFSObject
+     * @return the SFSObject
+     */
+    public ISFSObject object2params(ClassUnwrapper unwrapper,
             Object object, ISFSObject result) {
         List<GetterMethodCover> methods = unwrapper.getMethods();
         for(GetterMethodCover method : methods) {
@@ -49,12 +71,26 @@ public class ParameterUnwrapper {
         return result;
     }
     
+    /**
+     * Invoke getter method and add returned value to SFSObject
+     * 
+     * @param unwrapper structure of java class
+     * @param object the java object
+     * @return the SFSObject
+     */
     protected ISFSObject parseMethods(ClassUnwrapper unwrapper,
             Object object) {
-        return parse(unwrapper, object, new SFSObject());
+        return object2params(unwrapper, object, new SFSObject());
         
     }
     
+    /**
+     * Serialize a java object to a SFSObject
+     * 
+     * @param value value to parse
+     * @param method structure of getter method
+     * @param sfsObject the SFSObject
+     */
     @SuppressWarnings("rawtypes")
     protected void parseMethod(Object value, GetterMethodCover method,
             ISFSObject sfsObject) {
@@ -75,6 +111,13 @@ public class ParameterUnwrapper {
         sfsObject.put(method.getKey(), new SFSDataWrapper(type, value));
     }
     
+    /**
+     * Convert array of values to collection of values
+     * 
+     * @param method structure of getter method
+     * @param array the array of values
+     * @return the collection of values
+     */
     protected Object parseArray(GetterMethodCover method, 
             Object array) {
         if(method.isObjectArray()) {
@@ -131,6 +174,13 @@ public class ParameterUnwrapper {
         return array;
     }
     
+    /**
+     * Parse collection of values and get the value mapped to smartfox value
+     * 
+     * @param method structure of getter method
+     * @param collection collection of value
+     * @return the value after parsed
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected Object parseCollection(GetterMethodCover method, 
             Collection collection) {
@@ -152,27 +202,55 @@ public class ParameterUnwrapper {
         return collection;
     }
     
+    /**
+     * Serialize a java object to a SFSObject
+     * 
+     * @param method structure of getter method
+     * @param object object to serialize
+     * @return the SFSObject
+     */
     protected ISFSObject parseObject(GetterMethodCover method, 
             Object object) {
-        return parse(method.getReturnClass(), 
+        return object2params(method.getReturnClass(), 
                 object);
     }
     
+    /**
+     * Serialize array of object to a SFSArray
+     * 
+     * @param method structure of getter method
+     * @param array array of objects
+     * @return the SFSArray
+     */
     protected ISFSArray parseObjectArray(GetterMethodCover method, 
             Object[] array) {
         return parseObjectArray(method.getReturnClass(), 
                 array);
     }
     
+    /**
+     * Serialize array of object to a SFSArray
+     * 
+     * @param unwrapper structure of java class
+     * @param array array of objects
+     * @return the SFSArray
+     */
     private ISFSArray parseObjectArray(ClassUnwrapper unwrapper, 
             Object[] array) {
         ISFSArray result = new SFSArray();
         for(Object obj : array) {
-            result.addSFSObject(parse(unwrapper, obj));
+            result.addSFSObject(object2params(unwrapper, obj));
         }
         return result;
     }
     
+    /**
+     * Serialize collection of objects to a SFSArray
+     * 
+     * @param method structure of getter method
+     * @param collection collection of objects
+     * @return the SFSArray
+     */
     @SuppressWarnings({ "rawtypes" })
     protected ISFSArray parseObjectCollection(GetterMethodCover method, 
             Collection collection) {
@@ -184,6 +262,13 @@ public class ParameterUnwrapper {
         return result;
     }
     
+    /**
+     * Serialize collection of java array object to a SFSArray
+     * 
+     * @param method structure of getter method
+     * @param collection collection of java objects
+     * @return the SFSArray
+     */
     @SuppressWarnings({ "rawtypes" })
     protected ISFSArray parseArrayObjectCollection(GetterMethodCover method, 
             Collection collection) {
@@ -196,6 +281,13 @@ public class ParameterUnwrapper {
         return result;
     }
     
+    /**
+     * Serialize collection of array to a SFSArray
+     * 
+     * @param method structure of getter method
+     * @param collection collection of objects
+     * @return the SFSArray
+     */
     @SuppressWarnings("rawtypes")
     private ISFSArray parseArrayCollection(GetterMethodCover method,
             Collection collection) {
@@ -222,6 +314,12 @@ public class ParameterUnwrapper {
         return result;
     }
 	
+    /**
+     * Get SFSDataType mapped to returned value type of getter method
+     * 
+     * @param method structure of getter method
+     * @return the SFSDataType
+     */
     private SFSDataType getSFSDataType(MethodCover method) {
 	    if(method.isBoolean()) 
 	        return SFSDataType.BOOL;

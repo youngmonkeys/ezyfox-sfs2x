@@ -7,6 +7,8 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see SubscribeRoomGroup
+ * 
  * @author tavandung12
  * Created on May 27, 2016
  *
@@ -23,7 +25,6 @@ public class SubscribeRoomGroupImpl extends BaseCommandImpl implements Subscribe
      */
     public SubscribeRoomGroupImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        // TODO Auto-generated constructor stub
     }
 
     /* (non-Javadoc)

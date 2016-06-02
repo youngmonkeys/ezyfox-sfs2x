@@ -15,7 +15,7 @@ import com.smartfoxserver.v2.exceptions.SFSVariableException;
 import com.tvd12.ezyfox.core.annotation.Variable;
 import com.tvd12.ezyfox.core.annotation.VariableParam;
 import com.tvd12.ezyfox.core.structure.AgentClassWrapper;
-import com.tvd12.ezyfox.sfs2x.serializer.AgentWrapper;
+import com.tvd12.ezyfox.sfs2x.serializer.AgentDeserializer;
 import com.tvd12.test.base.BaseTest;
 
 import lombok.Data;
@@ -52,7 +52,7 @@ public class RoomAgentWrapperTest extends BaseTest {
         sfsRoom.setVariable(new SFSRoomVariable("a8", "1"));
         
         AgentClassWrapper wrapper = new AgentClassWrapper(ClassA.class);
-        new AgentWrapper().wrap(wrapper, sfsRoom.getVariables());
+        new AgentDeserializer().deserialize(wrapper, sfsRoom.getVariables());
         
     }
     

@@ -21,9 +21,11 @@ import com.tvd12.ezyfox.core.model.ApiBaseUser;
 import com.tvd12.ezyfox.core.model.ApiRoom;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
+ * @see SendObjectMessage
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -59,17 +61,27 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
         return Boolean.TRUE;
     }
     
+    /**
+     * Get smartfox room reference by name
+     * 
+     * @return smartfox room reference
+     */
     private Room getSfsRoom() {
         if(StringUtils.isEmpty(roomName))
             return extension.getParentZone().getRoomById(roomId);
         return CommandUtil.getSfsRoom(roomName, extension);
     }
     
+    /**
+     * Create smartfox parameter object from a POJO object or json string or string
+     * 
+     * @return smartfox parameter object
+     */
     private ISFSObject getMessage() {
         if(messageObject != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(messageObject.getClass());
             if(clazz != null) 
-                return ResponseParamParser.getInstance().parse(clazz.getUnwrapper(), messageObject);
+                return ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), messageObject);
         }
         if(jsonMessage != null)
             return SFSObject.newFromJsonData(jsonMessage);
@@ -81,6 +93,11 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
             
     }
     
+    /**
+     * Get list of smartfox users (recipients)
+     * 
+     * @return list of smartfox users
+     */
     private Collection<User> getSFSRecipients() {
         List<User> answer = new ArrayList<>();
         for(String recipient : recipients) {

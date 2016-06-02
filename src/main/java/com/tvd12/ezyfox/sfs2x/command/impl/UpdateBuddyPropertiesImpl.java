@@ -1,6 +1,6 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.BuddyAgentUnwrapper.buddyAgentUnwrapper;
+import static com.tvd12.ezyfox.sfs2x.serializer.BuddyAgentSerializer.buddyAgentSerializer;
 
 import java.util.List;
 
@@ -16,6 +16,8 @@ import com.tvd12.ezyfox.core.structure.BuddyClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see UpdateBuddyProperties
+ * 
  * @author tavandung12
  * Created on May 27, 2016
  *
@@ -43,7 +45,7 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     public Boolean execute() {
         BuddyClassUnwrapper unwrapper = context.getUserAgentClass(owner.getClass())
                 .getBuddyClass().getUnwrapper();
-        List<BuddyVariable> variables = buddyAgentUnwrapper().unwrap(unwrapper, owner);
+        List<BuddyVariable> variables = buddyAgentSerializer().serialize(unwrapper, owner);
         try {
             User sfsUser = CommandUtil.getSfsUser(owner, api);
             SmartFoxServer.getInstance().getAPIManager().getBuddyApi()

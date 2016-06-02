@@ -18,6 +18,8 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiPrivateMessageImpl;
 
 /**
+ * Support to handle private message event
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *
@@ -38,7 +40,7 @@ public class PrivateMessageEventHandler extends MessageEventHandler {
     @Override
     protected void init() {
         handlers = new ServerEventHandlerCenter()
-                .addListeners(handlerClasses, ApiPrivateMessage.class);
+                .addHandlers(handlerClasses, ApiPrivateMessage.class);
     }
     
     /* (non-Javadoc)

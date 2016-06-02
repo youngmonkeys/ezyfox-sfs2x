@@ -18,6 +18,8 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
 
 /**
+ * Support to handle event related to buddy
+ * 
  * @author tavandung12
  *
  */
@@ -36,7 +38,7 @@ public abstract class BuddyEventHandler extends ServerBaseEventHandler {
     @Override
     protected void init() {
         handlers = new ServerEventHandlerCenter()
-                .addListeners(handlerClasses, ApiZone.class, ApiBuddy.class);
+                .addHandlers(handlerClasses, ApiZone.class, ApiBuddy.class);
     }
 
     /* (non-Javadoc)
@@ -49,12 +51,25 @@ public abstract class BuddyEventHandler extends ServerBaseEventHandler {
         notifyToHandlers((ApiZone) sfsZone.getProperty(APIKey.ZONE), buddy);
     }
     
+    /**
+     * Notify event to handlers (listeners)
+     * 
+     * @param zone api zone reference
+     * @param buddy api buddy reference
+     */
     protected void notifyToHandlers(ApiZone zone, ApiBuddyImpl buddy) {
         for(ServerHandlerClass handler : handlers) {
             notifyToHandler(handler, zone, buddy);
         }
     }
     
+    /**
+     * Notify event to handler
+     * 
+     * @param handler structure of handler class
+     * @param zone api zone reference
+     * @param buddy api buddy reference
+     */
     protected void notifyToHandler(ServerHandlerClass handler, 
             ApiZone zone, ApiBuddyImpl buddy) {
         ReflectMethodUtil.invokeHandleMethod(

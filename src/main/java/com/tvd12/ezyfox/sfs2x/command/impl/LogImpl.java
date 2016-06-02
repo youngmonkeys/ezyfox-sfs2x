@@ -7,6 +7,13 @@ import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.Log;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
+/**
+ * @see Log
+ * 
+ * @author tavandung12
+ * Created on May 31, 2016
+ *
+ */
 public class LogImpl extends BaseCommandImpl implements Log {
 
 	private Class<?> from = api.getClass(); 

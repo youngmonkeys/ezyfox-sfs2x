@@ -4,11 +4,13 @@ import com.smartfoxserver.v2.buddylist.BuddyVariable;
 import com.smartfoxserver.v2.buddylist.SFSBuddyVariable;
 
 /**
+ * Support to serialize a java object to list of buddy variables
+ * 
  * @author tavandung12
  * Created on May 27, 2016
  *
  */
-public class BuddyAgentUnwrapper extends AgentUnwrapper {
+public class BuddyAgentSerializer extends AgentSerializer {
 
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.sfs2x.serializer.AgentUnwrapper#newVariable(java.lang.String, java.lang.Object, boolean)
@@ -19,17 +21,17 @@ public class BuddyAgentUnwrapper extends AgentUnwrapper {
         return new SFSBuddyVariable(name, value);
     }
     
-    private static BuddyAgentUnwrapper instance;
+    private static BuddyAgentSerializer instance;
     
-    private BuddyAgentUnwrapper() {}
+    private BuddyAgentSerializer() {}
     
-    public static BuddyAgentUnwrapper getInstance() {
+    public static BuddyAgentSerializer getInstance() {
         if(instance == null) 
-            instance = new BuddyAgentUnwrapper();
+            instance = new BuddyAgentSerializer();
         return instance;
     }
     
-    public static BuddyAgentUnwrapper buddyAgentUnwrapper() {
+    public static BuddyAgentSerializer buddyAgentSerializer() {
         return getInstance();
     }
 

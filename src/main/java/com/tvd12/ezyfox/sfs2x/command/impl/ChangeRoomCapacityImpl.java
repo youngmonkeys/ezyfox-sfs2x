@@ -9,6 +9,8 @@ import com.tvd12.ezyfox.core.model.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * @see ChangeRoomCapacity
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *

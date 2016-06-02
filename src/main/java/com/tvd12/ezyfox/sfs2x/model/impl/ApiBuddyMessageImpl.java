@@ -6,6 +6,9 @@ import com.tvd12.ezyfox.core.model.ApiBuddyMessage;
 import lombok.Setter;
 
 /**
+ * @see ApiBaseMessageImpl
+ * @see ApiBuddyMessage
+ * 
  * @author tavandung12
  * Created on May 26, 2016
  *

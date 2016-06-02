@@ -15,7 +15,7 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.structure.RequestListenerClass;
-import com.tvd12.ezyfox.sfs2x.serializer.RequestParamParser;
+import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
 
@@ -44,7 +44,7 @@ public class ParameterParserTest {
 		when(second.get("user")).thenReturn(new SFSDataWrapper(SFSDataType.SFS_OBJECT, third));
 
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		User user = (User) RequestParamParser.getInstance().assignValues(clazz, first);
+		User user = (User) RequestParamDeserializer.getInstance().deserialize(clazz, first);
 		assertNotNull(user);
 		assertNotNull(user.getUser());
 		assertNotNull(user.getUser().getUser());
@@ -70,7 +70,7 @@ public class ParameterParserTest {
 		first.putSFSArray("users", array);
 		
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		User user = (User)(RequestParamParser.getInstance().assignValues(clazz, first));
+		User user = (User)(RequestParamDeserializer.getInstance().deserialize(clazz, first));
 		assertNotNull(user);
 		assertEquals(user.getUsers().size(), 3);
 		
@@ -84,7 +84,7 @@ public class ParameterParserTest {
 		ISFSObject obj = new SFSObject();
 		obj.putUtfString("name", "dung");
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		RequestParamParser.getInstance().assignValues(clazz, obj);
+		RequestParamDeserializer.getInstance().deserialize(clazz, obj);
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class ParameterParserTest {
 		ISFSObject obj = new SFSObject();
 		obj.putUtfString("name", "dung");
 		RequestListenerClass clazz = new RequestListenerClass(NoParam.class);
-		RequestParamParser.getInstance().assignValues(clazz, obj);
+		RequestParamDeserializer.getInstance().deserialize(clazz, obj);
 	}
 	
 	@Test
@@ -116,7 +116,7 @@ public class ParameterParserTest {
                     @Override
                     public void execute() {
     					try {
-    					    RequestParamParser.getInstance().assignValues(clazz, first);
+    					    RequestParamDeserializer.getInstance().deserialize(clazz, first);
     					} catch (Exception e) {
     						e.printStackTrace();
     					}
@@ -147,7 +147,7 @@ public class ParameterParserTest {
                 .test(new Script() {
                     @Override
                     public void execute() {
-                        RequestParamParser.getInstance().assignValues(rlc, first);
+                        RequestParamDeserializer.getInstance().deserialize(rlc, first);
 //                      User user = (User)RequestParamParser2.getInstance().assignValues(rlc, first);
 //                      System.out.println(user.getAddress());
 //                      System.out.println(user.getName());

@@ -46,13 +46,36 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.tvd12.ezyfox.core.structure.ClassWrapper;
 import com.tvd12.ezyfox.core.structure.SetterMethodCover;
 
-public class ParameterWrapper {
+/**
+ * Support to deserialize a SFSObject to a java object
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
+
+public class ParameterDeserializer {
 	
-    public Object assignValues(ClassWrapper wrapper, ISFSObject params) {
+    /**
+     * Deserialize a SFSObject to a java object
+     * 
+     * @param wrapper structure of java object
+     * @param params the SFSObject
+     * @return a java object
+     */
+    public Object deserialize(ClassWrapper wrapper, ISFSObject params) {
         return assignValuesToMethods(wrapper, params);
     }
     
-    public Object assignValues(ClassWrapper wrapper,
+    /**
+     * Deserialize a SFSObject to a java object
+     * 
+     * @param wrapper structure of java object
+     * @param params the SFSObject
+     * @param result the java object
+     * @return the java object
+     */
+    public Object deserialize(ClassWrapper wrapper,
             ISFSObject params, Object result) {
         List<SetterMethodCover> methods = wrapper.getMethods();
         for(SetterMethodCover method : methods) {
@@ -64,11 +87,25 @@ public class ParameterWrapper {
         return result;
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object  
+     * 
+     * @param wrapper structure of java class
+     * @param params the SFSObject
+     * @return the java object
+     */
     protected Object assignValuesToMethods(ClassWrapper wrapper,
             ISFSObject params) {
-        return assignValues(wrapper, params, wrapper.newInstance());
+        return deserialize(wrapper, params, wrapper.newInstance());
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param instance object to call setter method
+     * @param method structure of setter method
+     * @param data value to set
+     */
     protected void assignValuesToMethod(Object instance,
             SetterMethodCover method, 
             SFSDataWrapper data) {
@@ -89,6 +126,13 @@ public class ParameterWrapper {
             method.invoke(instance, value);
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method setter method
+     * @param array the value as array to set
+     * @return the java object
+     */
     @SuppressWarnings("unchecked")
     protected Object assignValuesToArray(SetterMethodCover method, 
             Object array) {
@@ -145,7 +189,14 @@ public class ParameterWrapper {
         }
         return array;
     }
-     
+    
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of setter method
+     * @param array the value as collection
+     * @return the java object
+     */
     protected Object assignValuesToCollection(SetterMethodCover method, 
             Object array) {
         if(method.isArrayObjectCollection()) {
@@ -166,30 +217,58 @@ public class ParameterWrapper {
         return array;
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of setter method
+     * @param sfsObject the SFSObject
+     * @return the java object
+     */
     protected Object assignValuesToObject(SetterMethodCover method, 
             ISFSObject sfsObject) {
-        return assignValues(method.getParameterClass(), 
+        return deserialize(method.getParameterClass(), 
                 sfsObject);
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of setter method
+     * @param sfsArray smartfox array
+     * @return the java object
+     */
     private Object assignValuesToObjectArray(SetterMethodCover method, 
             ISFSArray sfsArray) {
         return assignValuesToObjectArray(method.getParameterClass(), 
                 sfsArray);
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param wrapper structure of java class
+     * @param sfsArray smartfox array to deserialize
+     * @return the java object
+     */
     private Object assignValuesToObjectArray(
             ClassWrapper wrapper, 
             ISFSArray sfsArray) {
         Object result = Array.newInstance(wrapper.getClazz(), sfsArray.size());
         for(int i = 0 ; i < sfsArray.size() ; i++) {
-            Object value = assignValues(wrapper, 
+            Object value = deserialize(wrapper, 
                     sfsArray.getSFSObject(i));
             Array.set(result, i, value);
         }
         return result;
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of setter method
+     * @param sfsArray smartfox array
+     * @return the java object
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object assignValuesToObjectCollection(
             SetterMethodCover method, 
@@ -203,6 +282,13 @@ public class ParameterWrapper {
         return result;
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of setter method
+     * @param sfsArray smartfox array
+     * @return the java object
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object assignValuesToArrayObjectCollection(
             SetterMethodCover method, 
@@ -216,6 +302,13 @@ public class ParameterWrapper {
         return result;
     }
     
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method structure of java object
+     * @param array smartfox array
+     * @return the java object
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private Object assignValuesToArrayCollection(SetterMethodCover method,
             ISFSArray array) {

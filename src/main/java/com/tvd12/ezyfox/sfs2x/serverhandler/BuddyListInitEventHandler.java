@@ -15,6 +15,8 @@ import com.tvd12.ezyfox.core.model.ApiUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
+ * Support to handle buddy list initializing event 
+ * 
  * @author tavandung12
  *
  */
@@ -40,6 +42,12 @@ public class BuddyListInitEventHandler extends UserZoneEventHandler {
         super.handleServerEvent(event);
     }
     
+    /**
+     * Update buddy properties of user
+     * 
+     * @param buddyProperties smartfox user's buddy properties
+     * @param apiBuddyProperties api user's buddy properties
+     */
     private void updateBuddyProperties(BuddyProperties buddyProperties,
             ApiBuddyProperties apiBuddyProperties) {
         apiBuddyProperties.setInited(buddyProperties.isInited());

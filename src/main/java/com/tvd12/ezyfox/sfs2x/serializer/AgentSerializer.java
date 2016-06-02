@@ -10,13 +10,35 @@ import com.smartfoxserver.v2.entities.variables.Variable;
 import com.tvd12.ezyfox.core.structure.ClassUnwrapper;
 import com.tvd12.ezyfox.core.structure.GetterMethodCover;
 
-public abstract class AgentUnwrapper extends ParameterUnwrapper {
+/**
+ * Support to serialize a java object to a list of smartfox variables 
+ * 
+ * @author tavandung12
+ * Created on Jun 1, 2016
+ *
+ */
+public abstract class AgentSerializer extends ParameterSerializer {
     
+    /**
+     * Create new variable object
+     * 
+     * @param name name of variable
+     * @param value value of variable
+     * @param isHidden hidden or visible?
+     * @return a variable object
+     */
     protected abstract <T extends Variable> T newVariable(
             String name, Object value, boolean isHidden);
 
+    /**
+     * Serialize java object
+     * 
+     * @param unwrapper structure of agent class
+     * @param agent the agent object
+     * @return List of variables
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public List unwrap(ClassUnwrapper unwrapper, Object agent) {
+    public List serialize(ClassUnwrapper unwrapper, Object agent) {
 	    List variables = new ArrayList<>();
 	    List<GetterMethodCover> methods = unwrapper.getMethods();
 	    for(GetterMethodCover method : methods) {
@@ -30,6 +52,13 @@ public abstract class AgentUnwrapper extends ParameterUnwrapper {
 	    return variables;
 	}
 	
+    /**
+     * Call getter method and get value
+     * 
+     * @param method structure of getter method
+     * @param value object to call method
+     * @return a value
+     */
 	@SuppressWarnings("rawtypes")
     protected Object getValue(GetterMethodCover method, Object value) {
         if(method.isByte()) {
@@ -92,6 +121,12 @@ public abstract class AgentUnwrapper extends ParameterUnwrapper {
 	    return value;
 	}
 	
+	/**
+	 * Convert a collection of value csv string
+	 * 
+	 * @param value the collection of values
+	 * @return csv string
+	 */
 	@SuppressWarnings("rawtypes")
     protected String toString(Collection value) {
 	    return StringUtils.join(value, ",");
