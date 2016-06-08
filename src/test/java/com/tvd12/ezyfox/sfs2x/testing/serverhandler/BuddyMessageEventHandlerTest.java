@@ -12,7 +12,6 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.BuddyMessageEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;
@@ -35,7 +34,7 @@ public class BuddyMessageEventHandlerTest extends BaseZoneHandlerTest {
         when(event.getParameter(SFSEventParam.ZONE)).thenReturn(sfsZone);
         when(event.getParameter(SFSEventParam.ROOM)).thenReturn(sfsRoom);
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser);
-        when(event.getParameter(SFSEventParam.RECIPIENT)).thenReturn(new ApiBuddyImpl("dungtv", false));
+        when(event.getParameter(SFSEventParam.RECIPIENT)).thenReturn(sfsUser);
         when(event.getParameter(SFSEventParam.MESSAGE)).thenReturn("abc");
         when(event.getParameter(SFSEventParam.OBJECT)).thenReturn(new SFSObject());
         handler.handleServerEvent(event);

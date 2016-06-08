@@ -34,14 +34,22 @@ public class ZoneExtension extends SFSExtension {
 	 * @see SFSExtension#init()
 	 */
 	@Override
-	public void init() {
+	public final void init() {
 		initContext();
 		before();
 		addServerEventHandlers();
 		addClientRequestHandlers();
 		addZoneAgent();
 		startServerInitializingEventHandler();
+		config();
 		after();
+	}
+	
+	/**
+	 * Override this function to add custom configuration
+	 */
+	protected void config() {
+	    
 	}
 	
 	/**
