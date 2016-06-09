@@ -27,6 +27,11 @@ public class BuddyListInitEventHandlerTest extends BaseZoneHandlerTest {
     public void test() throws SFSException {
         BuddyListInitEventHandler handler = new BuddyListInitEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
+        AppUser user = new AppUser();
+        user.setBuddyProperties(new ApiBuddyProperties());
+        BuddyProperties bdp = mock(BuddyProperties.class);
+        when(sfsUser.getBuddyProperties()).thenReturn(bdp);
+        when(sfsUser.getProperty(APIKey.USER)).thenReturn(user);
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser);
         when(event.getParameter(SFSEventParam.ZONE)).thenReturn(sfsZone);
         handler.handleServerEvent(event);
@@ -38,6 +43,7 @@ public class BuddyListInitEventHandlerTest extends BaseZoneHandlerTest {
         when(sfsUser1.getProperty(APIKey.USER)).thenReturn(null);
         BuddyListInitEventHandler handler = new BuddyListInitEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
+        when(sfsUser1.getProperty(APIKey.USER)).thenReturn(new AppUser());
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser1);
         when(event.getParameter(SFSEventParam.ZONE)).thenReturn(sfsZone);
         handler.handleServerEvent(event);
@@ -53,6 +59,7 @@ public class BuddyListInitEventHandlerTest extends BaseZoneHandlerTest {
         when(sfsUser1.getBuddyProperties()).thenReturn(sfsProperties);
         BuddyListInitEventHandler handler = new BuddyListInitEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
+        when(sfsUser1.getProperty(APIKey.USER)).thenReturn(new AppUser());
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser1);
         when(event.getParameter(SFSEventParam.ZONE)).thenReturn(sfsZone);
         handler.handleServerEvent(event);
