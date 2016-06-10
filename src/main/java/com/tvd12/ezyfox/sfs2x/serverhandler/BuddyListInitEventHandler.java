@@ -36,10 +36,18 @@ public class BuddyListInitEventHandler extends UserZoneEventHandler {
     public void handleServerEvent(ISFSEvent event) throws SFSException {
         User sfsUser = (User)event.getParameter(SFSEventParam.USER);
         ApiUser apiUser = (ApiUser) sfsUser.getProperty(APIKey.USER);
-        if(apiUser != null && apiUser.getBuddyProperties() != null) 
+        if(apiUser.getBuddyProperties() != null) 
             updateBuddyProperties(sfsUser.getBuddyProperties(), 
                     apiUser.getBuddyProperties());
+        removeAddedBuddies(sfsUser);
         super.handleServerEvent(event);
+    }
+    
+    protected void removeAddedBuddies(User sfsUser) {
+        sfsUser.getZone()
+            .getBuddyListManager()
+            .getBuddyList(sfsUser.getName())
+            .clearAll();
     }
     
     /**
