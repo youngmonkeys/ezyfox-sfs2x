@@ -42,8 +42,12 @@ public class AppContextImpl implements AppContext {
 	// holds all structures of server event handler classes
 	private ServerEventHandlerClasses serverEventHandlerClasses;
 	
-	// map of interface names and constructs of command implementation classes
+	// map of interface names and constructor of command implementation classes
 	private Map<Object, Constructor<?>> commands;
+	
+	// map of interface names and constructor of command implementation classes in a specific application
+	private Map<Object, Constructor<?>> appCommands
+	        = new ConcurrentHashMap<>();
 	
 	// properties object
 	private Map<Object, Object> properties
@@ -297,10 +301,49 @@ public class AppContextImpl implements AppContext {
 	}
 	
 	/**
+     * Get application command by base class
+     * 
+     * @param clazz the base class
+     * @return a command instance
+     */
+    @SuppressWarnings("unchecked")
+    private <T> T getAppCommand(Class<T> clazz) {
+        Constructor<?> constructor = appCommands.get(clazz.getName());
+        if(constructor == null)
+            throw new RuntimeException("Can not retrive implementation of command " + clazz);
+        try {
+            return (T)ReflectClassUtil.newInstance(constructor);
+        } catch (ExtensionException e) {
+            throw new RuntimeException("Can not retrive implementation of command " + clazz, e);
+        }
+    }
+	
+	/**
+	 * Add the application command to the map
+	 * 
+	 * @param baseClass the interface or abstract class
+	 * @param implementation the implementation class of command
+	 */
+	public void addAppCommand(Class<?> baseClass, Class<?> implementation) {
+	    try {
+            Constructor<?> constructor = ReflectClassUtil.getConstructor(implementation);
+            appCommands.put(baseClass.getName(), constructor);
+        } catch (ExtensionException e) {
+            throw new RuntimeException("Can not get constructor of command class " 
+                    + implementation);
+        }
+	}
+	
+	/**
 	 * Get command by interface class
 	 */
 	public <T> T command(Class<T> clazz) {
-		return getCommand(clazz);
+	    try {
+	        return getCommand(clazz);
+	    }
+	    catch(Exception e) {
+	        return getAppCommand(clazz);
+	    }
 	}
 	
 	// smartfox api
