@@ -69,7 +69,7 @@ public class AppContextImplTest {
     
     @Test(expectedExceptions = {RuntimeException.class})
     public void addAppCommandInvalidCase() {
-        context.addAppCommand(Class.class, Class.class);
+        context.addAppCommand(AppCommand4.class, AppCommand4.class);
     }
     
     @Test(expectedExceptions = {RuntimeException.class})
