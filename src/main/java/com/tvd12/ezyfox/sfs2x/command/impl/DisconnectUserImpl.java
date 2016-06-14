@@ -84,7 +84,7 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
                 return (byte)getValue();
             }
         });
-        return null;
+        return Boolean.TRUE;
     }
 
 }

@@ -33,6 +33,8 @@ public class AppContextImplTest {
             
             context.setApi(api);
             context.setExtension(extension);
+            context.addAppCommand(AppCommand.class, AppCommand.class);
+            context.addAppCommand(AppCommand2.class, AppCommand2.class);
         } catch (SFSCreateRoomException e) {
             e.printStackTrace();
         }
@@ -52,7 +54,22 @@ public class AppContextImplTest {
         assertTrue(context.serverEventHandlerClasses(ServerEvent.PUBLIC_MESSAGE).size() > 0);
         
         assertNotNull(context.command(CreateRoom.class));
-        
+        assertNotNull(context.command(AppCommand.class));
+    }
+    
+    @Test(expectedExceptions = {RuntimeException.class})
+    public void getAppCommandInvalidCase() {
+        context.command(Class.class);
+    }
+    
+    @Test(expectedExceptions = {RuntimeException.class})
+    public void getAppCommandInvalidCase2() {
+        context.command(AppCommand2.class);
+    }
+    
+    @Test(expectedExceptions = {RuntimeException.class})
+    public void addAppCommandInvalidCase() {
+        context.addAppCommand(Class.class, Class.class);
     }
     
     @Test(expectedExceptions = {RuntimeException.class})
