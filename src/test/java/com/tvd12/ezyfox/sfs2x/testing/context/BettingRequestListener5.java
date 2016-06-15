@@ -10,7 +10,7 @@ import com.tvd12.ezyfox.core.exception.BadRequestException;
 public class BettingRequestListener5 {
 
     public void execute(AppContext context, AppUser user) throws BadRequestException {
-        throw new BadRequestException();
+        throw new BadRequestException("error", 1);
     }
     
 }

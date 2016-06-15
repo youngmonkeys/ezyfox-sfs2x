@@ -16,6 +16,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.ClientResponseHandler;
 import com.tvd12.ezyfox.core.content.AppContext;
+import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
@@ -111,7 +112,8 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     @ClientResponseHandler
     @ClientRequestListener(command = "xyz")
     public static class ClassC {
-        public void execute(AppContext context, PokerUser user) {
+        public void execute(AppContext context, PokerUser user) throws Exception {
+            throw new BadRequestException();
         }
     }
     
