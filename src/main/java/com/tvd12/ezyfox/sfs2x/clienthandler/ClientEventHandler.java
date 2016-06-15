@@ -7,6 +7,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.model.ApiUser;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
@@ -45,8 +47,9 @@ public class ClientEventHandler extends ClientRequestHandler {
 		    try {
 		        notifyListener(clazz, params, user, userAgent);
 		    } catch(Exception e) {
-		        if(isBadRequestException(e))
-		            break;
+		        if(isBadRequestException(e)) {
+		            responseErrorToClient(e, user); break;
+		        }
 		        throw new RuntimeException(e);
 		    }
 		}
@@ -107,5 +110,32 @@ public class ClientEventHandler extends ClientRequestHandler {
 	 */
 	private boolean isBadRequestException(Exception e) {
 	    return ExceptionUtils.indexOfThrowable(e, BadRequestException.class) != -1;
+	}
+	
+	/**
+	 * Response error to client
+	 * 
+	 * @param ex the exception
+	 * @param user the recipient
+	 * 
+	 */
+	private void responseErrorToClient(Exception ex, User user) {
+	    BadRequestException e = getBadRequestException(ex);
+	    if(!e.isSendToClient())    return;
+	    ISFSObject params = new SFSObject();
+	    params.putUtfString(APIKey.MESSAGE, e.getReason());
+	    params.putInt(APIKey.CODE, e.getCode());
+	    send(APIKey.ERROR, params, user);
+	}
+	
+	/**
+	 * Get BadRequestException from the exception
+	 * 
+	 * @param ex the exception
+	 * @return BadRequestException
+	 */
+	private BadRequestException getBadRequestException(Exception ex) {
+	    return (BadRequestException) ExceptionUtils
+	            .getThrowables(ex)[ExceptionUtils.indexOfThrowable(ex, BadRequestException.class)];
 	}
 }
