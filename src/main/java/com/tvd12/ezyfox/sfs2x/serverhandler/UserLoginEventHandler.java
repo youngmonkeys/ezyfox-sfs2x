@@ -80,7 +80,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
             } catch(Exception e) {
                 if(!isBadRequestException(e)) 
                     throw new SFSLoginException();
-                final BadRequestException ex = (BadRequestException)ExceptionUtils.getRootCause(e);
+                final BadRequestException ex = getBadRequestException(e);
                 throw new SFSLoginException(ex.getMessage(), new SFSErrorData(new IErrorCode() {
                     @Override
                     public short getId() {
@@ -129,6 +129,17 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
      */
     private boolean isBadRequestException(Exception e) {
         return ExceptionUtils.indexOfThrowable(e, BadRequestException.class) != -1;
+    }
+    
+    /**
+     * Get BadRequestException from the exception
+     * 
+     * @param ex the exception
+     * @return BadRequestException
+     */
+    private BadRequestException getBadRequestException(Exception ex) {
+        return (BadRequestException) ExceptionUtils
+                .getThrowables(ex)[ExceptionUtils.indexOfThrowable(ex, BadRequestException.class)];
     }
 
 }
