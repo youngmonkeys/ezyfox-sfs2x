@@ -12,20 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class ExampleRoom extends ApiRoom {
 	
-	private ExampleUser owner;
-	
 	@Variable(name="pgb", visible = true)
 	private long piggybank = 10;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public ExampleUser getOwner() {
-		return owner;
-	}
-
-	@Override
-	public void setOwner(Object owner) {
-		this.owner = (ExampleUser)owner;
-	}
 
 }

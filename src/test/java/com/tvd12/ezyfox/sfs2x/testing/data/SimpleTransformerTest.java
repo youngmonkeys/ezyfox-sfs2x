@@ -206,6 +206,9 @@ public class SimpleTransformerTest {
         
         wrapper = transformer.transform(Lists.newArrayList());
         assertEquals(wrapper.getTypeId(), SFSDataType.NULL);
+        
+        wrapper = transformer.transform(Lists.newArrayList(new int[] {10}, new int[] {11}));
+        assertEquals(wrapper.getTypeId(), SFSDataType.SFS_ARRAY);
     }
     
     @Test(expectedExceptions = {IllegalArgumentException.class})

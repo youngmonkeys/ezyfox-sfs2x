@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
@@ -60,6 +62,20 @@ public class SimpleTransformer {
         }
         return transformObjectOrArray(value);
     }
+    
+    /**
+     * 
+     * Transform a collection of array to SFSDataWrapper object 
+     * 
+     * @param collection the collection
+     * @return a SFSDataWrapper object
+     */
+    protected SFSDataWrapper transformArrayCollection(Collection<?> collection) {
+        ISFSArray array = new SFSArray();
+        for(Object obj : collection)
+            array.add(transformObjectOrArray(obj));
+        return new SFSDataWrapper(SFSDataType.SFS_ARRAY, array);
+    }
 
     /**
      * Transform a collection of value to SFSDataWrapper object 
@@ -74,6 +90,8 @@ public class SimpleTransformer {
             return new SFSDataWrapper(SFSDataType.NULL, value);
         Iterator<?> it = collection.iterator();
         Object firstItem = it.next();
+        if(firstItem.getClass().isArray())
+            return transformArrayCollection(collection);
         if(firstItem instanceof Boolean)
             return new SFSDataWrapper(SFSDataType.BOOL_ARRAY, value);
         if(firstItem instanceof Byte)

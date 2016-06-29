@@ -289,7 +289,7 @@ public class ParameterSerializer {
      * @return the SFSArray
      */
     @SuppressWarnings("rawtypes")
-    private ISFSArray parseArrayCollection(GetterMethodCover method,
+    protected ISFSArray parseArrayCollection(GetterMethodCover method,
             Collection collection) {
         ISFSArray result = new SFSArray();
         SFSDataType dataType = ParamTypeParser

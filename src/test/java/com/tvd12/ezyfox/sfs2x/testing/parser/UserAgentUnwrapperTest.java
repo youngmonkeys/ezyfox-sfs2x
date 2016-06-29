@@ -5,6 +5,8 @@ import java.util.List;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
+import com.smartfoxserver.v2.entities.variables.UserVariable;
+import com.smartfoxserver.v2.entities.variables.VariableType;
 import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.Variable;
 import com.tvd12.ezyfox.core.annotation.VariableParam;
@@ -14,6 +16,8 @@ import com.tvd12.test.base.BaseTest;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
 
+import static org.testng.Assert.*;
+
 import lombok.Data;
 
 public class UserAgentUnwrapperTest extends BaseTest {
@@ -21,12 +25,72 @@ public class UserAgentUnwrapperTest extends BaseTest {
     private AgentClassUnwrapper unwrapper 
             = new AgentClassUnwrapper(ClassA.class);
     
+    @SuppressWarnings("unchecked")
     @Test
     public void test() {
         unwrapper 
             = new AgentClassUnwrapper(ClassA.class);
-        UserAgentSerializer.userAgentSerializer()
-            .serialize(unwrapper, new ClassA());
+        List<UserVariable> vars = 
+                UserAgentSerializer.userAgentSerializer()
+                    .serialize(unwrapper, new ClassA());
+        assertEquals(vars.get(0).getStringValue(), "1");
+        assertEquals(vars.get(1).getBoolValue(), Boolean.TRUE);
+        assertEquals(vars.get(2).getIntValue(), new Integer(1));
+        assertEquals(vars.get(3).getIntValue(), new Integer(1));
+        assertEquals(vars.get(4).getDoubleValue(), 1D);
+        assertEquals(vars.get(5).getDoubleValue(), 1D);
+        assertEquals(vars.get(6).getIntValue(), new Integer(1));
+        assertEquals(vars.get(7).getDoubleValue(), 1.D);
+        assertEquals(vars.get(8).getIntValue(), new Integer(1));
+        
+        assertEquals(vars.get(9).getStringValue(), "1");
+        assertEquals(vars.get(10).getBoolValue(), Boolean.TRUE);
+        assertEquals(vars.get(11).getIntValue(), new Integer(1));
+        assertEquals(vars.get(12).getIntValue(), new Integer(1));
+        assertEquals(vars.get(13).getDoubleValue(), 1D);
+        assertEquals(vars.get(14).getDoubleValue(), 1D);
+        assertEquals(vars.get(15).getIntValue(), new Integer(1));
+        assertEquals(vars.get(16).getDoubleValue(), 1.D);
+        assertEquals(vars.get(17).getIntValue(), new Integer(1));
+        
+        assertEquals(vars.get(18).getSFSArrayValue().getUtfStringArray(0).toArray(new String[1]), new String[] {"1"});
+        assertEquals(vars.get(19).getSFSArrayValue().getBoolArray(0).toArray(new Boolean[1]), new Boolean[] {Boolean.TRUE});
+        assertEquals(vars.get(20).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(21).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(22).getSFSArrayValue().getDoubleArray(0).toArray(new Double[1]), new Double[] {1D});
+        assertEquals(vars.get(23).getSFSArrayValue().getFloatArray(0).toArray(new Float[1]), new Float[] {1F});
+        assertEquals(vars.get(24).getSFSArrayValue().getIntArray(0).toArray(new Integer[1]), new Integer[] {1});
+        assertEquals(vars.get(25).getSFSArrayValue().getLongArray(0).toArray(new Long[1]), new Long[] {1L});
+        assertEquals(vars.get(26).getSFSArrayValue().getShortArray(0).toArray(new Short[1]), new Short[] {(short)1});
+        
+        assertEquals(vars.get(27).getSFSArrayValue().getUtfStringArray(0).toArray(new String[1]), new String[] {"1"});
+        assertEquals(vars.get(28).getSFSArrayValue().getBoolArray(0).toArray(new Boolean[1]), new Boolean[] {Boolean.TRUE});
+        assertEquals(vars.get(29).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(30).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(31).getSFSArrayValue().getDoubleArray(0).toArray(new Double[1]), new Double[] {1D});
+        assertEquals(vars.get(32).getSFSArrayValue().getFloatArray(0).toArray(new Float[1]), new Float[] {1F});
+        assertEquals(vars.get(33).getSFSArrayValue().getIntArray(0).toArray(new Integer[1]), new Integer[] {1});
+        assertEquals(vars.get(34).getSFSArrayValue().getLongArray(0).toArray(new Long[1]), new Long[] {1L});
+        assertEquals(vars.get(35).getSFSArrayValue().getShortArray(0).toArray(new Short[1]), new Short[] {(short)1});
+        
+        assertEquals(vars.get(36).getSFSArrayValue().getUtfStringArray(0).toArray(new String[1]), new String[] {"1"});
+        assertEquals(vars.get(37).getSFSArrayValue().getBoolArray(0).toArray(new Boolean[1]), new Boolean[] {Boolean.TRUE});
+        assertEquals(vars.get(38).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(39).getSFSArrayValue().getByteArray(0), new byte[] {(byte)1});
+        assertEquals(vars.get(40).getSFSArrayValue().getDoubleArray(0).toArray(new Double[1]), new Double[] {1D});
+        assertEquals(vars.get(41).getSFSArrayValue().getFloatArray(0).toArray(new Float[1]), new Float[] {1F});
+        assertEquals(vars.get(42).getSFSArrayValue().getIntArray(0).toArray(new Integer[1]), new Integer[] {1});
+        assertEquals(vars.get(43).getSFSArrayValue().getLongArray(0).toArray(new Long[1]), new Long[] {1L});
+        assertEquals(vars.get(44).getSFSArrayValue().getShortArray(0).toArray(new Short[1]), new Short[] {(short)1});
+        
+        assertEquals(vars.get(45).getType(), VariableType.ARRAY);
+        assertEquals(vars.get(46).getType(), VariableType.ARRAY);
+        assertEquals(vars.get(47).getSFSArrayValue().size(), 2);
+    
+    }
+    
+    public static void main(String[] args) {
+        new UserAgentUnwrapperTest().test();
     }
     
     @Override
@@ -137,7 +201,7 @@ public class UserAgentUnwrapperTest extends BaseTest {
         @Variable
         public List<ClassB> a46 = Lists.newArrayList(new ClassB("1"));
         @Variable
-        public List<byte[]> a47 = Lists.newArrayList(new byte[] {(byte)1});
+        public List<byte[]> a47 = Lists.newArrayList(new byte[] {(byte)1}, new byte[] {(byte)1});
         @Variable
         public List<ClassB[]> a48 = Lists.newArrayList(new ClassB[][] {new ClassB[] {new ClassB("1")}});
         
