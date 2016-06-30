@@ -39,6 +39,7 @@ public class BaseCommandTest2 extends BaseCommandTest {
         
         user = new ExUser();
         room = new ExRoom();
+        room.setName(ROOM_NAME);
         
         when(sfsUser.getProperty(APIKey.USER)).thenReturn(user);
         when(sfsRoom.getProperty(APIKey.ROOM)).thenReturn(room);
@@ -83,9 +84,9 @@ public class BaseCommandTest2 extends BaseCommandTest {
         /* (non-Javadoc)
          * @see com.lagente.core.model.ApiRoom#getName()
          */
-        @Override
-        public String getName() {
-            return "room";
-        }
+//        @Override
+//        public String getName() {
+//            return "room";
+//        }
     }
 }

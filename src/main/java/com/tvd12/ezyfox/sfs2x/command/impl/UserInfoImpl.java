@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UserInfo;
 import com.tvd12.ezyfox.core.config.APIKey;
@@ -429,6 +430,16 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     @Override
     public ApiZone getZone() {
         return (ApiZone) sfsUser.getZone().getProperty(APIKey.ZONE);
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeAllVariables()
+     */
+    @Override
+    public void removeAllVariables() {
+        List<UserVariable> vars = sfsUser.getVariables();
+        for(UserVariable var : vars) var.setNull();
+        api.setUserVariables(sfsUser, vars);
     }
 
     /* (non-Javadoc)

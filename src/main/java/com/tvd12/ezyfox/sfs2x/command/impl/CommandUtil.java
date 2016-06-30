@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.smartfoxserver.v2.api.ISFSApi;
@@ -82,6 +83,21 @@ public class CommandUtil {
         List<ApiRoom> answer = new ArrayList<>();
         for(Room room : sfsRooms)
             answer.add((ApiRoom) room.getProperty(APIKey.ROOM));
+        return answer;
+    }
+    
+    /**
+     * Get user agent list from smartfox user list
+     * 
+     * @param users smartfox room list
+     * @return list of user agents
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends ApiBaseUser> List<T> getApiUserList(Collection<User> users) {
+        List<T> answer = new ArrayList<>();
+        for(User user : users) 
+            if(user.containsProperty(APIKey.USER))
+                answer.add((T) user.getProperty(APIKey.USER));
         return answer;
     }
 	
