@@ -6,7 +6,7 @@
 
 #Synopsis
 
-This project support to create a server side game application more efficiently and more quickly (use smartfox server engine)
+This project supports to create a server side game application more efficiently and more quickly (use smartfox server engine)
 
 #Code Example
 

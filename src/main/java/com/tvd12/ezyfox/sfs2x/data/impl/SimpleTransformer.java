@@ -13,8 +13,8 @@ import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.primitiveArrayToS
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.stringArrayToCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toPrimitiveByteArray;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.wrapperArrayToCollection;
-
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.*;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isCollection;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObject;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,10 +22,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
+import com.tvd12.ezyfox.core.structure.ResponseHandlerClass;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
  * Support to transform a primitive type value, wrapper type value, array of values or list of value  
@@ -60,7 +63,23 @@ public class SimpleTransformer {
         if(isCollection(value.getClass())) {
             return transformCollection(value);
         }
+        else if(isObject(value.getClass())) {
+            return transformObject(value);
+        }
         return transformObjectOrArray(value);
+    }
+    
+    /**
+     * Transform a java pojo object to sfsobject
+     * 
+     * @param value pojo java object
+     * @return a SFSDataWrapper object
+     */
+    public SFSDataWrapper transformObject(Object value) {
+        ResponseHandlerClass struct = new ResponseHandlerClass(value.getClass());
+        ISFSObject sfsObject = ResponseParamSerializer
+                .getInstance().object2params(struct, value);
+        return new SFSDataWrapper(SFSDataType.SFS_OBJECT, sfsObject);
     }
     
     /**

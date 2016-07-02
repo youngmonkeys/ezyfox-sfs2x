@@ -3,6 +3,8 @@
  */
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
+import com.smartfoxserver.v2.core.ISFSEvent;
+import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -19,6 +21,18 @@ public class UserReconnectTryEventHandler extends UserZoneEventHandler {
      */
     public UserReconnectTryEventHandler(AppContextImpl context) {
         super(context);
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.sfs2x.serverhandler.UserZoneEventHandler#handleServerEvent(com.smartfoxserver.v2.core.ISFSEvent)
+     */
+    @Override
+    public void handleServerEvent(ISFSEvent event) throws SFSException {
+        try {
+            super.handleServerEvent(event);
+        } catch(Exception e) {
+            throw new SFSException(e);
+        }
     }
 
     /* (non-Javadoc)

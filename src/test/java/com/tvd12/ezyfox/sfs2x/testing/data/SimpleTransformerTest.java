@@ -211,8 +211,8 @@ public class SimpleTransformerTest {
         assertEquals(wrapper.getTypeId(), SFSDataType.SFS_ARRAY);
     }
     
-    @Test(expectedExceptions = {IllegalArgumentException.class})
-    public void testInvalidCase1() {
+    @Test
+    public void testValidCase1() {
         SimpleTransformer transformer = new SimpleTransformer();
         transformer.transform(new Object());
     }
@@ -221,6 +221,12 @@ public class SimpleTransformerTest {
     public void testInvalidCase2() {
         SimpleTransformer transformer = new SimpleTransformer();
         transformer.transform(Lists.newArrayList(new Object()));
+    }
+    
+    @Test(expectedExceptions = {IllegalArgumentException.class})
+    public void testInvalidCase3() {
+        SimpleTransformer transformer = new SimpleTransformer();
+        transformer.transform(new Void[1]);
     }
     
 }

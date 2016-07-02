@@ -38,7 +38,9 @@ public class FindRoomImpl extends BaseCommandImpl implements FindRoom {
     @SuppressWarnings("unchecked")
     @Override
     public <T> T by(String name) {
-        return (T) CommandUtil.getSfsRoom(name, extension);
+        Room room = CommandUtil.getSfsRoom(name, extension);
+        if(room == null) return null; 
+        return (T)room.getProperty(APIKey.ROOM);
     }
     
     /* (non-Javadoc)
@@ -48,8 +50,7 @@ public class FindRoomImpl extends BaseCommandImpl implements FindRoom {
     @Override
     public <T> T by(int id) {
         Room sfsRoom = extension.getParentZone().getRoomById(id);
-        if(sfsRoom == null)
-            return null;
+        if(sfsRoom == null) return null;
         return (T) sfsRoom.getProperty(APIKey.ROOM);
     }
 

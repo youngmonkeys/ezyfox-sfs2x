@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.smartfoxserver.v2.controllers.SystemRequest;
+import com.smartfoxserver.v2.controllers.filter.ISystemFilterChain;
+import com.smartfoxserver.v2.controllers.filter.SysControllerFilterChain;
 import com.smartfoxserver.v2.core.SFSEventType;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 import com.tvd12.ezyfox.core.config.APIKey;
@@ -14,6 +17,7 @@ import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRequestHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.filter.BaseSysControllerFilter;
 import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerInitializingEventHandler;
@@ -40,6 +44,7 @@ public class ZoneExtension extends SFSExtension {
 		addServerEventHandlers();
 		addClientRequestHandlers();
 		addZoneAgent();
+		addSysControllerFilters();
 		startServerInitializingEventHandler();
 		config();
 		after();
@@ -150,6 +155,18 @@ public class ZoneExtension extends SFSExtension {
 	private void addZoneAgent() {
 		getParentZone().setProperty(APIKey.ZONE, 
 				new ApiZoneImpl(getParentZone()));
+	}
+	
+	/**
+	 * Add System Controller Filters
+	 */
+	private void addSysControllerFilters() {
+	    for(SystemRequest rq : SystemRequest.values()) {
+	        ISystemFilterChain filterChain = new SysControllerFilterChain();
+	        filterChain.addFilter("EzyFoxFilterChain#" + rq, 
+	                new BaseSysControllerFilter(context, rq));
+	        getParentZone().setFilterChain(rq, filterChain);
+	    }
 	}
 	
 	

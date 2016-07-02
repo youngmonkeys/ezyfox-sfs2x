@@ -100,5 +100,31 @@ public class CommandUtil {
                 answer.add((T) user.getProperty(APIKey.USER));
         return answer;
     }
+    
+    /**
+     * Get list of smartfox users from collection of user agents
+     * 
+     * @param users the collection of user agents
+     * @param api the api
+     * @return list of smartfox users
+     */
+    public static <T extends ApiBaseUser> List<User> getSFSUserList(Collection<T> users, ISFSApi api) {
+        List<User> answer = new ArrayList<>();
+        for(T user : users) answer.add(getSfsUser(user, api));
+        return answer;
+    }
+    
+    /**
+     * Get list of smartfox users from collection of user names
+     * 
+     * @param usernames the collection of user agents
+     * @param api the api
+     * @return list of smartfox users
+     */
+    public static List<User> getSFSUserListByNames(Collection<String> usernames, ISFSApi api) {
+        List<User> answer = new ArrayList<>();
+        for(String username : usernames) answer.add(getSfsUser(username, api));
+        return answer;
+    }
 	
 }

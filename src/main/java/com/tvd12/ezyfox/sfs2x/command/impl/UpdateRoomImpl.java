@@ -2,6 +2,8 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import static com.tvd12.ezyfox.sfs2x.serializer.RoomAgentSerializer.roomAgentSerializer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.smartfoxserver.v2.api.ISFSApi;
@@ -27,6 +29,8 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	private ApiRoom agent;
 	private ApiBaseUser user;
 	private boolean toClient = true;
+	private List<String> includedVars = new ArrayList<>();
+    private List<String> excludedVars = new ArrayList<>();
 	
 	/**
 	 * @param context
@@ -55,14 +59,33 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
         List<RoomVariable> variables = 
                 roomAgentSerializer().serialize(unwrapper, agent);
         
+        List<RoomVariable> answer = variables;
+        if(includedVars.size() > 0) 
+            answer = getVariables(variables, includedVars);
+        answer.removeAll(getVariables(answer, excludedVars));
+        
         //notify to client and serverself
-        if(toClient) api.setRoomVariables(sfsUser, sfsRoom, variables);
+        if(toClient) api.setRoomVariables(sfsUser, sfsRoom, answer);
         
         //only for server
-        else sfsRoom.setVariables(variables);
+        else sfsRoom.setVariables(answer);
         return agent;
 		
 	}
+	
+	private List<RoomVariable> getVariables(List<RoomVariable> variables, List<String> varnames) {
+        List<RoomVariable> answer = new ArrayList<>();
+        for(String ic : varnames) {
+            RoomVariable var = null;
+            for(RoomVariable v : variables) {
+                if(v.getName().equals(ic)) {
+                    var = v; break;
+                }
+            }
+            if(var != null) answer.add(var);
+        }
+        return answer;
+    }
 
 	/**
 	 * @see UpdateRoom#toClient(boolean)
@@ -92,6 +115,26 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	public UpdateRoom user(ApiBaseUser user) {
 		this.user = user;
 		return this;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.tvd12.ezyfox.core.command.UpdateRoom#include(java.lang.String[])
+	 */
+	@SuppressWarnings("unchecked")
+    @Override
+	public UpdateRoom include(String... varnames) {
+	    includedVars.addAll(Arrays.asList(varnames));
+	    return this;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.tvd12.ezyfox.core.command.UpdateRoom#exclude(java.lang.String[])
+	 */
+	@SuppressWarnings("unchecked")
+    @Override
+	public UpdateRoom exclude(String... varnames) {
+	    excludedVars.addAll(Arrays.asList(varnames));
+	    return this;
 	}
 	
 }
