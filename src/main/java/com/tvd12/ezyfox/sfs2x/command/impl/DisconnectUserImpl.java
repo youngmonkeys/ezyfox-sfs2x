@@ -8,7 +8,7 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.IDisconnectionReason;
 import com.tvd12.ezyfox.core.command.DisconnectUser;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -32,9 +32,8 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.DisconnectUser#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.DisconnectUser#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public DisconnectUser user(ApiBaseUser userToDisconnect) {
         this.username = userToDisconnect.getName();
@@ -44,7 +43,6 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.DisconnectUser#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public DisconnectUser user(String usernameToDisconnect) {
         this.username = usernameToDisconnect;
@@ -54,8 +52,7 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.DisconnectUser#reasonId(byte)
      */
-    @SuppressWarnings("unchecked")
-    @Override
+   @Override
     public DisconnectUser reasonId(byte id) {
         this.reasonId = id;
         return this;

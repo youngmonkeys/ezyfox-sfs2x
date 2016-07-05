@@ -7,7 +7,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSBuddyListException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendBuddyMessage;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -62,9 +62,8 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage sender(ApiBaseUser sender) {
         this.sender = sender.getName();
@@ -74,7 +73,6 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage sender(String senderName) {
         this.sender = senderName;
@@ -82,9 +80,8 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#recipient(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#recipient(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage recipient(ApiBaseUser recipient) {
         this.recipient = recipient.getName();
@@ -94,7 +91,6 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#recipient(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage recipient(String recipientName) {
         this.recipient = recipientName;
@@ -104,7 +100,6 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage message(String message) {
         this.message = message;
@@ -114,7 +109,6 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#params(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendBuddyMessage params(Object params) {
         this.params = params;

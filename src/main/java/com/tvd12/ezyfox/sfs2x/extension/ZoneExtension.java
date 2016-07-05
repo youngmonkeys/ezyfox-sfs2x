@@ -17,8 +17,8 @@ import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRequestHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.filter.BaseSysControllerFilter;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerInitializingEventHandler;
 

@@ -1,7 +1,7 @@
-package com.tvd12.ezyfox.sfs2x.model.impl;
+package com.tvd12.ezyfox.sfs2x.entities.impl;
 
-import com.tvd12.ezyfox.core.model.ApiMessage;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiMessage;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 
 import lombok.Setter;
 
@@ -19,7 +19,7 @@ public class ApiMessageImpl extends ApiBaseMessageImpl implements ApiMessage {
     private ApiRoom room;
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiMessage#room()
+     * @see com.tvd12.ezyfox.core.entities.ApiMessage#room()
      */
     @SuppressWarnings("unchecked")
     @Override

@@ -3,8 +3,8 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.LeaveRoom;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -43,9 +43,8 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.LeaveRoom#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.LeaveRoom#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom user(ApiBaseUser user) {
         this.user = user.getName();
@@ -55,7 +54,6 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.LeaveRoom#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom user(String username) {
         this.user = username;
@@ -63,9 +61,8 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.LeaveRoom#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.LeaveRoom#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom room(ApiRoom room) {
         this.room = room.getName();
@@ -75,7 +72,6 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.LeaveRoom#room(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom room(String roomName) {
         this.room = roomName;
@@ -85,7 +81,6 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.LeaveRoom#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom fireClientEvent(boolean value) {
         this.fireClientEvent = value;
@@ -95,7 +90,6 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.LeaveRoom#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public LeaveRoom fireServerEvent(boolean value) {
         this.fireServerEvent = value;

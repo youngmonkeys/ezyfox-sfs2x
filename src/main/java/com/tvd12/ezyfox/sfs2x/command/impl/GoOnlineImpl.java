@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSBuddyListException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.GoOnline;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -47,9 +47,8 @@ public class GoOnlineImpl extends BaseCommandImpl implements GoOnline {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.GoOnline#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.GoOnline#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GoOnline user(ApiBaseUser user) {
         this.user = user.getName();
@@ -59,7 +58,6 @@ public class GoOnlineImpl extends BaseCommandImpl implements GoOnline {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.GoOnline#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GoOnline user(String username) {
         this.user = username;
@@ -69,7 +67,6 @@ public class GoOnlineImpl extends BaseCommandImpl implements GoOnline {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.GoOnline#online(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GoOnline online(boolean online) {
         this.online = online;
@@ -79,7 +76,6 @@ public class GoOnlineImpl extends BaseCommandImpl implements GoOnline {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.GoOnline#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GoOnline fireServerEvent(boolean fireServerEvent) {
         this.fireServerEvent = fireServerEvent;

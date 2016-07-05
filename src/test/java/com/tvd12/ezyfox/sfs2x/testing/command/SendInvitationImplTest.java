@@ -20,7 +20,7 @@ import com.smartfoxserver.v2.entities.invitation.Invitation;
 import com.smartfoxserver.v2.entities.invitation.InvitationManager;
 import com.smartfoxserver.v2.entities.invitation.SFSInvitationManager;
 import com.tvd12.ezyfox.core.command.SendInvitation.Callback;
-import com.tvd12.ezyfox.core.model.ApiInvitation;
+import com.tvd12.ezyfox.core.entities.ApiInvitation;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.core.transport.Parameters;
 import com.tvd12.ezyfox.sfs2x.command.impl.SendInvitationImpl;

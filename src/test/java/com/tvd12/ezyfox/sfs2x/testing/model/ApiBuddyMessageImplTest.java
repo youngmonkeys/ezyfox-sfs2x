@@ -6,8 +6,8 @@ import static org.testng.Assert.assertNotNull;
 
 import org.testng.annotations.Test;
 
-import com.tvd12.ezyfox.core.model.ApiZone;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyMessageImpl;
+import com.tvd12.ezyfox.core.entities.ApiZone;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyMessageImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 
 /**

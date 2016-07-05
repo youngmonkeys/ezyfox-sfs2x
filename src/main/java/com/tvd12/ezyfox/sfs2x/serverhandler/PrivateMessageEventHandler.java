@@ -10,12 +10,12 @@ import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
-import com.tvd12.ezyfox.core.model.ApiPrivateMessage;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiUser;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiPrivateMessage;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiPrivateMessageImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiPrivateMessageImpl;
 
 /**
  * Support to handle private message event

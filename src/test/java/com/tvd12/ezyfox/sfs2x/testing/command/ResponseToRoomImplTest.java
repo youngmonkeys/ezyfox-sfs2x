@@ -2,7 +2,7 @@ package com.tvd12.ezyfox.sfs2x.testing.command;
 
 import org.testng.annotations.Test;
 
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.command.impl.ResponseToRoomImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.VideoPokerRoom;
 
@@ -63,7 +63,7 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
             .sender(user)
             .room(new ApiRoom() {
                 /* (non-Javadoc)
-                 * @see com.tvd12.ezyfox.core.model.ApiRoom#getName()
+                 * @see com.tvd12.ezyfox.core.entities.ApiRoom#getName()
                  */
                 @Override
                 public String getName() {

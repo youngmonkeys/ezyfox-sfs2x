@@ -3,7 +3,7 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.Logout;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -38,9 +38,8 @@ public class LogoutImpl extends BaseCommandImpl implements Logout {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Logout#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.Logout#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Logout user(ApiBaseUser user) {
         this.username = user.getName();
@@ -50,7 +49,6 @@ public class LogoutImpl extends BaseCommandImpl implements Logout {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.Logout#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Logout user(String username) {
         this.username = username;

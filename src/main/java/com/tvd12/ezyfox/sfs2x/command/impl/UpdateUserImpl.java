@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.exceptions.SFSVariableException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UpdateUser;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -85,7 +85,6 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 	/**
 	 * @see UpdateUser#toClient(boolean)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateUser toClient(boolean value) {
 		this.toClient = value;
@@ -95,7 +94,6 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 	/**
 	 * @see UpdateUser#user(ApiBaseUser)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateUser user(ApiBaseUser user) {
 		this.agent = user;
@@ -105,7 +103,6 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.command.UpdateUser#include(java.lang.String[])
 	 */
-	@SuppressWarnings("unchecked")
     @Override
 	public UpdateUser include(String... varnames) {
 	    includedVars.addAll(Arrays.asList(varnames));
@@ -115,7 +112,6 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.command.UpdateUser#exclude(java.lang.String[])
 	 */
-	@SuppressWarnings("unchecked")
     @Override
 	public UpdateUser exclude(String... varnames) {
 	    excludedVars.addAll(Arrays.asList(varnames));

@@ -10,12 +10,12 @@ import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
-import com.tvd12.ezyfox.core.model.ApiBuddy;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiBuddy;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
 
 /**
  * Support to handle event related to buddy

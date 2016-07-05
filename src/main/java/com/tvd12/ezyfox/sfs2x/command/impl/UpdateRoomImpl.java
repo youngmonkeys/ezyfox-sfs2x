@@ -12,8 +12,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UpdateRoom;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -90,7 +90,6 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	/**
 	 * @see UpdateRoom#toClient(boolean)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateRoom toClient(boolean value) {
 		this.toClient = value;
@@ -100,7 +99,6 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	/**
 	 * @see UpdateRoom#room(ApiRoom)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateRoom room(ApiRoom room) {
 		this.agent = room;
@@ -110,7 +108,6 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	/**
 	 * @see UpdateRoom#user(ApiBaseUser)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public UpdateRoom user(ApiBaseUser user) {
 		this.user = user;
@@ -120,7 +117,6 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.command.UpdateRoom#include(java.lang.String[])
 	 */
-	@SuppressWarnings("unchecked")
     @Override
 	public UpdateRoom include(String... varnames) {
 	    includedVars.addAll(Arrays.asList(varnames));
@@ -130,7 +126,6 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.command.UpdateRoom#exclude(java.lang.String[])
 	 */
-	@SuppressWarnings("unchecked")
     @Override
 	public UpdateRoom exclude(String... varnames) {
 	    excludedVars.addAll(Arrays.asList(varnames));

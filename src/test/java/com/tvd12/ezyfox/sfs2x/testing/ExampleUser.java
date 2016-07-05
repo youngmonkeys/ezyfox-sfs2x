@@ -7,7 +7,7 @@ import com.tvd12.ezyfox.core.annotation.RequestParam;
 import com.tvd12.ezyfox.core.annotation.UserAgent;
 import com.tvd12.ezyfox.core.annotation.Variable;
 import com.tvd12.ezyfox.core.annotation.VariableParam;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -108,6 +108,8 @@ public class RoomInfoImplTest extends BaseCommandTest2 {
         assertEquals(command.isEmpty(), true);
         assertEquals(command.isFull(), true);
         assertEquals(command.isPasswordProtected(), true);
+        command.room(1);
+        command.room(ROOM_NAME);
     }
     
     @Test(expectedExceptions = {IllegalStateException.class})

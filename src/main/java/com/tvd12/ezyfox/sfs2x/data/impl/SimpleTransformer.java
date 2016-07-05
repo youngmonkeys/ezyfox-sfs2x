@@ -15,18 +15,22 @@ import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toPrimitiveByteAr
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.wrapperArrayToCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObject;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObjectArray;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
-import com.tvd12.ezyfox.core.structure.ResponseHandlerClass;
+import com.tvd12.ezyfox.core.structure.ResponseParamsClass;
+import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
@@ -39,16 +43,23 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
  *
  */
 public class SimpleTransformer {
+    
+    private AppContextImpl context;
 
     // map of types their transformer
     private Map<Class<?>, Transformer> transformers
          = new HashMap<>();
     
-    /**
-     * Call initialize map of transformers in default constructor
-     */
+    
     public SimpleTransformer() {
-        init();
+        this(null);
+    }
+    
+    /**
+     * Call initialize map of transformers
+     */
+    public SimpleTransformer(AppContextImpl context) {
+        init(context);
     }
     
     /**
@@ -66,17 +77,38 @@ public class SimpleTransformer {
         else if(isObject(value.getClass())) {
             return transformObject(value);
         }
+        else if(isObjectArray(value.getClass())) {
+            return transformArrayObject(value);
+        }
         return transformObjectOrArray(value);
     }
     
+    /**
+     * Transform a java pojo object array to sfsarray
+     * 
+     * @param value the pojo object array
+     * @return a SFSDataWrapper object
+     */
+    protected SFSDataWrapper transformArrayObject(Object value) {
+        int length = ArrayUtils.getLength(value);
+        if(length == 0) 
+            return new SFSDataWrapper(SFSDataType.NULL, null);
+        ISFSArray sfsarray = new SFSArray();
+        for(Object obj : (Object[])value)
+            sfsarray.add(transform(obj));
+        return new SFSDataWrapper(SFSDataType.SFS_ARRAY, sfsarray);
+    }
+
     /**
      * Transform a java pojo object to sfsobject
      * 
      * @param value pojo java object
      * @return a SFSDataWrapper object
      */
-    public SFSDataWrapper transformObject(Object value) {
-        ResponseHandlerClass struct = new ResponseHandlerClass(value.getClass());
+    protected SFSDataWrapper transformObject(Object value) {
+        ResponseParamsClass struct = null;
+        if(context != null) struct = context.getResponseParamsClass(value.getClass());
+        if(struct == null) struct = new ResponseParamsClass(value.getClass());
         ISFSObject sfsObject = ResponseParamSerializer
                 .getInstance().object2params(struct, value);
         return new SFSDataWrapper(SFSDataType.SFS_OBJECT, sfsObject);
@@ -95,7 +127,21 @@ public class SimpleTransformer {
             array.add(transformObjectOrArray(obj));
         return new SFSDataWrapper(SFSDataType.SFS_ARRAY, array);
     }
-
+    
+    /**
+     * 
+     * Transform a collection of object to SFSDataWrapper object 
+     * 
+     * @param collection the collection
+     * @return a SFSDataWrapper object
+     */
+    protected SFSDataWrapper transformObjectCollection(Collection<?> collection) {
+        ISFSArray sfsarray = new SFSArray();
+        for(Object obj : collection)
+            sfsarray.add(transform(obj));
+        return new SFSDataWrapper(SFSDataType.SFS_ARRAY, sfsarray);
+    }
+    
     /**
      * Transform a collection of value to SFSDataWrapper object 
      * 
@@ -111,6 +157,8 @@ public class SimpleTransformer {
         Object firstItem = it.next();
         if(firstItem.getClass().isArray())
             return transformArrayCollection(collection);
+        if(isObject(firstItem.getClass())) 
+            return transformObjectCollection((Collection<?>)value);
         if(firstItem instanceof Boolean)
             return new SFSDataWrapper(SFSDataType.BOOL_ARRAY, value);
         if(firstItem instanceof Byte)
@@ -159,11 +207,16 @@ public class SimpleTransformer {
     /**
      * Initialize map of transformers
      */
-    protected void init() {
+    protected void init(AppContextImpl context) {
+        setContext(context);
         initWithWrapperType();
         initWithPrimitiveTypeArray();
         initWithWrapperTypArray();
         initWithStringType();
+    }
+    
+    private void setContext(AppContextImpl context) {
+        this.context = context;
     }
     
     /**

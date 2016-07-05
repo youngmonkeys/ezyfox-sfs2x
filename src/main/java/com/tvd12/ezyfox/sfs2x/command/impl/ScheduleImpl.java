@@ -41,7 +41,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#delay(long)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl delay(long time) {
         this.delayTime = time;
         return this;
@@ -51,7 +50,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#oneTime(boolean)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl oneTime(boolean value) {
         this.onTime = value;
         return this;
@@ -61,7 +59,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#period(long)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl period(long value) {
         this.period = value;
         return this;
@@ -71,7 +68,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#task(Runnable)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl task(Runnable value) {
         this.runnable = value;
         return this;

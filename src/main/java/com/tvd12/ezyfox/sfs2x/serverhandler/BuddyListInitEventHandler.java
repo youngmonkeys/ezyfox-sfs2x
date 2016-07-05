@@ -10,8 +10,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.config.ServerEvent;
-import com.tvd12.ezyfox.core.model.ApiBuddyProperties;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiBuddyProperties;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**

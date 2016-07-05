@@ -13,7 +13,7 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSBuddyListException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UpdateBuddyProperties;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.BuddyClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -80,9 +80,8 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UpdateBuddyProperties owner(ApiBaseUser user) {
         this.owner = user;
@@ -92,7 +91,6 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UpdateBuddyProperties fireClientEvent(boolean value) {
         this.fireClientEvent = value;
@@ -102,7 +100,6 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UpdateBuddyProperties fireServerEvent(boolean value) {
         this.fireServerEvent = value;
@@ -112,7 +109,6 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#include(java.lang.String[])
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UpdateBuddyProperties include(String... varnames) {
         this.includedVars.addAll(Arrays.asList(varnames));
@@ -122,7 +118,6 @@ public class UpdateBuddyPropertiesImpl extends BaseCommandImpl implements Update
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UpdateBuddyProperties#exclude(java.lang.String[])
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UpdateBuddyProperties exclude(String... varnames) {
         this.excludedVars.addAll(Arrays.asList(varnames));

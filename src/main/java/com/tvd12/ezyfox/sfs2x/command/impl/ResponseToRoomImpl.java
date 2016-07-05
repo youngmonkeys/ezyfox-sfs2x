@@ -14,8 +14,8 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.ResponseToRoom;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -48,7 +48,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     /* (non-Javadoc)
      * @see com.lagente.core.command.ResponseToRoom#command(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom command(String command) {
         this.command = command;
@@ -58,7 +57,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     /* (non-Javadoc)
      * @see com.lagente.core.command.ResponseToRoom#data(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom data(Object object) {
         this.data = object;
@@ -68,7 +66,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.ResponseToRoom#param(java.lang.String, java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom param(String name, Object value) {
         addition.put(name, TRANSFORMER.transform(value));
@@ -78,7 +75,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     /* (non-Javadoc)
      * @see com.lagente.core.command.ResponseToRoom#sender(com.lagente.core.model.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom sender(ApiBaseUser user) {
         this.sender = user.getName();
@@ -88,7 +84,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     /* (non-Javadoc)
      * @see com.lagente.core.command.ResponseToRoom#room(com.lagente.core.model.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom room(ApiRoom room) {
         this.roomName = room.getName();
@@ -96,9 +91,8 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#exclude(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#exclude(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ResponseToRoom exclude(ApiBaseUser user) {
         this.excludedUsers.add(user.getName());

@@ -7,8 +7,8 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendPublicMessage;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -59,9 +59,8 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage sender(ApiBaseUser sender) {
         this.sender = sender.getName();
@@ -71,7 +70,6 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#sender(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage sender(String senderName) {
         this.sender = senderName;
@@ -79,9 +77,8 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendPublicMessage#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.SendPublicMessage#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage room(ApiRoom room) {
         this.room = room.getName();
@@ -91,7 +88,6 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendPublicMessage#room(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage room(String roomName) {
         this.room = roomName;
@@ -101,7 +97,6 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage message(String message) {
         this.message = message;
@@ -111,7 +106,6 @@ public class SendPublicMessageImpl extends BaseCommandImpl implements SendPublic
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendBuddyMessage#params(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPublicMessage params(Object params) {
         this.params = params;

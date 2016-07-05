@@ -6,7 +6,7 @@ import com.smartfoxserver.v2.api.ISFSBuddyApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.BlockBuddy;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -48,9 +48,8 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.BlockBuddy#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.BlockBuddy#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -60,7 +59,6 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BlockBuddy#owner(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy owner(String ownerName) {
         this.owner = ownerName;
@@ -70,7 +68,6 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BlockBuddy#buddy(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy buddy(String buddyName) {
         this.buddy = buddyName;
@@ -80,7 +77,6 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BlockBuddy#blocked(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy blocked(boolean isBlock) {
         this.blocked = isBlock;
@@ -90,7 +86,6 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BlockBuddy#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy fireClientEvent(boolean fireClientEvent) {
         this.fireClientEvent = fireClientEvent;
@@ -100,7 +95,6 @@ public class BlockBuddyImpl extends BaseCommandImpl implements BlockBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BlockBuddy#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BlockBuddy fireServerEvent(boolean fireServerEvent) {
         this.fireServerEvent = fireServerEvent;

@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.managers.BanMode;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.BanUser;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -49,9 +49,8 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.BanUser#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.BanUser#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser user(ApiBaseUser userToBan) {
         this.userToBan = userToBan.getName();
@@ -61,7 +60,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser user(String userToBan) {
         this.userToBan = userToBan;
@@ -71,7 +69,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#modUser(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser modUser(String modUser) {
         this.modUser = modUser;
@@ -81,7 +78,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser message(String banMessage) {
         this.message = banMessage;
@@ -91,7 +87,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#byAddress()
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser byAddress() {
         this.bandByAddressMode = true;
@@ -101,7 +96,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#byName()
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser byName() {
         this.bandByAddressMode = false;
@@ -111,7 +105,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#duration(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser duration(int durationMinutes) {
         this.durationMinutes = durationMinutes;
@@ -121,7 +114,6 @@ public class BanUserImpl extends BaseCommandImpl implements BanUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.BanUser#delay(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public BanUser delay(int delaySeconds) {
         this.delaySeconds = delaySeconds;

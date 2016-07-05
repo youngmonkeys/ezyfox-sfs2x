@@ -1,4 +1,4 @@
-package com.tvd12.ezyfox.sfs2x.model.impl;
+package com.tvd12.ezyfox.sfs2x.entities.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,9 +8,9 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiUser;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 
 /**
  * This a proxy class
@@ -143,7 +143,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getUserById(int)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getUserById(int)
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -155,7 +155,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getUserByName(java.lang.String)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getUserByName(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -167,7 +167,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getUsersInGroup(java.lang.String)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getUsersInGroup(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -181,7 +181,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getUserList()
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getUserList()
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -195,7 +195,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#isNPC(java.lang.String)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#isNPC(java.lang.String)
 	 */
 	@Override
 	public boolean isNPC(String username) {
@@ -206,7 +206,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiZone#getRoomById(int)
+     * @see com.tvd12.ezyfox.core.entities.ApiZone#getRoomById(int)
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -218,7 +218,7 @@ public class ApiZoneImpl implements ApiZone {
     }
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getRoomByName(java.lang.String)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getRoomByName(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -230,7 +230,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getRoomsInGroup(java.lang.String)
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getRoomsInGroup(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -245,7 +245,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiZone#getRoomList()
+	 * @see com.tvd12.ezyfox.core.entities.ApiZone#getRoomList()
 	 */
 	@SuppressWarnings("unchecked")
     @Override
@@ -260,7 +260,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiProperties#setProperty(java.lang.Object, java.lang.Object)
+	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#setProperty(java.lang.Object, java.lang.Object)
 	 */
 	@Override
 	public void setProperty(Object key, Object value) {
@@ -269,7 +269,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiProperties#getProperty(java.lang.Object)
+	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object)
 	 */
 	@Override
 	public Object getProperty(Object key) {
@@ -277,7 +277,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiProperties#getProperty(java.lang.Object, java.lang.Class)
+	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object, java.lang.Class)
 	 */
 	@Override
 	public <T> T getProperty(Object key, Class<T> clazz) {
@@ -285,7 +285,7 @@ public class ApiZoneImpl implements ApiZone {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.tvd12.ezyfox.core.model.ApiProperties#removeProperty(java.lang.Object)
+	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#removeProperty(java.lang.Object)
 	 */
 	@Override
 	public void removeProperty(Object key) {

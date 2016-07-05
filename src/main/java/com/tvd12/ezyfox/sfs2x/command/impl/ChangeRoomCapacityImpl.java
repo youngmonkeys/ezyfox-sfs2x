@@ -4,8 +4,8 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.ChangeRoomCapacity;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -48,9 +48,8 @@ public class ChangeRoomCapacityImpl extends BaseCommandImpl implements ChangeRoo
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomCapacity owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -58,9 +57,8 @@ public class ChangeRoomCapacityImpl extends BaseCommandImpl implements ChangeRoo
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomCapacity room(ApiRoom targetRoom) {
         this.targetRoom = targetRoom.getName();
@@ -70,7 +68,6 @@ public class ChangeRoomCapacityImpl extends BaseCommandImpl implements ChangeRoo
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#maxUsers(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomCapacity maxUsers(int newMaxUsers) {
         this.maxUsers = newMaxUsers;
@@ -80,7 +77,6 @@ public class ChangeRoomCapacityImpl extends BaseCommandImpl implements ChangeRoo
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.ChangeRoomCapacity#maxSpectators(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomCapacity maxSpectators(int newMaxSpactators) {
         this.maxSpectators = newMaxSpactators;

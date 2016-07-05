@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * @author tavandung12
@@ -15,15 +16,14 @@ public class MapUtill {
 
     private MapUtill() {}
     
-    public static ISFSObject map2SFSObject(Map<String, Object> map) {
+    public static ISFSObject map2SFSObject(AppContextImpl context, 
+            Map<String, Object> map) {
+        SimpleTransformer transformer = new SimpleTransformer(context);
         ISFSObject answer = new SFSObject();
         for(Entry<String, Object> entry : map.entrySet()) {
-            answer.put(entry.getKey(), TRANSFORMER.transform(entry.getValue()));
+            answer.put(entry.getKey(), transformer.transform(entry.getValue()));
         }
         return answer;
     }
-    
-    private static final SimpleTransformer TRANSFORMER = 
-            new SimpleTransformer();
     
 }

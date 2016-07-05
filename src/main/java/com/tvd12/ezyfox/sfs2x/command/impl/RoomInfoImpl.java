@@ -10,9 +10,9 @@ import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.RoomInfo;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -45,7 +45,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#containsUser(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#containsUser(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public boolean containsUser(ApiBaseUser user) {
@@ -133,7 +133,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#addUser(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#addUser(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public void addUser(ApiBaseUser user) {
@@ -145,7 +145,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#addUser(com.tvd12.ezyfox.core.model.ApiBaseUser, boolean)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#addUser(com.tvd12.ezyfox.core.entities.ApiBaseUser, boolean)
      */
     @Override
     public void addUser(ApiBaseUser user, boolean asSpectator) {
@@ -165,7 +165,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#removeUser(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#removeUser(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public void removeUser(ApiBaseUser user) {
@@ -282,7 +282,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#setOwner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#setOwner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public void setOwner(ApiBaseUser owner) {
@@ -309,7 +309,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#switchPlayerToSpectator(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#switchPlayerToSpectator(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public void switchPlayerToSpectator(ApiBaseUser user) {
@@ -321,7 +321,7 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#switchSpectatorToPlayer(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UpdateRoomInfo#switchSpectatorToPlayer(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
     public void switchSpectatorToPlayer(ApiBaseUser user) {
@@ -333,13 +333,30 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.RoomInfo#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.RoomInfo#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RoomInfo room(ApiRoom room) {
         this.apiRoom = room;
         this.room = CommandUtil.getSfsRoom(room, extension);
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.RoomInfo#room(int)
+     */
+    @Override
+    public RoomInfo room(int id) {
+        this.room = extension.getParentZone().getRoomById(id);
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.RoomInfo#room(java.lang.String)
+     */
+    @Override
+    public RoomInfo room(String name) {
+        this.room = CommandUtil.getSfsRoom(name, extension);
         return this;
     }
 

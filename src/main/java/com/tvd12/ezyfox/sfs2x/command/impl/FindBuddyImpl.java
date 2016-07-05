@@ -3,8 +3,8 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.FindBuddy;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiBuddy;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBuddy;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -41,9 +41,8 @@ public class FindBuddyImpl extends BaseCommandImpl implements FindBuddy {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FindBuddy#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.FindBuddy#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FindBuddy owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -53,7 +52,6 @@ public class FindBuddyImpl extends BaseCommandImpl implements FindBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FindBuddy#owner(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FindBuddy owner(String ownerName) {
         this.owner = ownerName;
@@ -63,7 +61,6 @@ public class FindBuddyImpl extends BaseCommandImpl implements FindBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FindBuddy#buddy(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FindBuddy buddy(String buddyName) {
         this.buddy = buddyName;

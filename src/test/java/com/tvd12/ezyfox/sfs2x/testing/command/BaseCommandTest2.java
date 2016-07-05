@@ -7,10 +7,10 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiUser;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 
 import static org.mockito.Mockito.*;
 

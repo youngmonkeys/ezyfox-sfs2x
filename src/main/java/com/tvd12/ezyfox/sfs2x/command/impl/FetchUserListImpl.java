@@ -9,8 +9,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.FetchUserList;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -32,7 +32,7 @@ public class FetchUserListImpl extends BaseCommandImpl implements FetchUserList 
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUserList#in(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUserList#in(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public List<ApiUser> in(ApiRoom room) {

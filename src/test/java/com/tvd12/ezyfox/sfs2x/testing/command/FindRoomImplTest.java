@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import com.tvd12.ezyfox.sfs2x.command.impl.FindRoomImpl;
 import static org.testng.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author tavandung12
@@ -16,6 +17,8 @@ public class FindRoomImplTest extends BaseCommandTest2 {
     public void test() {
         FindRoomImpl findRoom = new FindRoomImpl(context, api, extension);
         assertNull(findRoom.by("zzzzz"));
+        when(sfsUser.getLastJoinedRoom()).thenReturn(sfsRoom);
+        findRoom.by(user);
     }
     
 }

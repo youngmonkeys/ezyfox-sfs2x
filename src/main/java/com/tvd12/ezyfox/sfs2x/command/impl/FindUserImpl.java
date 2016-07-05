@@ -32,7 +32,8 @@ public class FindUserImpl extends BaseCommandImpl implements FindUser {
     @Override
     public <T> T by(String name) {
         User user = api.getUserByName(name);
-        return (T)user.getProperty(APIKey.USER);
+        return (user == null) ? null :
+                (T)user.getProperty(APIKey.USER);
     }
 	
 	/* (non-Javadoc)

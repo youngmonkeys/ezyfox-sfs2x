@@ -8,9 +8,9 @@ import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.UserJoinZoneEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.context.BaseHandlerTest;
 

@@ -14,9 +14,9 @@ import com.smartfoxserver.v2.entities.invitation.InvitationCallback;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendInvitation;
 import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiInvitation;
-import com.tvd12.ezyfox.core.model.ApiInvitationImpl;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiInvitation;
+import com.tvd12.ezyfox.core.entities.ApiInvitationImpl;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.MapUtill;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParametersUtil;
@@ -57,7 +57,7 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
                         CommandUtil.getSFSUserList(invitees, api), 
                         expirySeconds, 
                         createCallback(), 
-                        MapUtill.map2SFSObject(params));
+                        MapUtill.map2SFSObject(context, params));
         return Boolean.TRUE;
     }
     
@@ -95,9 +95,8 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendInvitation#inviter(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendInvitation#inviter(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendInvitation inviter(ApiBaseUser user) {
         this.inviter = user;
@@ -107,17 +106,15 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendInvitation#invitees(java.util.List)
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T extends SendInvitation> T invitees(List<ApiBaseUser> users) {
+    public SendInvitation invitees(List<ApiBaseUser> users) {
         this.invitees.addAll(users);
-        return (T)this;
+        return this;
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendInvitation#invitees(com.tvd12.ezyfox.core.model.ApiBaseUser[])
+     * @see com.tvd12.ezyfox.core.command.SendInvitation#invitees(com.tvd12.ezyfox.core.entities.ApiBaseUser[])
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendInvitation invitees(ApiBaseUser... users) {
         this.invitees.addAll(Arrays.asList(users));
@@ -127,7 +124,6 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendInvitation#expirySeconds(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendInvitation expirySeconds(int seconds) {
         this.expirySeconds = seconds;
@@ -137,7 +133,6 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendInvitation#callback(com.tvd12.ezyfox.core.command.SendInvitation.Callback)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendInvitation callback(Callback callback) {
         this.callback = callback;
@@ -147,7 +142,6 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendInvitation#param(java.lang.String, java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendInvitation param(String name, Object value) {
         params.put(name, value);

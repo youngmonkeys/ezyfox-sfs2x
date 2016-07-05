@@ -9,8 +9,8 @@ import com.smartfoxserver.v2.api.ISFSBuddyApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.RemoveBuddy;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -51,9 +51,8 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.RemoveBuddy#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.RemoveBuddy#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -63,7 +62,6 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.RemoveBuddy#owner(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy owner(String ownerName) {
         this.owner = ownerName;
@@ -71,9 +69,8 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.RemoveBuddy#zone(com.tvd12.ezyfox.core.model.ApiZone)
+     * @see com.tvd12.ezyfox.core.command.RemoveBuddy#zone(com.tvd12.ezyfox.core.entities.ApiZone)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy zone(ApiZone zone) {
         this.zone = zone;
@@ -83,7 +80,6 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.RemoveBuddy#buddy(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy buddy(String buddyName) {
         this.buddy = buddyName;
@@ -93,7 +89,6 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.RemoveBuddy#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy fireClientEvent(boolean fireClientEvent) {
         this.fireClientEvent = fireClientEvent;
@@ -103,7 +98,6 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.RemoveBuddy#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RemoveBuddy fireServerEvent(boolean fireServerEvent) {
         this.fireServerEvent = fireServerEvent;
