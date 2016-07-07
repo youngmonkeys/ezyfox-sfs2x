@@ -17,8 +17,13 @@ import com.tvd12.ezyfox.sfs2x.command.impl.CreateRoomImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.ApiModelFactory;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;
 
-public class CreateRoomTest extends BaseCommandTest {
+public class CreateRoomTest extends BaseCommandTest2 {
 
+    public CreateRoomTest() {
+        super();
+        
+    }
+    
     @Test
     public void test() {
         new CreateRoomImpl(context, api, extension)

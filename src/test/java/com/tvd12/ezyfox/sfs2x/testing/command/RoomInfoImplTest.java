@@ -13,6 +13,8 @@ import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSJoinRoomException;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiGameUser;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.command.impl.RoomInfoImpl;
 
 /**
@@ -38,17 +40,19 @@ public class RoomInfoImplTest extends BaseCommandTest2 {
     
     @Test
     public void test() {
-        
+        ((ApiUser)user).addChild(new GameUser());
         RoomVariable var = new SFSRoomVariable("abc", 1D);
         when(sfsRoom.getVariables()).thenReturn(Lists.newArrayList(var));
         
         RoomInfoImpl command = new RoomInfoImpl(context, api, extension);
+        room.setCommand(command);
         command.room(room);
         command.addUser(user);
         command.addUser(user, true);
         command.removeUser(user);
         command.removeVariable(USER_NAME);
         command.setActive(true);
+        when(sfsRoom.isActive()).thenReturn(true);
         assertTrue(room.isActive());
         command.setCapacity(5, 6);
         assertEquals(room.getMaxUsers(), 5);
@@ -96,6 +100,9 @@ public class RoomInfoImplTest extends BaseCommandTest2 {
         when(sfsRoom.isFull()).thenReturn(Boolean.TRUE);
         when(sfsUser.containsProperty(APIKey.USER)).thenReturn(Boolean.TRUE);
         when(sfsRoom.isPasswordProtected()).thenReturn(true);
+        assertEquals(command.getSpectatorsList(GameUser.class).size(), 1);
+        assertEquals(command.getPlayersList(GameUser.class).size(), 2);
+        assertEquals(command.getUserList(GameUser.class).size(), 2);
         assertEquals(command.getZone(), apiZone);
         assertEquals(command.containsUser(user), true);
         assertEquals(command.containsUser(USER_NAME), true);
@@ -138,6 +145,10 @@ public class RoomInfoImplTest extends BaseCommandTest2 {
         RoomInfoImpl command = new RoomInfoImpl(context, api, extension);
         doThrow(SFSRoomException.class).when(room1).switchSpectatorToPlayer(any(User.class));
         command.room(exRoom).switchSpectatorToPlayer(user);
+    }
+    
+    public static class GameUser extends ApiGameUser {
+        
     }
     
 }

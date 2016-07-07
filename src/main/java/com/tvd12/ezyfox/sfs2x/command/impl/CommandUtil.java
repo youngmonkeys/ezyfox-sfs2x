@@ -10,7 +10,9 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiGameUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 
 /**
  * Support to get smartfox user or room by name or agent object
@@ -93,11 +95,29 @@ public class CommandUtil {
      * @return list of user agents
      */
     @SuppressWarnings("unchecked")
-    public static <T extends ApiBaseUser> List<T> getApiUserList(Collection<User> users) {
+    public static <T extends ApiUser> List<T> getApiUserList(Collection<User> users) {
         List<T> answer = new ArrayList<>();
         for(User user : users) 
             if(user.containsProperty(APIKey.USER))
                 answer.add((T) user.getProperty(APIKey.USER));
+        return answer;
+    }
+    
+    /**
+     * Get user agent list from smartfox user list
+     * 
+     * @param clazz class of game user
+     * @param users smartfox room list
+     * @return list of user agents
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends ApiGameUser> List<T> getApiGameUserList(Collection<User> users, Class<?> clazz) {
+        List<T> answer = new ArrayList<>();
+        for(User user : users) {
+            if(!user.containsProperty(APIKey.USER)) continue;
+            ApiUser apiUser = (ApiUser)user.getProperty(APIKey.USER);
+            answer.add((T) apiUser.getChild(clazz));
+        }
         return answer;
     }
     

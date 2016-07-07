@@ -11,7 +11,9 @@ import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.RoomInfo;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiGameUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -72,24 +74,48 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
      * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getSpectatorsList()
      */
     @Override
-    public <T extends ApiBaseUser> List<T> getSpectatorsList() {
+    public <T extends ApiUser> List<T> getSpectatorsList() {
         return CommandUtil.getApiUserList(room.getSpectatorsList());
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getSpectatorsList(java.lang.Class)
+     */
+    @Override
+    public <T extends ApiGameUser> List<T> getSpectatorsList(Class<?> clazz) {
+        return CommandUtil.getApiGameUserList(room.getSpectatorsList(), clazz);
     }
 
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getPlayersList()
      */
     @Override
-    public <T extends ApiBaseUser> List<T> getPlayersList() {
+    public <T extends ApiUser> List<T> getPlayersList() {
         return CommandUtil.getApiUserList(room.getPlayersList());
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getPlayersList(java.lang.Class)
+     */
+    @Override
+    public <T extends ApiGameUser> List<T> getPlayersList(Class<?> clazz) {
+        return CommandUtil.getApiGameUserList(room.getPlayersList(), clazz);
     }
 
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getUserList()
      */
     @Override
-    public <T extends ApiBaseUser> List<T> getUserList() {
+    public <T extends ApiUser> List<T> getUserList() {
         return CommandUtil.getApiUserList(room.getUserList());
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#getUserList(java.lang.Class)
+     */
+    @Override
+    public <T extends ApiGameUser> List<T> getUserList(Class<?> clazz) {
+        return CommandUtil.getApiGameUserList(room.getUserList(), clazz);
     }
 
     /* (non-Javadoc)
@@ -122,6 +148,14 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     @Override
     public boolean isFull() {
         return room.isFull();
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.FetchRoomInfo#isActive()
+     */
+    @Override
+    public boolean isActive() {
+        return room.isActive();
     }
     
     /* (non-Javadoc)
@@ -196,7 +230,6 @@ public class RoomInfoImpl extends BaseCommandImpl implements RoomInfo {
     @Override
     public void setActive(boolean flag) {
         room.setActive(flag);
-        apiRoom.setActive(flag);
     }
 
     /* (non-Javadoc)

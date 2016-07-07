@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import com.smartfoxserver.v2.entities.User;
+import com.tvd12.ezyfox.core.command.UserInfo;
 import com.tvd12.ezyfox.core.config.APIKey;
 import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.entities.ApiUser;
@@ -46,6 +47,7 @@ public class UserJoinZoneEventHandler extends UserZoneEventHandler {
         sfsUser.setProperty(APIKey.USER, answer);
         answer.setId(sfsUser.getId());
         answer.setIp(sfsUser.getIpAddress());
+        answer.setCommand(context.command(UserInfo.class).user(sfsUser.getId()));
         return answer;
     }
     

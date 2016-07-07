@@ -2,6 +2,7 @@ package com.tvd12.ezyfox.sfs2x.testing.serverhandler;
 
 import org.testng.annotations.Test;
 
+import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.entities.Zone;
@@ -22,6 +23,8 @@ public class UserJoinZoneEventHandlerTest extends BaseHandlerTest {
 
     @Test
     public void test() throws SFSException {
+        ISFSApi api = mock(ISFSApi.class);
+        context.setApi(api);
         UserJoinZoneEventHandler hander = new ExUserJoinZoneEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser);
