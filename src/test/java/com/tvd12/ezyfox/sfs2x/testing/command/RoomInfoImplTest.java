@@ -12,7 +12,7 @@ import com.smartfoxserver.v2.entities.variables.RoomVariable;
 import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSJoinRoomException;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiGameUser;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.command.impl.RoomInfoImpl;

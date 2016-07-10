@@ -14,7 +14,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.CreateRoom;
-import com.tvd12.ezyfox.core.config.ServerEvent;
+import com.tvd12.ezyfox.core.constants.ServerEvent;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;

@@ -13,7 +13,7 @@ import com.smartfoxserver.v2.entities.invitation.Invitation;
 import com.smartfoxserver.v2.entities.invitation.InvitationCallback;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendInvitation;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.entities.ApiInvitation;
 import com.tvd12.ezyfox.core.entities.ApiInvitationImpl;

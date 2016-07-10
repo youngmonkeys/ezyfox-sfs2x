@@ -11,7 +11,7 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.sfs2x.serverhandler.BuddyMessageEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;

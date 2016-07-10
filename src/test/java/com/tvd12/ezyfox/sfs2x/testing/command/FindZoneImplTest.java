@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.entities.managers.IZoneManager;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.sfs2x.command.impl.FindZoneImpl;
 

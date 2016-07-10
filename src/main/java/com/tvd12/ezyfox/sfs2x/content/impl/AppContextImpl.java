@@ -68,6 +68,16 @@ public class AppContextImpl implements AppContext {
 	}
 	
 	/**
+	 * Indicate this event will be auto response
+	 * 
+	 * @param event the event
+	 * @return true or false
+	 */
+	public boolean isAutoResponse(String event) {
+	    return extensionConfig.getAutoResponseEvents().contains(event);
+	}
+	
+	/**
 	 * @see AppContext#set(Object, Object)
 	 */
 	@Override

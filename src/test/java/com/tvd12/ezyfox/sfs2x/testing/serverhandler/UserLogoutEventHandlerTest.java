@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.exceptions.SFSException;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.sfs2x.serverhandler.UserLogoutEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.context.BaseHandlerTest;
 

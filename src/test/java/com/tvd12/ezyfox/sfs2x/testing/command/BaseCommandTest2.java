@@ -6,7 +6,7 @@ package com.tvd12.ezyfox.sfs2x.testing.command;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.entities.ApiUser;

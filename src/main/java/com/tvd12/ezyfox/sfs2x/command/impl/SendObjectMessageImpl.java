@@ -16,7 +16,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendObjectMessage;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;

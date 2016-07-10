@@ -7,19 +7,26 @@ import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import com.smartfoxserver.bitswarm.sessions.ISession;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
+import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.exceptions.IErrorCode;
 import com.smartfoxserver.v2.exceptions.SFSErrorData;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.exceptions.SFSLoginException;
-import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.config.UserLoginEventHandlerCenter;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.entities.ApiLogin;
+import com.tvd12.ezyfox.core.entities.ApiLoginImpl;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.UserLoginHandlerClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiSessionImpl;
 
 /**
  * Support to handle user login event
@@ -47,7 +54,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
     @Override
     protected void init() {
         loginHandlers = new UserLoginEventHandlerCenter()
-                .addHandlers(handlerClasses, String.class, String.class);
+                .addHandlers(handlerClasses, ApiLogin.class);
     }
 
     /*
@@ -56,58 +63,81 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
      */
     @Override
     public void handleServerEvent(ISFSEvent event) throws SFSException {
-        String name = (String) event.getParameter(SFSEventParam.LOGIN_NAME);
-        String pass = (String) event.getParameter(SFSEventParam.LOGIN_PASSWORD);
+        ApiLogin wrapper = wrapLoginData(event);
         ISFSObject inData = (ISFSObject)event.getParameter(SFSEventParam.LOGIN_IN_DATA);
         ISFSObject outData = (ISFSObject)event.getParameter(SFSEventParam.LOGIN_OUT_DATA);
-        notifyHandler(name, pass, inData, outData);
+        notifyHandler(wrapper, inData, outData);
+    }
+    
+    /**
+     * Wrap the login data
+     * 
+     * @param event the event
+     * @return the wrapper
+     */
+    private ApiLogin wrapLoginData(ISFSEvent event) {
+        Zone zone = (Zone) event.getParameter(SFSEventParam.ZONE);
+        ISession session = (ISession) event.getParameter(SFSEventParam.SESSION);
+        String name = (String) event.getParameter(SFSEventParam.LOGIN_NAME);
+        String pass = (String) event.getParameter(SFSEventParam.LOGIN_PASSWORD);
+        ApiLoginImpl apiLogin = new ApiLoginImpl();
+        apiLogin.setZone((ApiZone) zone.getProperty(APIKey.ZONE));
+        apiLogin.setSession(new ApiSessionImpl(session));
+        apiLogin.setUsername(name);
+        apiLogin.setPassword(pass);
+        return apiLogin;
     }
 
     /**
      * Propagate event to handler
      * 
-     * @param username user name
-     * @param password user's password
+     * @param wrapper the login data wrapper
      * @param inData login in data
      * @param outData login out data
      * @throws SFSLoginException when has any errors
      */
-    protected void notifyHandler(String username, String password, 
+    protected void notifyHandler(ApiLogin wrapper, 
             ISFSObject inData, ISFSObject outData) throws SFSLoginException {
-        for (UserLoginHandlerClass handler : loginHandlers) {
-            try {
-                notifyHanlder(handler, username, password, inData, outData);
-            } catch(Exception e) {
-                if(!isBadRequestException(e)) 
-                    throw new SFSLoginException();
-                final BadRequestException ex = getBadRequestException(e);
-                throw new SFSLoginException(ex.getMessage(), new SFSErrorData(new IErrorCode() {
-                    @Override
-                    public short getId() {
-                        return (short)ex.getCode();
-                    }
-                }));
+        try {
+            for (UserLoginHandlerClass handler : loginHandlers)
+                notifyHanlder(handler, wrapper, inData, outData);
+        } catch(Exception e) { throw processException(e); }
+    }
+    
+    /**
+     * Process the exception
+     * 
+     * @param e the exception
+     * @return the SFSLoginException exception
+     */
+    protected SFSLoginException processException(Exception e) {
+        if(!isBadRequestException(e)) 
+            return new SFSLoginException();
+        final BadRequestException ex = getBadRequestException(e);
+        return new SFSLoginException(ex.getMessage(), new SFSErrorData(new IErrorCode() {
+            @Override
+            public short getId() {
+                return (short)ex.getCode();
             }
-        }
+        }));
     }
 
     /**
      * Propagate event to handler
      * 
      * @param handler structure of handler class
-     * @param username user name
-     * @param password password
+     * @param wrapper the login data wrapper
      * @param inData login in data
      * @param outData login out data
      */
     protected void notifyHanlder(UserLoginHandlerClass handler, 
-            String username, String password, ISFSObject inData, ISFSObject outData) {
+            ApiLogin wrapper, ISFSObject inData, ISFSObject outData) {
         Object instance = requestParamDeserializer()
                 .deserialize(handler.getRequestListenerClass(), inData);
         ReflectMethodUtil.invokeHandleMethod(
                 handler.getHandleMethod(), 
                 instance,
-                context, username, password);
+                context, wrapper);
         responseParamSerializer()
             .object2params(handler.getResponseHandlerClass(), instance, outData);
     }

@@ -16,7 +16,7 @@ import com.smartfoxserver.v2.buddylist.BuddyList;
 import com.smartfoxserver.v2.buddylist.BuddyListManager;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSBuddyListException;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.sfs2x.command.impl.AddBuddyImpl;

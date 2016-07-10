@@ -5,7 +5,7 @@ import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerUserHandlerClass;
