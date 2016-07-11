@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
-import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
+import com.tvd12.ezyfox.core.constants.ServerEvent;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;

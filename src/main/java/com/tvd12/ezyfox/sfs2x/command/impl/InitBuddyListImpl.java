@@ -6,7 +6,7 @@ import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.InitBuddyList;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -48,9 +48,8 @@ public class InitBuddyListImpl extends BaseCommandImpl implements InitBuddyList 
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.InitBuddyList#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.InitBuddyList#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public InitBuddyList user(ApiBaseUser user) {
         this.username = user.getName();
@@ -60,7 +59,6 @@ public class InitBuddyListImpl extends BaseCommandImpl implements InitBuddyList 
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.InitBuddyList#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public InitBuddyList user(String username) {
         this.username = username;
@@ -70,7 +68,6 @@ public class InitBuddyListImpl extends BaseCommandImpl implements InitBuddyList 
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.InitBuddyList#fireServerEvent(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public InitBuddyList fireServerEvent(boolean value) {
         this.fireServerEvent = value;

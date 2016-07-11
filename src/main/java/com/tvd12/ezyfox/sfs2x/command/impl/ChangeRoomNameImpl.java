@@ -4,8 +4,8 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.ChangeRoomName;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -47,9 +47,8 @@ public class ChangeRoomNameImpl extends BaseCommandImpl implements ChangeRoomNam
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomName#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomName#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomName owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -57,9 +56,8 @@ public class ChangeRoomNameImpl extends BaseCommandImpl implements ChangeRoomNam
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomName#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomName#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomName room(ApiRoom targetRoom) {
         this.targetRoom = targetRoom.getName();
@@ -69,7 +67,6 @@ public class ChangeRoomNameImpl extends BaseCommandImpl implements ChangeRoomNam
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.ChangeRoomName#name(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomName name(String newName) {
         this.roomName = newName;

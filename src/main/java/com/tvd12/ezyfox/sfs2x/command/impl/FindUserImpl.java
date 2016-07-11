@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.FindUser;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -32,7 +32,8 @@ public class FindUserImpl extends BaseCommandImpl implements FindUser {
     @Override
     public <T> T by(String name) {
         User user = api.getUserByName(name);
-        return (T)user.getProperty(APIKey.USER);
+        return (user == null) ? null :
+                (T)user.getProperty(APIKey.USER);
     }
 	
 	/* (non-Javadoc)

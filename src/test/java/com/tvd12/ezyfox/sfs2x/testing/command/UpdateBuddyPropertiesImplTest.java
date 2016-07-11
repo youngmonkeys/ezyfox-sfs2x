@@ -31,6 +31,20 @@ public class UpdateBuddyPropertiesImplTest extends BaseCommandTest2 {
         AppUser owner = new AppUser();
         owner.setName(USER_NAME);
         command.owner(owner)
+            .include("2", "3")
+            .exclude("2", "3")
+            .fireClientEvent(true)
+            .fireServerEvent(true)
+            .execute();
+    }
+    
+    @Test
+    public void test1() throws Exception {
+        initEnviroment();
+        UpdateBuddyPropertiesImpl command = new UpdateBuddyPropertiesImpl(context, api, extension);
+        AppUser owner = new AppUser();
+        owner.setName(USER_NAME);
+        command.owner(owner)
             .fireClientEvent(true)
             .fireServerEvent(true)
             .execute();

@@ -7,9 +7,9 @@ import java.util.Properties;
 
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.SFSExtension;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.factory.UserAgentFactory;
-import com.tvd12.ezyfox.core.model.ApiUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.test.base.BaseTest;
 

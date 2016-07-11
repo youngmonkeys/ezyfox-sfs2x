@@ -9,7 +9,7 @@ import com.smartfoxserver.v2.buddylist.SFSBuddyEventParam;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.exceptions.SFSException;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.BuddyAddEventHandler;
 
 /**

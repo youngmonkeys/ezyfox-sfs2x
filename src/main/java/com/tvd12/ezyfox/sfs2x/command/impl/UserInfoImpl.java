@@ -12,12 +12,13 @@ import java.util.Map.Entry;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UserInfo;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -42,7 +43,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#addCreatedRoom(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#addCreatedRoom(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public void addCreatedRoom(ApiRoom room) {
@@ -50,7 +51,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#addJoinedRoom(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#addJoinedRoom(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public void addJoinedRoom(ApiRoom room) {
@@ -58,7 +59,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeCreatedRoom(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeCreatedRoom(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public void removeCreatedRoom(ApiRoom room) {
@@ -66,7 +67,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeJoinedRoom(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeJoinedRoom(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public void removeJoinedRoom(ApiRoom room) {
@@ -138,7 +139,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#setPlayerId(int, com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#setPlayerId(int, com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public void setPlayerId(int id, ApiRoom room) {
@@ -210,7 +211,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isJoinedInRoom(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isJoinedInRoom(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public boolean isJoinedInRoom(ApiRoom room) {
@@ -250,7 +251,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isPlayer(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isPlayer(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public boolean isPlayer(ApiRoom room) {
@@ -266,7 +267,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isSpectator(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#isSpectator(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public boolean isSpectator(ApiRoom room) {
@@ -379,7 +380,7 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#getPlayerId(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUserInfo#getPlayerId(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
     @Override
     public int getPlayerId(ApiRoom room) {
@@ -430,11 +431,20 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     public ApiZone getZone() {
         return (ApiZone) sfsUser.getZone().getProperty(APIKey.ZONE);
     }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#removeAllVariables()
+     */
+    @Override
+    public void removeAllVariables() {
+        List<UserVariable> vars = sfsUser.getVariables();
+        for(UserVariable var : vars) var.setNull();
+        api.setUserVariables(sfsUser, vars);
+    }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UserInfo#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UserInfo#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UserInfo user(ApiBaseUser user) {
         sfsUser = getSfsUser(user, api);
@@ -444,7 +454,6 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UserInfo#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UserInfo user(String username) {
         sfsUser = getSfsUser(username, api);
@@ -454,7 +463,6 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UserInfo#user(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UserInfo user(int userId) {
         sfsUser = api.getUserById(userId);

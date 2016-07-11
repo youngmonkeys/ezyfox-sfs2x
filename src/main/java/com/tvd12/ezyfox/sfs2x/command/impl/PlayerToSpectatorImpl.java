@@ -4,8 +4,8 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.PlayerToSpectator;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -48,9 +48,8 @@ public class PlayerToSpectatorImpl extends BaseCommandImpl implements PlayerToSp
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public PlayerToSpectator user(ApiBaseUser user) {
         this.user = user.getName();
@@ -58,9 +57,8 @@ public class PlayerToSpectatorImpl extends BaseCommandImpl implements PlayerToSp
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public PlayerToSpectator room(ApiRoom room) {
         this.targetRoom = room.getName();
@@ -70,7 +68,6 @@ public class PlayerToSpectatorImpl extends BaseCommandImpl implements PlayerToSp
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public PlayerToSpectator fireClientEvent(boolean value) {
         this.fireClientEvent = value;
@@ -80,7 +77,6 @@ public class PlayerToSpectatorImpl extends BaseCommandImpl implements PlayerToSp
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.PlayerToSpectator#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public PlayerToSpectator fireServerEvent(boolean value) {
         this.fireServerEvent = value;

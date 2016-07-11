@@ -15,7 +15,9 @@ import com.smartfoxserver.bitswarm.sessions.ISession;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.SFSUser;
 import com.smartfoxserver.v2.entities.User;
-import com.tvd12.ezyfox.core.config.APIKey;
+import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
+import com.smartfoxserver.v2.entities.variables.UserVariable;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.sfs2x.command.impl.UserInfoImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 
@@ -117,7 +119,9 @@ public class UserInfoCommandImpleTest extends BaseCommandTest2 {
         m.put(sfsRoom, 1);
         when(user.getPlayerIds()).thenReturn(m);
         c.getPlayerIds();
-        
+        UserVariable var = new SFSUserVariable("abc", 1D);
+        when(user.getVariables()).thenReturn(Lists.newArrayList(var));
+        c.removeAllVariables();
         
     }
     

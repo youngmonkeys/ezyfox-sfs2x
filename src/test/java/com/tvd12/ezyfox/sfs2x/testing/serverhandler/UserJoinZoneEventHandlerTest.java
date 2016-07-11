@@ -2,15 +2,19 @@ package com.tvd12.ezyfox.sfs2x.testing.serverhandler;
 
 import org.testng.annotations.Test;
 
+import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
+import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.SFSExtension;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.constants.APIEvent;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiZoneImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.UserJoinZoneEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.context.BaseHandlerTest;
 
@@ -22,7 +26,31 @@ public class UserJoinZoneEventHandlerTest extends BaseHandlerTest {
 
     @Test
     public void test() throws SFSException {
+        ISFSApi api = mock(ISFSApi.class);
+        context.setApi(api);
+        doNothing().when(sfsExtension).send(any(String.class), any(ISFSObject.class), any(User.class));
         UserJoinZoneEventHandler hander = new ExUserJoinZoneEventHandler(context);
+        hander.setParentExtension(sfsExtension);
+        ISFSEvent event = mock(ISFSEvent.class);
+        when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser);
+        Zone sfsZone = mockZone();
+        ApiZone apiZone = new ApiZoneImpl(sfsZone);
+        when(sfsZone.getProperty(APIKey.ZONE)).thenReturn(apiZone);
+        when(event.getParameter(SFSEventParam.ZONE)).thenReturn(sfsZone);
+        
+        hander.handleServerEvent(event);
+        
+    }
+    
+    @Test
+    public void test2() throws SFSException {
+        ISFSApi api = mock(ISFSApi.class);
+        AppContextImpl ctx = spy(context);
+        when(ctx.isAutoResponse(APIEvent.ZONE_JOIN)).thenReturn(true);
+        ctx.setApi(api);
+        doNothing().when(sfsExtension).send(any(String.class), any(ISFSObject.class), any(User.class));
+        UserJoinZoneEventHandler hander = new ExUserJoinZoneEventHandler(ctx);
+        hander.setParentExtension(sfsExtension);
         ISFSEvent event = mock(ISFSEvent.class);
         when(event.getParameter(SFSEventParam.USER)).thenReturn(sfsUser);
         Zone sfsZone = mockZone();

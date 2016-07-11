@@ -9,8 +9,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSJoinRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.JoinRoom;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -41,7 +41,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#user(com.lagente.core.model.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom user(ApiBaseUser user) {
         this.userToJoin = user.getName();
@@ -51,7 +50,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom user(String username) {
         this.userToJoin = username;
@@ -61,7 +59,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#roomToJoin(com.lagente.core.model.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom roomToJoin(ApiRoom room) {
         this.roomToJoin = room.getName();
@@ -71,7 +68,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#roomToJoin(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom roomToJoin(String roomName) {
         this.roomToJoin = roomName;
@@ -81,7 +77,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#password(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom password(String password) {
         this.password = password;
@@ -91,7 +86,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#asSpectator(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom asSpectator(boolean value) {
         this.asSpectator = value;
@@ -101,7 +95,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#roomToLeave(com.lagente.core.model.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom roomToLeave(ApiRoom room) {
         this.roomToLeave = room.getName();
@@ -111,7 +104,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#roomToLeave(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom roomToLeave(String roomName) {
         this.roomToLeave = roomName;
@@ -121,7 +113,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom fireClientEvent(boolean value) {
         this.fireClientEvent = value;
@@ -131,7 +122,6 @@ public class JoinRoomImpl extends BaseCommandImpl implements JoinRoom {
     /* (non-Javadoc)
      * @see com.lagente.core.command.JoinRoom#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public JoinRoom fireServerEvent(boolean value) {
         this.fireServerEvent = value;

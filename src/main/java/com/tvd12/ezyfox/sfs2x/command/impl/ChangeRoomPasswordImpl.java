@@ -4,8 +4,8 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.exceptions.SFSRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.ChangeRoomPassword;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -47,9 +47,8 @@ public class ChangeRoomPasswordImpl extends BaseCommandImpl implements ChangeRoo
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomPassword owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -57,9 +56,8 @@ public class ChangeRoomPasswordImpl extends BaseCommandImpl implements ChangeRoo
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomPassword room(ApiRoom targetRoom) {
         this.targetRoom = targetRoom.getName();
@@ -67,9 +65,8 @@ public class ChangeRoomPasswordImpl extends BaseCommandImpl implements ChangeRoo
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#password(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.ChangeRoomPassword#password(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public ChangeRoomPassword password(String newPassword) {
         this.password = newPassword;

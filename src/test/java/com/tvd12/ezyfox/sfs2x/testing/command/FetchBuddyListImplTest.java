@@ -11,9 +11,10 @@ import org.testng.annotations.Test;
 import com.google.common.collect.Lists;
 import com.smartfoxserver.v2.buddylist.BuddyList;
 import com.smartfoxserver.v2.buddylist.BuddyListManager;
-import com.tvd12.ezyfox.core.model.ApiBuddy;
+import com.tvd12.ezyfox.core.entities.ApiBuddy;
 import com.tvd12.ezyfox.sfs2x.command.impl.FetchBuddyListImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
+
 import static org.testng.Assert.*;
 
 /**

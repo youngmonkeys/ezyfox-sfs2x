@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.KickUser;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -33,7 +33,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#user(com.lagente.core.model.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser user(ApiBaseUser user) {
         this.userToKick = user.getName();
@@ -43,7 +42,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser user(String username) {
         this.userToKick = username;
@@ -53,7 +51,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#modUser(com.lagente.core.model.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser modUser(ApiBaseUser user) {
         this.modUser = user.getName();
@@ -63,7 +60,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#modUser(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser modUser(String username) {
         this.modUser = username; 
@@ -73,7 +69,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser message(String message) {
         this.kickMessage = message;
@@ -83,7 +78,6 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     /* (non-Javadoc)
      * @see com.lagente.core.command.KickUser#delay(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public KickUser delay(int delaySeconds) {
         this.delaySeconds = delaySeconds;

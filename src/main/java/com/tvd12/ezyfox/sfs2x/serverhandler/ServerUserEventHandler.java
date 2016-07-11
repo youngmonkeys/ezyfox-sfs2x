@@ -3,7 +3,7 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 import java.util.List;
 
 import com.tvd12.ezyfox.core.config.ServerUserEventHandlerCenter;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.structure.ServerUserHandlerClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;

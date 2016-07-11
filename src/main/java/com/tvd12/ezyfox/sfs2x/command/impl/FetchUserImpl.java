@@ -5,8 +5,8 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.FetchUser;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -50,7 +50,6 @@ public class FetchUserImpl extends BaseCommandImpl implements FetchUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FetchUser#userId(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FetchUser userId(int userId) {
         this.userId = userId;
@@ -60,7 +59,6 @@ public class FetchUserImpl extends BaseCommandImpl implements FetchUser {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.FetchUser#username(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FetchUser username(String name) {
         this.username = name;
@@ -68,9 +66,8 @@ public class FetchUserImpl extends BaseCommandImpl implements FetchUser {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.FetchUser#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.FetchUser#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public FetchUser room(ApiRoom room) {
         this.room = room.getName();

@@ -2,7 +2,7 @@ package com.tvd12.ezyfox.sfs2x.testing.model;
 
 import org.testng.annotations.Test;
 
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 
 import static org.testng.Assert.*;

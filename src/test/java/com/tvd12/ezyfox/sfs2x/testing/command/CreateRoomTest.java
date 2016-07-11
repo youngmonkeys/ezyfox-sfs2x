@@ -12,13 +12,18 @@ import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.tvd12.ezyfox.core.annotation.RoomAgent;
 import com.tvd12.ezyfox.core.annotation.Variable;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.command.impl.CreateRoomImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.ApiModelFactory;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;
 
-public class CreateRoomTest extends BaseCommandTest {
+public class CreateRoomTest extends BaseCommandTest2 {
 
+    public CreateRoomTest() {
+        super();
+        
+    }
+    
     @Test
     public void test() {
         new CreateRoomImpl(context, api, extension)

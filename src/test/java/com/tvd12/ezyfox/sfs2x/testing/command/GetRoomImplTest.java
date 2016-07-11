@@ -6,7 +6,7 @@ package com.tvd12.ezyfox.sfs2x.testing.command;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.command.impl.FindRoomImpl;
 import static org.mockito.Mockito.*;
 

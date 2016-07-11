@@ -20,6 +20,34 @@ public class UpdateRoomImplTest extends BaseCommandTest {
         when(extension.getParentZone()).thenReturn(zone);
         UpdateRoomImpl update = new UpdateRoomImpl(context, api, extension);
         update.toClient(true)
+            .include("1", "2")
+            .exclude("1", "2")
+            .room(pokerRoom)
+            .user(null)
+            .execute();
+        
+        update.toClient(false)
+            .room(pokerRoom)
+            .user(null)
+            .execute();
+        
+        when(zone.getRoomByName("poker")).thenReturn(null);
+        update.toClient(false)
+            .room(pokerRoom)
+            .user(null)
+            .execute();
+        
+    }
+    
+    @Test
+    public void test1() {
+        PokerRoom pokerRoom = new PokerRoom();
+        pokerRoom.setName("poker");
+        Zone zone = mock(Zone.class);
+        when(zone.getRoomByName("poker")).thenReturn(new SFSRoom("poker"));
+        when(extension.getParentZone()).thenReturn(zone);
+        UpdateRoomImpl update = new UpdateRoomImpl(context, api, extension);
+        update.toClient(true)
             .room(pokerRoom)
             .user(null)
             .execute();

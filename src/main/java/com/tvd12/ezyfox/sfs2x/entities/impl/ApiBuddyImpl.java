@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.tvd12.ezyfox.sfs2x.model.impl;
+package com.tvd12.ezyfox.sfs2x.entities.impl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.smartfoxserver.v2.buddylist.SFSBuddy;
-import com.tvd12.ezyfox.core.model.ApiBuddy;
-import com.tvd12.ezyfox.core.model.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiBuddy;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiBuddy#setTemp(boolean)
+     * @see com.tvd12.ezyfox.core.entities.ApiBuddy#setTemp(boolean)
      */
     @Override
     public void setTemp(boolean temp) {
@@ -44,7 +44,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiProperties#setProperty(java.lang.Object, java.lang.Object)
+     * @see com.tvd12.ezyfox.core.entities.ApiProperties#setProperty(java.lang.Object, java.lang.Object)
      */
     @Override
     public void setProperty(Object key, Object value) {
@@ -52,7 +52,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiProperties#getProperty(java.lang.Object)
+     * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object)
      */
     @Override
     public Object getProperty(Object key) {
@@ -60,7 +60,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiProperties#getProperty(java.lang.Object, java.lang.Class)
+     * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object, java.lang.Class)
      */
     @Override
     public <T> T getProperty(Object key, Class<T> clazz) {
@@ -68,7 +68,7 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiProperties#removeProperty(java.lang.Object)
+     * @see com.tvd12.ezyfox.core.entities.ApiProperties#removeProperty(java.lang.Object)
      */
     @Override
     public void removeProperty(Object key) {

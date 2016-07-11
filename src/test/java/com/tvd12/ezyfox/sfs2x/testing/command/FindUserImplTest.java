@@ -20,6 +20,7 @@ public class FindUserImplTest extends BaseCommandTest2 {
         command.by(1);
         when(api.getUserById(2)).thenReturn(null);
         command.by(2);
+        command.by("abcxyz123");
     }
     
 }

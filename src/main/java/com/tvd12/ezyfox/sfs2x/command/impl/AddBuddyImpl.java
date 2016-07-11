@@ -22,13 +22,13 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSBuddyListException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.AddBuddy;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiBuddy;
-import com.tvd12.ezyfox.core.model.ApiUser;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBuddy;
+import com.tvd12.ezyfox.core.entities.ApiUser;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
 
 /**
  * @see AddBuddy
@@ -51,9 +51,8 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.AddBuddy#owner(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.AddBuddy#owner(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy owner(ApiBaseUser owner) {
         this.owner = owner.getName();
@@ -65,7 +64,6 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.AddBuddy#owner(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy owner(String ownerName) {
         this.owner = ownerName;
@@ -75,9 +73,8 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
 
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.AddBuddy#zone(com.tvd12.ezyfox.core.model.ApiZone)
+     * @see com.tvd12.ezyfox.core.command.AddBuddy#zone(com.tvd12.ezyfox.core.entities.ApiZone)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy zone(ApiZone zone) {
         this.zone = zone;
@@ -89,7 +86,6 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.AddBuddy#buddy(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy buddy(String buddyName) {
         this.target = buddyName;
@@ -101,7 +97,6 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.AddBuddy#temp(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy temp(boolean isTemp) {
         this.temp = isTemp;
@@ -113,7 +108,6 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.AddBuddy#fireClientEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy fireClientEvent(boolean fireClientEvent) {
         this.fireClientEvent = fireClientEvent;
@@ -125,7 +119,6 @@ public class AddBuddyImpl extends BaseCommandImpl implements AddBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.AddBuddy#fireServerEvent(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public AddBuddy fireServerEvent(boolean fireServerEvent) {
         this.fireServerEvent = fireServerEvent;

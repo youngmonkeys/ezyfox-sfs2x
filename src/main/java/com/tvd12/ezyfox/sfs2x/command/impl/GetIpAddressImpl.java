@@ -4,7 +4,7 @@ import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.GetIpAddress;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -38,9 +38,8 @@ public class GetIpAddressImpl extends BaseCommandImpl implements GetIpAddress {
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.GetIpAddress#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.GetIpAddress#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GetIpAddress user(ApiBaseUser user) {
         this.username = user.getName();
@@ -50,7 +49,6 @@ public class GetIpAddressImpl extends BaseCommandImpl implements GetIpAddress {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.GetIpAddress#user(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public GetIpAddress user(String username) {
         this.username = username;

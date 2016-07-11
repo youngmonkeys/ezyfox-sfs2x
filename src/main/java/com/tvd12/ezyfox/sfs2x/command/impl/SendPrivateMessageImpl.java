@@ -6,7 +6,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendPrivateMessage;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -54,9 +54,8 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#sender(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#sender(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage sender(ApiBaseUser sender) {
         this.sender = sender.getName();
@@ -66,7 +65,6 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendPrivateMessage#sender(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage sender(String senderName) {
         this.sender = senderName;
@@ -74,9 +72,8 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage recipient(ApiBaseUser recipient) {
         this.recipient = recipient.getName();
@@ -85,7 +82,6 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage message(String message) {
         this.message = message;
@@ -95,7 +91,6 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage recipient(String recipientName) {
         this.recipient = recipientName;
@@ -105,7 +100,6 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendPrivateMessage#params(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendPrivateMessage params(Object params) {
         this.params = params;

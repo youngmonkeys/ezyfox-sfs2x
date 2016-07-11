@@ -8,8 +8,9 @@ import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.annotation.RoomAgent;
 import com.tvd12.ezyfox.core.command.CreateRoom;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.command.RoomInfo;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.AgentClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
@@ -84,6 +85,7 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
             room.setProperty(APIKey.ROOM, agent);
             agent.setId(room.getId());
             agent.setPasswordProtected(room.isPasswordProtected());
+            agent.setCommand(context.command(RoomInfo.class).room(room.getId()));
         }
         catch (SFSCreateRoomException e) {
             throw new IllegalStateException("Can not create room " + agent.getName(), e);

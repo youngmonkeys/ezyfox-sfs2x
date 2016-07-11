@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
+import com.smartfoxserver.v2.entities.data.ISFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.variables.Variable;
 import com.tvd12.ezyfox.core.structure.ClassUnwrapper;
 import com.tvd12.ezyfox.core.structure.GetterMethodCover;
+import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
 
 /**
  * Support to serialize a java object to a list of smartfox variables 
@@ -79,57 +80,30 @@ public abstract class AgentSerializer extends ParameterSerializer {
         else if(method.isObject()) {
             value = parseObject(method, value);
         }
-        else if(method.isPrimitiveBooleanArray()) {
-	        value = StringUtils.join((boolean[])value, ",");
-	    }
-	    else if(method.isPrimitiveByteArray()) {
-	        value = new String((byte[])value);
-	    }
-	    else if(method.isPrimitiveCharArray()) {
-	        value = new String((char[])value);
-	    }
-	    else if(method.isPrimitiveDoubleArray()) {
-	        value = StringUtils.join((double[])value, ",");
-	    }
-	    else if(method.isPrimitiveFloatArray()) {
-	        value = StringUtils.join((float[])value, ",");
-	    }
-	    else if(method.isPrimitiveIntArray()) {
-	        value = StringUtils.join((int[])value, ",");
-	    }
-	    else if(method.isPrimitiveLongArray()) {
-	        value = StringUtils.join((long[])value, ",");
-	    }
-	    else if(method.isPrimitiveShortArray()) {
-	        value = StringUtils.join((short[])value, ",");
-	    }
-	    else if(method.isObjectArray()) {
-            value = parseObjectArray(method, (Object[])value);
+        else if(method.isObjectArray()) {
+            value = parseArray(method, value);
         }
-	    else if(method.isArray()) {
-	        value = StringUtils.join((Object[])value, ",");
-	    }
-	    else if(method.isArrayObjectCollection()) {
-	        value = parseArrayObjectCollection(method, (Collection)value);
-	    }
-	    else if(method.isObjectCollection()) {
-	        value = parseObjectCollection(method, (Collection)value);
-	    }
-        else if(method.isColection()) {
-            value = toString((Collection)value);
+        else if(method.isArrayObjectCollection()) {
+            return parseArrayObjectCollection(method, (Collection)value);
+        }
+        else if(method.isObjectCollection()) {
+            return parseObjectCollection(method, (Collection)value);
+        }
+        else if(method.isArrayCollection()) {
+            return parseArrayCollection(method, (Collection)value);
+        }
+        else if(method.isArray() || method.isColection()) {
+            return transformSimpleValue(value);
         }
 	    return value;
 	}
 	
-	/**
-	 * Convert a collection of value csv string
-	 * 
-	 * @param value the collection of values
-	 * @return csv string
-	 */
-	@SuppressWarnings("rawtypes")
-    protected String toString(Collection value) {
-	    return StringUtils.join(value, ",");
+	protected ISFSArray transformSimpleValue(Object value) {
+	    ISFSArray answer = new SFSArray();
+	    answer.add(TRANSFORMER.transform(value));
+	    return answer;
 	}
 	
+	private static final SimpleTransformer TRANSFORMER
+        = new SimpleTransformer();
 }

@@ -2,14 +2,20 @@ package com.tvd12.ezyfox.sfs2x.testing.data;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
+import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
+import com.tvd12.ezyfox.core.annotation.ResponseParam;
 import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
+
+import lombok.Data;
 
 /**
  * @author tavandung12
@@ -206,10 +212,30 @@ public class SimpleTransformerTest {
         
         wrapper = transformer.transform(Lists.newArrayList());
         assertEquals(wrapper.getTypeId(), SFSDataType.NULL);
+        
+        wrapper = transformer.transform(Lists.newArrayList(new int[] {10}, new int[] {11}));
+        assertEquals(wrapper.getTypeId(), SFSDataType.SFS_ARRAY);
+        
+        wrapper = transformer.transform(new Result[] {new Result(), new Result()});
+        assertEquals(wrapper.getTypeId(), SFSDataType.SFS_ARRAY);
+        ISFSArray sfsArray = (ISFSArray)wrapper.getObject();
+        assertEquals(sfsArray.size(), 2);
+        assertEquals(sfsArray.getSFSObject(0).getUtfString("2"), "r");
+        
+        wrapper = transformer.transform(Lists.newArrayList(new Result(), new Result()));
+        assertEquals(wrapper.getTypeId(), SFSDataType.SFS_ARRAY);
+        sfsArray = (ISFSArray)wrapper.getObject();
+        assertEquals(sfsArray.size(), 2);
+        assertEquals(sfsArray.getSFSObject(0).getUtfString("2"), "r");
+        
+        wrapper = transformer.transform(new Result[0]);
+        assertEquals(wrapper.getTypeId(), SFSDataType.NULL);
+        assertEquals(wrapper.getObject(), null);
+        
     }
     
-    @Test(expectedExceptions = {IllegalArgumentException.class})
-    public void testInvalidCase1() {
+    @Test
+    public void testValidCase1() {
         SimpleTransformer transformer = new SimpleTransformer();
         transformer.transform(new Object());
     }
@@ -217,7 +243,22 @@ public class SimpleTransformerTest {
     @Test(expectedExceptions = {IllegalArgumentException.class})
     public void testInvalidCase2() {
         SimpleTransformer transformer = new SimpleTransformer();
-        transformer.transform(Lists.newArrayList(new Object()));
+        List<ArrayList<Object>> list = new ArrayList<>();
+        list.add(new ArrayList<>());
+        transformer.transform(list);
     }
     
+    @Test(expectedExceptions = {IllegalArgumentException.class})
+    public void testInvalidCase3() {
+        SimpleTransformer transformer = new SimpleTransformer();
+        transformer.transform(new Void[1]);
+    }
+    
+    @Data
+    public static class Result {
+        @ResponseParam("1")
+        private int id = 1;
+        @ResponseParam("2")
+        private String name = "r";
+    }
 }

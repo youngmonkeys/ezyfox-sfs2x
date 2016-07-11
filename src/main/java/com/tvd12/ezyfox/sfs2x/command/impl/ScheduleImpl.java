@@ -21,6 +21,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     
     private long delayTime;
     private boolean onTime;
+    private boolean stopped;
     private long period;
     private Runnable runnable;
     
@@ -35,13 +36,13 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     public ScheduleImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
+        this.stopped = false;
     }
 
     /**
      * @see Schedule#delay(long)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl delay(long time) {
         this.delayTime = time;
         return this;
@@ -51,7 +52,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#oneTime(boolean)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl oneTime(boolean value) {
         this.onTime = value;
         return this;
@@ -61,7 +61,6 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#period(long)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl period(long value) {
         this.period = value;
         return this;
@@ -71,10 +70,17 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @see Schedule#task(Runnable)
      */
     @Override
-    @SuppressWarnings("unchecked")
     public ScheduleImpl task(Runnable value) {
         this.runnable = value;
         return this;
+    }
+    
+    /**
+     * @see com.tvd12.ezyfox.core.command.Schedule#stopped()
+     */
+    @Override
+    public boolean stopped() {
+        return stopped;
     }
 
     /**
@@ -82,8 +88,10 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     @Override
     public void schedule() {
+        stopped = false;
         TaskScheduler scheduler = SmartFoxServer
-                    .getInstance().getTaskScheduler();
+                    .getInstance()
+                    .getTaskScheduler();
         if(onTime)
             scheduleOneTime(scheduler);
         else 
@@ -97,6 +105,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     public void stop() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
+        stopped = true;
     }
     
     /**
@@ -106,6 +115,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     public void stopNow() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
+        stopped = true;
     }
     
     /**

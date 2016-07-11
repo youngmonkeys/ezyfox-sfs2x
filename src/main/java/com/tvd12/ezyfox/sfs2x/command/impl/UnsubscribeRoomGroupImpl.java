@@ -3,7 +3,7 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.UnsubscribeRoomGroup;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
@@ -38,9 +38,8 @@ public class UnsubscribeRoomGroupImpl extends BaseCommandImpl implements Unsubsc
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.UnsubscribeRoomGroup#user(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.UnsubscribeRoomGroup#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UnsubscribeRoomGroup user(ApiBaseUser user) {
         this.user = user.getName();
@@ -50,7 +49,6 @@ public class UnsubscribeRoomGroupImpl extends BaseCommandImpl implements Unsubsc
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.UnsubscribeRoomGroup#groupId(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public UnsubscribeRoomGroup groupId(String groupId) {
         this.groupId = groupId;

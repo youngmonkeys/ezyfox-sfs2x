@@ -1,8 +1,8 @@
-package com.tvd12.ezyfox.sfs2x.model.impl;
+package com.tvd12.ezyfox.sfs2x.entities.impl;
 
-import com.tvd12.ezyfox.core.model.ApiBaseMessage;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.entities.ApiBaseMessage;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 
 import lombok.Setter;
 
@@ -21,21 +21,21 @@ public class ApiBaseMessageImpl implements ApiBaseMessage {
     protected ApiZone zone;
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiBaseMessage#content()
+     * @see com.tvd12.ezyfox.core.entities.ApiBaseMessage#content()
      */
     @Override
     public String content() {
         return content;
     }
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiBaseMessage#zone()
+     * @see com.tvd12.ezyfox.core.entities.ApiBaseMessage#zone()
      */
     @Override
     public ApiZone zone() {
         return zone;
     }
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiBaseMessage#sender()
+     * @see com.tvd12.ezyfox.core.entities.ApiBaseMessage#sender()
      */
     @SuppressWarnings("unchecked")
     @Override

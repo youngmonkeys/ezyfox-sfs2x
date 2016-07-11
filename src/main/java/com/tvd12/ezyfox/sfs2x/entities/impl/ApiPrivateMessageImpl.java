@@ -1,7 +1,7 @@
-package com.tvd12.ezyfox.sfs2x.model.impl;
+package com.tvd12.ezyfox.sfs2x.entities.impl;
 
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiPrivateMessage;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiPrivateMessage;
 
 import lombok.Setter;
 
@@ -19,7 +19,7 @@ public class ApiPrivateMessageImpl extends ApiMessageImpl implements ApiPrivateM
     private ApiBaseUser recipient;
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.model.ApiMessageRecipient#recipient()
+     * @see com.tvd12.ezyfox.core.entities.ApiMessageRecipient#recipient()
      */
     @SuppressWarnings("unchecked")
     @Override

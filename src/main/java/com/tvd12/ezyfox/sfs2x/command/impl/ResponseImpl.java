@@ -4,6 +4,7 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +19,7 @@ import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.Response;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -51,7 +52,6 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     /* (non-Javadoc)
      * @see com.lagente.core.command.Response#command(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Response command(String command) {
         this.command = command;
@@ -61,7 +61,6 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     /* (non-Javadoc)
      * @see com.lagente.core.command.Response#data(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Response data(Object object) {
         this.data = object;
@@ -71,7 +70,6 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.Response#param(java.lang.String, java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Response param(String name, Object value) {
         addition.put(name, TRANSFORMER.transform(value));
@@ -81,27 +79,34 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     /* (non-Javadoc)
      * @see com.lagente.core.command.Response#user(com.lagente.core.model.ApiBaseUser)
      */
+    @Override
+    public Response recipient(ApiBaseUser... users) {
+        return recipient(Arrays.asList(users));
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#recipient(java.util.List)
+     */
     @SuppressWarnings("unchecked")
     @Override
-    public Response recipient(ApiBaseUser user) {
-        this.usernames.add(user.getName());
-        return this;
+    public <T extends Response, U extends ApiBaseUser> T recipient(List<U> users) {
+        for(ApiBaseUser user : users)
+            this.usernames.add(user.getName());
+        return (T)this;
     }
     
     /* (non-Javadoc)
      * @see com.lagente.core.command.Response#recipient(com.lagente.core.model.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public Response recipient(String username) {
-        this.usernames.add(username);
+    public Response recipient(String... usernames) {
+        this.usernames.addAll(Arrays.asList(usernames));
         return this;
     }
     
     /* (non-Javadoc)
      * @see com.lagente.core.command.Response#useUDP(boolean)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Response useUDP(boolean value) {
         this.useUDP = value;

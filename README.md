@@ -6,7 +6,7 @@
 
 #Synopsis
 
-This project support to create a server side game application more efficiently and more quickly (user smartfox server engine)
+This project supports to create a server side game application more efficiently and more quickly (use smartfox server engine)
 
 #Code Example
 
@@ -74,7 +74,7 @@ Let's say you want to listen a "bet" request from client and you also you want t
     @ResponseParam("2")
     private int roomId;
     
-    public void execute(AppContext context, VideoPokerUser user) {
+    public void execute(AppContext context, MyUser user) {
         MyRoom room = 
                 context.command(FindRoom.class).by(roomId);
         context.command(Log.class).from(this).info("user {} has just betted {} chips", 
@@ -108,7 +108,7 @@ Let's say you need validate a parameter in a request from client (i.e money in "
     @ResponseParam("2")
     private int roomId;
     
-    public void execute(AppContext context, VideoPokerUser user) throws Exception {
+    public void execute(AppContext context, MyUser user) throws Exception {
         if(money <= 0) {
             context.command(Response.class)
                 .command("2").recipient(user).execute();
@@ -121,7 +121,7 @@ Let's say you need validate a parameter in a request from client (i.e money in "
 
 #Motivation
 
-We have used smartfox server engine, we must use key-value object like SFSObject, SFSUser, SFSRoom e.t.c, they make our source code too complex, hard to read, hard to map, example:
+We have used smartfox server engine, we must use key-value object like SFSObject, SFSUser, SFSRoom e.t.c, they make our source code too complex, hard to read and hard to map, example:
 
 ```java
   // public user var
@@ -135,7 +135,7 @@ We have used smartfox server engine, we must use key-value object like SFSObject
   getApi().setUserVariables(user, Arrays.asList(avatarPic, dbId));
 ```
 
-We must spend a lot of time to declare, init variables. Some time we also have two or three user agent for each game, and mapping an user agent to key-value object is hard. We think using POJO is good idea, so we make this project.
+We must spend a lot of time to declare, init variables. Some time we also have two or three user agent for each game and mapping an user agent to key-value object is hard. We think using POJO is good idea, so we make this project.
 
 #Installation
 
@@ -143,7 +143,7 @@ We must spend a lot of time to declare, init variables. Some time we also have t
 	<dependency>
 		<groupId>com.tvd12</groupId>
 		<artifactId>ezyfox-sfs2x</artifactId>
-		<version>1.0.5</version>
+		<version>1.0.6</version>
 	</dependency>
 ```
 

@@ -6,14 +6,14 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.config.ServerEvent;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiBuddyMessage;
-import com.tvd12.ezyfox.core.model.ApiZone;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiBuddyMessage;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.model.impl.ApiBuddyMessageImpl;
+import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyMessageImpl;
 
 /**
  * Support to handle buddy message event

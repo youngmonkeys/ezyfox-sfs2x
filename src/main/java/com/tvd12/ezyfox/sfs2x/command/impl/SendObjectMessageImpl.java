@@ -16,9 +16,9 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.SendObjectMessage;
-import com.tvd12.ezyfox.core.config.APIKey;
-import com.tvd12.ezyfox.core.model.ApiBaseUser;
-import com.tvd12.ezyfox.core.model.ApiRoom;
+import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.MessageParamsClass;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -109,9 +109,8 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#room(com.tvd12.ezyfox.core.model.ApiRoom)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#room(com.tvd12.ezyfox.core.entities.ApiRoom)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage room(ApiRoom room) {
         this.roomName = room.getName();
@@ -121,7 +120,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#room(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage room(String roomName) {
         this.roomName = roomName;
@@ -131,7 +129,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#room(int)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage room(int roomId) {
         this.roomId = roomId;
@@ -139,9 +136,8 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#sender(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#sender(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage sender(ApiBaseUser sender) {
         this.sender = sender.getName();
@@ -149,9 +145,8 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     }
 
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(com.tvd12.ezyfox.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage recipient(ApiBaseUser recipient) {
         this.recipients.add(recipient.getName());
@@ -163,7 +158,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#message(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage message(String message) {
         this.messageString = message;
@@ -173,7 +167,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#message(java.lang.Object)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage message(Object data) {
         this.messageObject = data;
@@ -183,7 +176,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#jsonMessage(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage jsonMessage(String jsonMessage) {
         this.jsonMessage = jsonMessage;
@@ -193,19 +185,17 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipients(java.util.List)
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T extends SendObjectMessage> T recipients(List<ApiBaseUser> recipients) {
+    public SendObjectMessage recipients(List<ApiBaseUser> recipients) {
         for(ApiBaseUser user : recipients) {
             this.recipients.add(user.getName());
         }
-        return (T) this;
+        return this;
     }
     
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipients(java.lang.String[])
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage recipients(String... recipients) {
         this.recipients.addAll(Arrays.asList(recipients));
@@ -215,7 +205,6 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipient(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public SendObjectMessage recipient(String recipientName) {
         this.recipients.add(recipientName);
