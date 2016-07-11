@@ -21,6 +21,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     
     private long delayTime;
     private boolean onTime;
+    private boolean stopped;
     private long period;
     private Runnable runnable;
     
@@ -35,6 +36,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     public ScheduleImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
+        this.stopped = false;
     }
 
     /**
@@ -72,14 +74,24 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
         this.runnable = value;
         return this;
     }
+    
+    /**
+     * @see com.tvd12.ezyfox.core.command.Schedule#stopped()
+     */
+    @Override
+    public boolean stopped() {
+        return stopped;
+    }
 
     /**
      * @see Schedule#schedule()
      */
     @Override
     public void schedule() {
+        stopped = false;
         TaskScheduler scheduler = SmartFoxServer
-                    .getInstance().getTaskScheduler();
+                    .getInstance()
+                    .getTaskScheduler();
         if(onTime)
             scheduleOneTime(scheduler);
         else 
@@ -93,6 +105,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     public void stop() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
+        stopped = true;
     }
     
     /**
@@ -102,6 +115,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     public void stopNow() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
+        stopped = true;
     }
     
     /**

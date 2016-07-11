@@ -10,6 +10,8 @@ import org.testng.annotations.Test;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.sfs2x.command.impl.ScheduleImpl;
 
+import static org.testng.Assert.*;
+
 public class ScheduleImplTest extends BaseCommandTest {
 
     @Test
@@ -24,10 +26,13 @@ public class ScheduleImplTest extends BaseCommandTest {
                 sImpl.stop();
             }
         };
+        assertFalse(sImpl.stopped());
         sImpl.task(task);
         sImpl.stop();
+        assertTrue(sImpl.stopped());
         sImpl.stopNow();
         sImpl.schedule();
+        assertFalse(sImpl.stopped());
     }
     
     @Test
