@@ -30,8 +30,6 @@ public class ServerReadyEventHandler extends ServerBaseEventHandler {
 	 */
 	@Override
 	public void handleServerEvent(ISFSEvent event) throws SFSException {
-		AppContextImpl appContext = (AppContextImpl)context;
-		appContext.setExtension(getParentExtension());
 		notifyHandlers();
 	}
 	

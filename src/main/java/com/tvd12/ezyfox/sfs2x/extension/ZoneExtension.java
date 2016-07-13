@@ -126,6 +126,7 @@ public class ZoneExtension extends SFSExtension {
 				.getInstance()
 				.addContext(getClass(), new AppContextImpl(getClass()));
 		context.setApi(getApi());
+		context.setExtension(this);
 	}
 	
 	/**

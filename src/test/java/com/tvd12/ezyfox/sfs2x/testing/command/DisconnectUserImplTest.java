@@ -24,7 +24,7 @@ public class DisconnectUserImplTest extends BaseCommandTest2 {
         DisconnectUserImpl command = new DisconnectUserImpl(context, api, extension);
         command.user(user)
             .user(USER_NAME)
-            .reasonId((byte)1)
+            .reason((byte)1)
             .execute();
     }
     
@@ -34,7 +34,7 @@ public class DisconnectUserImplTest extends BaseCommandTest2 {
         DisconnectUserImpl command = new DisconnectUserImpl(context, api, extension);
         command.user(user)
             .user(USER_NAME)
-            .reasonId((byte)-1)
+            .reason((byte)-1)
             .execute();
     }
     
@@ -46,7 +46,7 @@ public class DisconnectUserImplTest extends BaseCommandTest2 {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 IDisconnectionReason reason = (IDisconnectionReason)invocation.getArguments()[1];
-                reason.getByteValue();
+                reason.getValue();
                 return null;
             }
         }).when(api).disconnectUser(any(User.class), any(IDisconnectionReason.class));

@@ -14,6 +14,7 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
+import com.smartfoxserver.v2.util.IDisconnectionReason;
 import com.tvd12.ezyfox.core.command.UserInfo;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
@@ -469,5 +470,22 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
         return this;
     }
 
-    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.UpdateUserInfo#disconnect(byte)
+     */
+    @Override
+    public void disconnect(final byte reasonId) {
+        sfsUser.disconnect(new IDisconnectionReason() {
+            
+            @Override
+            public int getValue() {
+                return getByteValue();
+            }
+            
+            @Override
+            public byte getByteValue() {
+                return reasonId;
+            }
+        });
+    }
 }

@@ -20,7 +20,7 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUser {
 
     private String username;
-    private byte reasonId = -1;
+    private byte reasonId;
     
     /**
      * @param context
@@ -53,7 +53,7 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
      * @see com.tvd12.ezyfox.core.command.DisconnectUser#reasonId(byte)
      */
    @Override
-    public DisconnectUser reasonId(byte id) {
+    public DisconnectUser reason(byte id) {
         this.reasonId = id;
         return this;
     }
@@ -65,20 +65,16 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     @Override
     public Boolean execute() {
         User user = CommandUtil.getSfsUser(username, api);
-        if(reasonId == -1) {
-            api.disconnectUser(user);
-            return Boolean.TRUE;
-        }
         api.disconnectUser(user, new IDisconnectionReason() {
             
             @Override
             public int getValue() {
-                return reasonId;
+                return getByteValue();
             }
             
             @Override
             public byte getByteValue() {
-                return (byte)getValue();
+                return reasonId;
             }
         });
         return Boolean.TRUE;
