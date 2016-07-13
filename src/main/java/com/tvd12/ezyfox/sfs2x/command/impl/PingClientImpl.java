@@ -5,25 +5,32 @@ import java.util.concurrent.TimeUnit;
 
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.api.ISFSApi;
+import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.TaskScheduler;
+import com.tvd12.ezyfox.core.command.PingClient;
 import com.tvd12.ezyfox.core.command.Schedule;
+import com.tvd12.ezyfox.core.constants.ApiRequest;
+import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
- * @see Schedule
+ * @see PingClient
  * 
  * @author tavandung12
  * Created on May 31, 2016
  *
  */
-public class ScheduleImpl extends BaseCommandImpl implements Schedule {
+public class PingClientImpl extends BaseCommandImpl implements PingClient {
     
     private long delayTime;
     private boolean onTime;
     private boolean stopped;
     private long period;
     private Runnable runnable;
+    private ApiBaseUser user;
     
     private ScheduledFuture<?> scheduledFuture;
     
@@ -34,50 +41,59 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      * @param api
      * @param extension
      */
-    public ScheduleImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
+    public PingClientImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
         this.stopped = false;
         this.onTime = true;
     }
 
     /**
-     * @see Schedule#delay(long)
+     * @see PingClient#delay(long)
      */
     @Override
-    public ScheduleImpl delay(long time) {
+    public PingClientImpl delay(long time) {
         this.delayTime = time;
         return this;
     }
 
     /**
-     * @see Schedule#oneTime(boolean)
+     * @see PingClient#oneTime(boolean)
      */
     @Override
-    public ScheduleImpl oneTime(boolean value) {
+    public PingClientImpl oneTime(boolean value) {
         this.onTime = value;
         return this;
     }
 
     /**
-     * @see Schedule#period(long)
+     * @see PingClient#period(long)
      */
     @Override
-    public ScheduleImpl period(long value) {
+    public PingClientImpl period(long value) {
         this.period = value;
         return this;
     }
 
     /**
-     * @see Schedule#task(Runnable)
+     * @see PingClient#callback(Runnable)
      */
     @Override
-    public ScheduleImpl task(Runnable value) {
+    public PingClientImpl callback(Runnable value) {
         this.runnable = value;
         return this;
     }
     
     /**
-     * @see com.tvd12.ezyfox.core.command.Schedule#stopped()
+     * @see com.tvd12.ezyfox.core.command.PingClient#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
+     */
+    @Override
+    public PingClientImpl user(ApiBaseUser user) {
+        this.user = user;
+        return this;
+    }
+    
+    /**
+     * @see com.tvd12.ezyfox.core.command.PingClient#stopped()
      */
     @Override
     public boolean stopped() {
@@ -85,11 +101,12 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     }
 
     /**
-     * @see Schedule#schedule()
+     * @see PingClient#ping()
      */
     @Override
-    public void schedule() {
+    public void ping() {
         stopped = false;
+        sendPingCommand();
         TaskScheduler scheduler = SmartFoxServer
                     .getInstance()
                     .getTaskScheduler();
@@ -98,9 +115,15 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
         else 
             schedule(scheduler);
     }
+    
+    private void sendPingCommand() {
+        User sfsUser = CommandUtil.getSfsUser(user, api);
+        ISFSObject params = new SFSObject();
+        extension.send(ApiRequest.PING, params, sfsUser);
+    }
 
     /**
-     * @see Schedule#stop()
+     * @see PingClient#stop()
      */
     @Override
     public void stop() {

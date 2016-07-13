@@ -1,5 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.testing.command;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -8,6 +10,8 @@ import static org.testng.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -17,6 +21,7 @@ import com.smartfoxserver.v2.entities.SFSUser;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
+import com.smartfoxserver.v2.util.IDisconnectionReason;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.sfs2x.command.impl.UserInfoImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
@@ -122,6 +127,19 @@ public class UserInfoCommandImpleTest extends BaseCommandTest2 {
         UserVariable var = new SFSUserVariable("abc", 1D);
         when(user.getVariables()).thenReturn(Lists.newArrayList(var));
         c.removeAllVariables();
+        
+        doAnswer(new Answer<Void>() {
+            /* (non-Javadoc)
+             * @see org.mockito.stubbing.Answer#answer(org.mockito.invocation.InvocationOnMock)
+             */
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                IDisconnectionReason reason = (IDisconnectionReason)invocation.getArguments()[0];
+                assertEquals(reason.getValue(), (byte)1);
+                return null;
+            }
+        }).when(user).disconnect(any(IDisconnectionReason.class));
+        c.disconnect((byte)1);
         
     }
     
