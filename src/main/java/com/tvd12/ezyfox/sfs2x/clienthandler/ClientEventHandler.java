@@ -42,16 +42,15 @@ public class ClientEventHandler extends ClientRequestHandler {
 	@Override
 	public void handleClientRequest(User user, ISFSObject params) {
 		ApiUser apiUser = AgentUtil.getUserAgent(user);
-		for(RequestResponseClass clazz : listeners) {
-		    Object userAgent = checkUserAgent(clazz, apiUser);
-		    try {
-		        notifyListener(clazz, params, user, userAgent);
-		    } catch(Exception e) {
-		        if(isBadRequestException(e)) {
-		            responseErrorToClient(e, user); break;
-		        }
-		        throw new RuntimeException(e);
-		    }
+		try {
+	        for(RequestResponseClass clazz : listeners) {
+	            Object userAgent = checkUserAgent(clazz, apiUser);
+	            notifyListener(clazz, params, user, userAgent);
+	        }
+		} catch(Exception e) {
+		    if(isBadRequestException(e)) 
+		        responseErrorToClient(e, user);
+		    else throw new RuntimeException(e);
 		}
 	}
 	

@@ -2,6 +2,7 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.api.ISFSApi;
@@ -9,6 +10,8 @@ import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.TaskScheduler;
 import com.tvd12.ezyfox.core.command.Schedule;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+
+import lombok.AllArgsConstructor;
 
 /**
  * @see Schedule
@@ -21,9 +24,9 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     
     private long delayTime;
     private boolean onTime;
-    private boolean stopped;
     private long period;
-    private Runnable runnable;
+    private RunnableImpl runnable;
+    private AtomicBoolean stopped;
     
     private ScheduledFuture<?> scheduledFuture;
     
@@ -36,8 +39,8 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     public ScheduleImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        this.stopped = false;
         this.onTime = true;
+        this.stopped = new AtomicBoolean(false);
     }
 
     /**
@@ -72,7 +75,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     @Override
     public ScheduleImpl task(Runnable value) {
-        this.runnable = value;
+        this.runnable = new RunnableImpl(value);
         return this;
     }
     
@@ -81,7 +84,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     @Override
     public boolean stopped() {
-        return stopped;
+        return stopped.get();
     }
 
     /**
@@ -89,7 +92,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     @Override
     public void schedule() {
-        stopped = false;
+        stopped.set(false);
         TaskScheduler scheduler = SmartFoxServer
                     .getInstance()
                     .getTaskScheduler();
@@ -104,19 +107,48 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
      */
     @Override
     public void stop() {
-        if(scheduledFuture != null)
-            scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
-        stopped = true;
+        cancelNow();
+        stopped.set(true);
     }
     
-    /**
-     * @see Schedule#stopNow()
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Schedule#cancel()
      */
     @Override
-    public void stopNow() {
+    public boolean cancel() {
+        if(scheduledFuture != null)
+            return scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Schedule#cancelNow()
+     */
+    @Override
+    public boolean cancelNow() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
-        stopped = true;
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Schedule#cancelled()
+     */
+    @Override
+    public boolean cancelled() {
+        if(scheduledFuture != null)
+            return scheduledFuture.isCancelled();
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Schedule#done()
+     */
+    @Override
+    public boolean done() {
+        if(scheduledFuture != null)
+            return scheduledFuture.isDone();
+        return false;
     }
     
     /**
@@ -138,4 +170,15 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
                 runnable, (int)delayTime, (int)period, TimeUnit.MILLISECONDS);
     }
     
+    @AllArgsConstructor
+    private class RunnableImpl implements Runnable {
+        
+        private Runnable task;
+        
+        @Override
+        public void run() {
+            if(!stopped.get())
+                task.run();
+        }
+    }
 }

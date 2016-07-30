@@ -5,12 +5,14 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.concurrent.ScheduledFuture;
 
 import org.testng.annotations.Test;
 
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
 import com.tvd12.ezyfox.sfs2x.command.impl.PingClientImpl;
+import com.tvd12.test.reflect.MethodBuilder;
 
 public class PingClientImplTest extends BaseCommandTest2 {
 
@@ -27,16 +29,24 @@ public class PingClientImplTest extends BaseCommandTest2 {
                 sImpl.stop();
             }
         };
+        assertTrue(sImpl.cancel());
+        assertTrue(sImpl.cancelled());
+        assertFalse(sImpl.done());
         assertFalse(sImpl.stopped());
         sImpl.callback(task);
         sImpl.stop();
         assertTrue(sImpl.stopped());
-        sImpl.stopNow();
+        sImpl.stop();
+        sImpl.ping();
+        sImpl.cancel();
+        sImpl.cancelNow();
+        sImpl.cancelled();
+        sImpl.done();
         sImpl.ping();
     }
     
     @Test
-    public void test2() {
+    public void test2() throws Exception {
         final PingClientImpl sImpl = new PingClientImpl(context, api, extension)
                 .delay(0)
                 .oneTime(false)
@@ -44,12 +54,11 @@ public class PingClientImplTest extends BaseCommandTest2 {
             Runnable task = new Runnable() {
                 @Override
                 public void run() {
-                    sImpl.stopNow();
+                    sImpl.stop();
                 }
             };
-            sImpl.callback(task);
             sImpl.stop();
-            sImpl.stopNow();
+            sImpl.callback(task);
             sImpl.ping();
     }
     
@@ -64,4 +73,27 @@ public class PingClientImplTest extends BaseCommandTest2 {
         sImpl.stop();
     }
     
+    @Test
+    public void test4() throws Exception {
+        final PingClientImpl sImpl = new PingClientImpl(context, api, extension)
+                .delay(0)
+                .oneTime(true)
+                .period(1);
+            Runnable task = new Runnable() {
+                @Override
+                public void run() {
+                    sImpl.stop();
+                }
+            };
+            sImpl.callback(task);
+            sImpl.stop();
+            Field runnableField = PingClientImpl.class.getDeclaredField("runnable");
+            runnableField.setAccessible(true);
+            Method runMethod = MethodBuilder.create()
+                    .clazz(runnableField.getType())
+                    .method("run")
+                    .build();
+            runMethod.setAccessible(true);
+            runMethod.invoke(runnableField.get(sImpl));
+    }
 }
