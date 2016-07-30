@@ -2,6 +2,7 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.api.ISFSApi;
@@ -11,10 +12,11 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.TaskScheduler;
 import com.tvd12.ezyfox.core.command.PingClient;
-import com.tvd12.ezyfox.core.command.Schedule;
 import com.tvd12.ezyfox.core.constants.ApiRequest;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+
+import lombok.AllArgsConstructor;
 
 /**
  * @see PingClient
@@ -27,10 +29,10 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
     
     private long delayTime;
     private boolean onTime;
-    private boolean stopped;
     private long period;
-    private Runnable runnable;
     private ApiBaseUser user;
+    private RunnableImpl runnable;
+    private AtomicBoolean stopped;
     
     private ScheduledFuture<?> scheduledFuture;
     
@@ -43,8 +45,8 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     public PingClientImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        this.stopped = false;
         this.onTime = true;
+        this.stopped = new AtomicBoolean(false);
     }
 
     /**
@@ -79,7 +81,7 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     @Override
     public PingClientImpl callback(Runnable value) {
-        this.runnable = value;
+        this.runnable = new RunnableImpl(value);
         return this;
     }
     
@@ -97,7 +99,7 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     @Override
     public boolean stopped() {
-        return stopped;
+        return stopped.get();
     }
 
     /**
@@ -105,7 +107,7 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     @Override
     public void ping() {
-        stopped = false;
+        stopped.set(false);
         sendPingCommand();
         TaskScheduler scheduler = SmartFoxServer
                     .getInstance()
@@ -127,19 +129,48 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     @Override
     public void stop() {
-        if(scheduledFuture != null)
-            scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
-        stopped = true;
+        cancelNow();
+        stopped.set(true);
     }
     
-    /**
-     * @see Schedule#stopNow()
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.PingClient#cancel()
      */
     @Override
-    public void stopNow() {
+    public boolean cancel() {
+        if(scheduledFuture != null)
+            return scheduledFuture.cancel(DONT_INTERRUPT_IF_RUNNING);
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.PingClient#cancelNow()
+     */
+    @Override
+    public boolean cancelNow() {
         if(scheduledFuture != null)
             scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
-        stopped = true;
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.PingClient#cancelled()
+     */
+    @Override
+    public boolean cancelled() {
+        if(scheduledFuture != null)
+            return scheduledFuture.isCancelled();
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.PingClient#done()
+     */
+    @Override
+    public boolean done() {
+        if(scheduledFuture != null)
+            return scheduledFuture.isDone();
+        return false;
     }
     
     /**
@@ -161,4 +192,15 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
                 runnable, (int)delayTime, (int)period, TimeUnit.MILLISECONDS);
     }
     
+    @AllArgsConstructor
+    private class RunnableImpl implements Runnable {
+        
+        private Runnable task;
+        
+        @Override
+        public void run() {
+            if(!stopped.get())
+                task.run();
+        }
+    }
 }
