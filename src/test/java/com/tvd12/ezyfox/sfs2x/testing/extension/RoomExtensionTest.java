@@ -1,0 +1,30 @@
+package com.tvd12.ezyfox.sfs2x.testing.extension;
+
+import org.testng.annotations.Test;
+
+import com.tvd12.ezyfox.core.content.ContextProvider;
+import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.testing.context.AppEntryPoint;
+import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension;
+import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension2;
+
+/**
+ * @author tavandung12
+ * Created on Aug 16, 2016
+ *
+ */
+public class RoomExtensionTest {
+
+    @Test
+    public void test() {
+        new ExRoomExtension().init();
+    }
+    
+    @Test
+    public void test2() {
+        AppContextImpl ctx = new AppContextImpl(AppEntryPoint.class);
+        ContextProvider.getInstance().addContext(AppEntryPoint.class, ctx);
+        new ExRoomExtension2().init();
+    }
+    
+}

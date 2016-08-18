@@ -49,7 +49,7 @@ public class ZoneExtension extends SFSExtension {
 		before();
 		addServerEventHandlers();
 		addClientRequestHandlers();
-		addZoneAgent();
+		addAgent();
 		addSysControllerFilters();
 		startServerInitializingEventHandler();
 		config();
@@ -122,11 +122,20 @@ public class ZoneExtension extends SFSExtension {
 	 * Initialize application context
 	 */
 	private void initContext() {
-		context = (AppContextImpl)ContextProvider
-				.getInstance()
-				.addContext(getClass(), new AppContextImpl(getClass()));
+		context = createAppContext();
 		context.setApi(getApi());
 		context.setExtension(this);
+	}
+	
+	/**
+	 * Create application context
+	 * 
+	 * @return the context
+	 */
+	protected AppContextImpl createAppContext() {
+	    return (AppContextImpl)ContextProvider
+                .getInstance()
+                .addContext(getClass(), new AppContextImpl(getClass()));
 	}
 	
 	/**
@@ -145,8 +154,18 @@ public class ZoneExtension extends SFSExtension {
 	 * @param command the command
 	 */
 	protected void addClientRequestHandler(String command) {
-		addClientRequestHandler(new ClientEventHandler(context, command));
+		addClientRequestHandler(newClientEventHandler(command));
 	}
+	
+	/**
+	 * Create new client event handler
+	 * 
+	 * @param command the command
+	 * @return the client event handler
+	 */
+	protected ClientEventHandler newClientEventHandler(String command) {
+        return new ClientEventHandler(context, command);
+    }
 	
 	/**
 	 * Add client request handle
@@ -160,7 +179,7 @@ public class ZoneExtension extends SFSExtension {
 	/**
 	 * Initialize ApiZone object and bind it to smartfox zone
 	 */
-	private void addZoneAgent() {
+	protected void addAgent() {
 		getParentZone().setProperty(APIKey.ZONE, 
 				new ApiZoneImpl(getParentZone()));
 	}
@@ -176,6 +195,5 @@ public class ZoneExtension extends SFSExtension {
 	        getParentZone().setFilterChain(rq, filterChain);
 	    }
 	}
-	
 	
 }

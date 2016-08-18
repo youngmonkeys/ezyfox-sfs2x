@@ -3,6 +3,8 @@ package com.tvd12.ezyfox.sfs2x.clienthandler;
 import static com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer.requestParamDeserializer;
 import static com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer.responseParamSerializer;
 
+import java.lang.reflect.Method;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.smartfoxserver.v2.entities.User;
@@ -67,9 +69,20 @@ public class ClientEventHandler extends ClientRequestHandler {
 	        ISFSObject params, User user, Object userAgent) throws Exception {
 	    Object listener = requestParamDeserializer()
 	            .deserialize(clazz.getRequestListenerClass(), params);
-	    ReflectMethodUtil.invokeExecuteMethod(
-	            clazz.getExecuteMethod(), listener, context, userAgent);
+	    invokeExecuteMethod(clazz.getExecuteMethod(), listener, userAgent);
 	    responseClient(clazz, listener, user);
+	}
+	
+	/**
+	 * Invoke the execute method
+	 * 
+	 * @param method the execute method
+	 * @param listener the listener
+	 * @param userAgent the user agent object
+	 */
+	protected void invokeExecuteMethod(Method method, Object listener, Object userAgent) {
+	    ReflectMethodUtil.invokeExecuteMethod(
+                method, listener, context, userAgent);
 	}
 	
 	/**
