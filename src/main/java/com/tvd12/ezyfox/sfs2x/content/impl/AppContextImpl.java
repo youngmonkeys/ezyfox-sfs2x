@@ -230,8 +230,12 @@ public class AppContextImpl implements AppContext {
 	 * @param entryPoint application's entry point class
 	 */
 	private void initExtensionConfig(Class<?> entryPoint) {
-		extensionConfig = new ExtensionConfiguration();
+		extensionConfig = newExtensionConfiguration();
 		extensionConfig.load(entryPoint);
+	}
+	
+	protected ExtensionConfiguration newExtensionConfiguration() {
+	    return new ExtensionConfiguration();
 	}
 	
 	/**
@@ -257,7 +261,7 @@ public class AppContextImpl implements AppContext {
 	/**
 	 * Read configuration file and add all constructors to map
 	 */
-	private void initCommands() {
+	protected void initCommands() {
 	    Map<Object, Class<?>> commandsClass 
 	            = CommandProvider.provide(getClass());
 	    commands = new HashMap<>();

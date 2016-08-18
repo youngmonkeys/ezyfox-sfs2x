@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import com.smartfoxserver.v2.api.CreateRoomSettings;
+import com.smartfoxserver.v2.api.CreateRoomSettings.RoomExtensionSettings;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.SFSRoomRemoveMode;
@@ -113,6 +114,8 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
         settings.setGroupId(agent.getGroupdId());
         settings.setUseWordsFilter(agent.isUseWordsFilter());
         settings.setAutoRemoveMode(SFSRoomRemoveMode.fromString(agent.getRemoveMode().name()));
+        if(agent.getExtension() != null) 
+            settings.setExtension(new RoomExtensionSettings(agent.getExtension().getName(), agent.getExtension().getClazz()));
         return settings;
 	}
     
