@@ -72,7 +72,7 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      */
     @Override
     public Response param(String name, Object value) {
-        addition.put(name, TRANSFORMER.transform(value));
+        addition.put(name, new SimpleTransformer(context).transform(value));
         return this;
     }
     
@@ -156,6 +156,4 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
             throw new IllegalStateException("Invalid command");
     }
  
-    private static final SimpleTransformer TRANSFORMER
-            = new SimpleTransformer();
 }

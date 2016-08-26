@@ -64,7 +64,6 @@ public class AppContextImpl implements AppContext {
 		this.initRequestListenerCenter();
 		
 		this.initCommands();
-		this.initProperties();
 	}
 	
 	/**
@@ -269,13 +268,6 @@ public class AppContextImpl implements AppContext {
 	        Constructor<?> constructor = getCommandConstructor(entry.getValue());
 	        commands.put(entry.getKey(), constructor);
 	    }
-	}
-	
-	/**
-	 * initialize properties object
-	 */
-	private void initProperties() {
-		properties = new HashMap<>();
 	}
 	
 	/**
