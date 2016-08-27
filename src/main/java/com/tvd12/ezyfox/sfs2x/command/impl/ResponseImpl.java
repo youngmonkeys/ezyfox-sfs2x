@@ -81,15 +81,15 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      */
     @Override
     public Response recipient(ApiBaseUser... users) {
-        return recipient(Arrays.asList(users));
+        return recipients(Arrays.asList(users));
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Response#recipient(java.util.List)
+     * @see com.tvd12.ezyfox.core.command.Response#recipients(java.util.List)
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Response, U extends ApiBaseUser> T recipient(List<U> users) {
+    public <T extends Response, U extends ApiBaseUser> T recipients(List<U> users) {
         for(ApiBaseUser user : users)
             this.usernames.add(user.getName());
         return (T)this;
