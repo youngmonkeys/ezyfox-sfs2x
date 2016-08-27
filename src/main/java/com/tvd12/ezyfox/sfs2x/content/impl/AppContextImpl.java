@@ -42,9 +42,6 @@ public class AppContextImpl implements AppContext {
 	// holds all structures of server event handler classes
 	private ServerEventHandlerClasses serverEventHandlerClasses;
 	
-	// map of interface names and constructor of command implementation classes
-	private Map<Object, Constructor<?>> commands;
-	
 	// map of interface names and constructor of command implementation classes in a specific application
 	private Map<Object, Constructor<?>> appCommands
 	        = new ConcurrentHashMap<>();
@@ -52,6 +49,9 @@ public class AppContextImpl implements AppContext {
 	// properties object
 	private Map<Object, Object> properties
 	        = new ConcurrentHashMap<>();
+	
+	// map of interface names and constructor of command implementation classes
+    protected Map<Object, Constructor<?>> commands;
 	
 	/**
 	 * Application entry point's class
@@ -176,7 +176,10 @@ public class AppContextImpl implements AppContext {
      * @return structure of response parameter class
      */
     public ResponseParamsClass getResponseParamsClass(Class<?> clazz) {
-        return getResponseParamsClasses().get(clazz);
+         ResponseParamsClass answer = getResponseParamsClasses().get(clazz);
+         if(answer == null)
+             answer = new ResponseParamsClass(clazz);
+         return answer;
     }
     
     /**
