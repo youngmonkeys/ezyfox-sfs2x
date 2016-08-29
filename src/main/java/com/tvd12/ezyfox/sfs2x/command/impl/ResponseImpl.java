@@ -35,10 +35,12 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     private Object data;
     private String command;
     private boolean useUDP = false;
-    private Set<String> usernames
-            = new HashSet<>();
-    private Map<String, SFSDataWrapper> addition 
-            = new HashMap<>();
+    
+    private List<String> includedVars = new ArrayList<>();
+    private List<String> excludedVars = new ArrayList<>();
+    
+    private Set<String> usernames = new HashSet<>();
+    private Map<String, SFSDataWrapper> addition = new HashMap<>();
     
     /**
      * @param context
@@ -80,7 +82,7 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      * @see com.lagente.core.command.Response#user(com.lagente.core.model.ApiBaseUser)
      */
     @Override
-    public Response recipient(ApiBaseUser... users) {
+    public Response recipients(ApiBaseUser... users) {
         return recipients(Arrays.asList(users));
     }
     
@@ -99,7 +101,7 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      * @see com.lagente.core.command.Response#recipient(com.lagente.core.model.ApiBaseUser)
      */
     @Override
-    public Response recipient(String... usernames) {
+    public Response recipients(String... usernames) {
         this.usernames.addAll(Arrays.asList(usernames));
         return this;
     }
@@ -110,6 +112,24 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     @Override
     public Response useUDP(boolean value) {
         this.useUDP = value;
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#only(java.lang.String[])
+     */
+    @Override
+    public Response only(String... params) {
+        includedVars.addAll(Arrays.asList(params));
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#ignore(java.lang.String[])
+     */
+    @Override
+    public Response ignore(String... params) {
+        excludedVars.addAll(Arrays.asList(params));
         return this;
     }
     
@@ -143,6 +163,8 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
                 : new SFSObject();
         for(Entry<String, SFSDataWrapper> entry : addition.entrySet())
             answer.put(entry.getKey(), entry.getValue());
+        answer = onlyAcceptParams(answer);
+        removeExcludedParams(answer);
         return answer;
     }
     
@@ -154,6 +176,18 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     private void validateCommand() {
         if(command == null || command.trim().isEmpty())
             throw new IllegalStateException("Invalid command");
+    }
+    
+    private ISFSObject onlyAcceptParams(ISFSObject obj) {
+        if(includedVars.size() == 0) return obj;
+        ISFSObject answer = new SFSObject();
+        for(String p : includedVars)
+            answer.put(p, obj.get(p));
+        return answer;
+    }
+    
+    private void removeExcludedParams(ISFSObject obj) {
+        for(String p : excludedVars) obj.removeElement(p);
     }
  
 }
