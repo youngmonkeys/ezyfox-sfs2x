@@ -14,10 +14,9 @@ import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.primitiveArrayToS
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.stringArrayToCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toPrimitiveByteArray;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.wrapperArrayToCollection;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isPrimitiveChar;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isWrapperByte;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isWrapperChar;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.*;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.List;
 
@@ -94,21 +93,99 @@ public class ParameterSerializer {
     @SuppressWarnings("rawtypes")
     protected void parseMethod(Object value, GetterMethodCover method,
             ISFSObject sfsObject) {
-        
+        Object answer = value;
         if(method.isColection()) {
-            value = parseCollection(method, (Collection)value);
+            answer = parseCollection(method, (Collection)value);
         }
-        if(method.isArray()) {
-            value = parseArray(method, value);
+        else if(method.isTwoDimensionsArray()) {
+            answer = parseTwoDimensionsArray(method, value);
+        }
+        else if(method.isArray()) {
+            answer = parseArray(method, value);
         }
         else if(method.isObject()) {
-            value = parseObject(method, value);
+            answer = parseObject(method, value);
         }
         else if(method.isChar()) {
-            value = (byte)(((Character)value).charValue());
+            answer = (byte)(((Character)value).charValue());
         }
         SFSDataType type = getSFSDataType(method);
-        sfsObject.put(method.getKey(), new SFSDataWrapper(type, value));
+        sfsObject.put(method.getKey(), new SFSDataWrapper(type, answer));
+    }
+    
+    /**
+     * Serialize two-dimensions array to ISFSArray
+     * 
+     * @param method method's structure
+     * @param array the two-dimensions array
+     * @return ISFSArray object
+     */
+    protected Object parseTwoDimensionsArray(GetterMethodCover method, 
+            Object array) {
+        ISFSArray answer = new SFSArray();
+        int size = Array.getLength(array);
+        for(int i = 0 ; i < size ; i++) {
+            SFSDataType dtype = getSFSArrayDataType(method);
+            Object value = parseArrayOfTwoDimensionsArray(method, Array.get(array, i));
+            answer.add(new SFSDataWrapper(dtype, value));
+        }
+        return answer;
+    }
+    
+    protected Object parseArrayOfTwoDimensionsArray(GetterMethodCover method, Object array) {
+        Class<?> type = method.getComponentType().getComponentType();
+        if(isObject(type)) {
+            return parseObjectArray(method, (Object[])array);
+        }
+        else if(isPrimitiveBool(type)) {
+            return primitiveArrayToBoolCollection((boolean[])array);
+        }
+        else if(isPrimitiveChar(type)) {
+            return charArrayToByteArray((char[])array);
+        }
+        else if(isPrimitiveDouble(type)) {
+            return primitiveArrayToDoubleCollection((double[])array);
+        }
+        else if(isPrimitiveFloat(type)) {
+            return primitiveArrayToFloatCollection((float[])array);
+        }
+        else if(isPrimitiveInt(type)) {
+            return primitiveArrayToIntCollection((int[])array);
+        }
+        else if(isPrimitiveLong(type)) {
+            return primitiveArrayToLongCollection((long[])array);
+        }
+        else if(isPrimitiveShort(type)) {
+            return primitiveArrayToShortCollection((short[])array);
+        }
+        else if(isString(type)) {
+            return stringArrayToCollection((String[])array);
+        }
+        else if(isWrapperBool(type)) {
+            return wrapperArrayToCollection((Boolean[])array);
+        }
+        else if(isWrapperByte(type)) {
+            return toPrimitiveByteArray((Byte[])array);
+        }
+        else if(isWrapperChar(type)) {
+            return charWrapperArrayToPrimitiveByteArray((Character[])array);
+        }
+        else if(isWrapperDouble(type)) {
+            return wrapperArrayToCollection((Double[])array);
+        }
+        else if(isWrapperFloat(type)) {
+            return wrapperArrayToCollection((Float[])array);
+        }
+        else if(isWrapperInt(type)) {
+            return wrapperArrayToCollection((Integer[])array);
+        }
+        else if(isWrapperLong(type)) {
+            return wrapperArrayToCollection((Long[])array);
+        }
+        else if(isWrapperShort(type)) {
+            return wrapperArrayToCollection((Short[])array);
+        }
+        return array;
     }
     
     /**
@@ -147,14 +224,14 @@ public class ParameterSerializer {
         else if(method.isStringArray()) {
             return stringArrayToCollection((String[])array);
         }
+        else if(method.isWrapperBooleanArray()) {
+            return wrapperArrayToCollection((Boolean[])array);
+        }
         else if(method.isWrapperByteArray()) {
             return toPrimitiveByteArray((Byte[])array);
         }
         else if(method.isWrapperCharArray()) {
             return charWrapperArrayToPrimitiveByteArray((Character[])array);
-        }
-        else if(method.isWrapperBooleanArray()) {
-            return wrapperArrayToCollection((Boolean[])array);
         }
         else if(method.isWrapperDoubleArray()) {
             return wrapperArrayToCollection((Double[])array);
@@ -389,8 +466,20 @@ public class ParameterSerializer {
 	        return SFSDataType.SFS_ARRAY;
 	    if(method.isArrayObjectCollection())
             return SFSDataType.SFS_ARRAY;
-//	    if(method.isArrayCollection()) 
 	    return SFSDataType.SFS_ARRAY;
-//	    return SFSDataType.SFS_OBJECT;
 	}
+    
+    protected SFSDataType getSFSArrayDataType(MethodCover method) {
+        Class<?> type = method.getComponentType().getComponentType();
+        if(isBool(type)) return SFSDataType.BOOL_ARRAY;
+        if(isByte(type)) return SFSDataType.BYTE_ARRAY;
+        if(isChar(type)) return SFSDataType.BYTE_ARRAY;
+        if(isDouble(type)) return SFSDataType.DOUBLE_ARRAY;
+        if(isFloat(type)) return SFSDataType.FLOAT_ARRAY;
+        if(isInt(type)) return SFSDataType.INT_ARRAY;
+        if(isLong(type)) return SFSDataType.LONG_ARRAY;
+        if(isShort(type)) return SFSDataType.SHORT_ARRAY;
+        if(isString(type)) return SFSDataType.UTF_STRING_ARRAY;
+        return SFSDataType.SFS_ARRAY;
+    }
 }

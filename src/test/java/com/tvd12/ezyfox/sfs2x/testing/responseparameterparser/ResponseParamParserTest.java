@@ -1,5 +1,10 @@
 package com.tvd12.ezyfox.sfs2x.testing.responseparameterparser;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,9 +25,8 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import static org.testng.Assert.*;
 
 public class ResponseParamParserTest {
 
@@ -76,11 +80,43 @@ public class ResponseParamParserTest {
         }
     }
 	
-	@Test(expectedExceptions = {IllegalStateException.class})
+	@Test
 	public void testBiArrayCase() {
 	    ResponseHandlerClass clazz = new ResponseHandlerClass(ClassC.class);
-        ResponseParamSerializer
+        ISFSObject params = ResponseParamSerializer
                 .getInstance().object2params(clazz, new ClassC());
+        
+        ISFSArray a0 = params.getSFSArray("a0");
+        
+        //test boolean array
+        assertEquals(a0.size(), 2);
+        Collection<Boolean> a01 = a0.getBoolArray(0);
+        assertEquals(a01.size(), 2);
+        assertEquals(a01.iterator().next(), Boolean.TRUE);
+        assertEquals((Boolean)a01.toArray()[1], Boolean.FALSE);
+        Collection<Boolean> a02 = a0.getBoolArray(1);
+        assertEquals(a02.size(), 2);
+        assertEquals(a02.iterator().next(), Boolean.FALSE);
+        assertEquals((Boolean)a02.toArray()[1], Boolean.TRUE);
+        
+        ISFSArray a18 = params.getSFSArray("a18");
+        
+        //test boolean array
+        assertEquals(a18.size(), 2);
+        
+        ISFSArray a181 = a18.getSFSArray(0);
+        assertEquals(a181.size(), 2);
+        ISFSObject a1811 = a181.getSFSObject(0);
+        assertEquals(a1811.getUtfString("a"), "1");
+        ISFSObject a1812 = a181.getSFSObject(1);
+        assertEquals(a1812.getUtfString("a"), "2");
+        
+        ISFSArray a182 = a18.getSFSArray(1);
+        assertEquals(a182.size(), 2);
+        ISFSObject a1821 = a182.getSFSObject(0);
+        assertEquals(a1821.getUtfString("a"), "3");
+        ISFSObject a1822 = a182.getSFSObject(1);
+        assertEquals(a1822.getUtfString("a"), "4");
 	}
 	
 	@Test(expectedExceptions = {IllegalStateException.class})
@@ -201,7 +237,42 @@ public class ResponseParamParserTest {
 	@ClientResponseHandler
 	public static class ClassC {
 	    @ResponseParam
-	    public byte[][] abcarray = new byte[10][10];
+        public boolean[][] a0 = {{true, false}, {false, true}};
+	    @ResponseParam
+	    public byte[][] a1 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public char[][] a2 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public double[][] a3 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public float[][] a4 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public int[][] a5 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public long[][] a6 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public short[][] a8 = {{1, 2}, {3, 4}};
+	    
+	    @ResponseParam
+        public Boolean[][] a9 = {{true, false}, {false, true}};
+	    @ResponseParam
+        public Byte[][] a10 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public Character[][] a11 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public Double[][] a12 = {{1D, 2D}, {3D, 4D}};
+	    @ResponseParam
+        public Float[][] a13 = {{1F, 2F}, {3F, 4F}};
+	    @ResponseParam
+        public Integer[][] a14 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public Long[][] a15 = {{1L, 2L}, {3L, 4L}};
+	    @ResponseParam
+        public Short[][] a16 = {{1, 2}, {3, 4}};
+	    @ResponseParam
+        public String[][] a17 = {{"1", "2"}, {"3", "4"}};
+	    @ResponseParam
+        public ClassH[][] a18 = {{new ClassH("1"), new ClassH("2")}, {new ClassH("3"), new ClassH("4")}};
 	}
 	
 	@Data
@@ -244,7 +315,12 @@ public class ResponseParamParserTest {
 	    public String dr = "dung";
 	}
 	
-	
+	@Data
+	@AllArgsConstructor
+	public static class ClassH {
+	    @ResponseParam("a")
+	    private String a;
+	}
 	
 	public static void main(String[] args) {
         new ResponseParamParserTest().collectionOfArrayCase();
