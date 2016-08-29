@@ -19,8 +19,8 @@ public class ResponseImplTest extends BaseCommandTest2 {
         ResponseImpl command = new ResponseImpl(context, api, extension);
         command.command("hello")
             .data(new VideoPokerRoom())
-            .recipient(user)
-            .recipient("dungtv")
+            .recipients(user)
+            .recipients("dungtv")
             .useUDP(false)
             .param("a", "b")
             .execute();
@@ -31,8 +31,8 @@ public class ResponseImplTest extends BaseCommandTest2 {
         ResponseImpl command = new ResponseImpl(context, api, extension);
         command.command("hello")
             .data(null)
-            .recipient(user)
-            .recipient("dungtv")
+            .recipients(user)
+            .recipients("dungtv")
             .useUDP(false)
             .execute();
     }
@@ -42,8 +42,8 @@ public class ResponseImplTest extends BaseCommandTest2 {
         ResponseImpl command = new ResponseImpl(context, api, extension);
         command.command("")
             .data(null)
-            .recipient(user)
-            .recipient("dungtv")
+            .recipients(user)
+            .recipients("dungtv")
             .useUDP(false)
             .execute();
     }
@@ -53,8 +53,8 @@ public class ResponseImplTest extends BaseCommandTest2 {
         ResponseImpl command = new ResponseImpl(context, api, extension);
         command.command(null)
             .data(null)
-            .recipient(user)
-            .recipient("dungtv")
+            .recipients(user)
+            .recipients("dungtv")
             .useUDP(false)
             .execute();
     }

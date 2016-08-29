@@ -28,7 +28,7 @@ public class ParamTypeParserTest {
             SFSDataType.SFS_ARRAY, SFSDataType.SFS_ARRAY, SFSDataType.SFS_ARRAY,
             SFSDataType.SFS_ARRAY, SFSDataType.SFS_ARRAY, SFSDataType.SFS_ARRAY,
             
-            SFSDataType.SFS_OBJECT, SFSDataType.SFS_OBJECT
+            SFSDataType.SFS_OBJECT, SFSDataType.SFS_OBJECT, SFSDataType.SFS_ARRAY
     };
     
     public static VariableType EXPECTED_VARIABLETYPE[] = {
@@ -48,7 +48,7 @@ public class ParamTypeParserTest {
             VariableType.ARRAY, VariableType.ARRAY, VariableType.ARRAY,
             VariableType.ARRAY, VariableType.ARRAY, VariableType.ARRAY,
             
-            VariableType.OBJECT, VariableType.OBJECT
+            VariableType.OBJECT, VariableType.OBJECT, VariableType.ARRAY
     };
     
     public void testDataTypeValidCase(String[] args) {
@@ -120,6 +120,8 @@ public class ParamTypeParserTest {
         
         public Object a45;
         public ClassA a46;
+        
+        public int[][] ab7;
     }
     
 }

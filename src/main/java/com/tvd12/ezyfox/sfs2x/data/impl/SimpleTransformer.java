@@ -13,10 +13,9 @@ import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.primitiveArrayToS
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.stringArrayToCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toPrimitiveByteArray;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.wrapperArrayToCollection;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isCollection;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObject;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObjectArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.*;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -74,6 +73,9 @@ public class SimpleTransformer {
         if(isCollection(value.getClass())) {
             return transformCollection(value);
         }
+        else if(isTwoDimensionArray(value.getClass())) {
+            return transformTwoDimensionsArray(value);
+        }
         else if(isObject(value.getClass())) {
             return transformObject(value);
         }
@@ -81,6 +83,15 @@ public class SimpleTransformer {
             return transformArrayObject(value);
         }
         return transformObjectOrArray(value);
+    }
+    
+    protected SFSDataWrapper transformTwoDimensionsArray(Object array) {
+        ISFSArray sfsArray = new SFSArray();
+        int size = Array.getLength(array);
+        for(int i = 0 ; i < size ; i++) {
+          sfsArray.add(transform(Array.get(array, i)));
+        }
+        return new SFSDataWrapper(SFSDataType.SFS_ARRAY, sfsArray);
     }
     
     /**

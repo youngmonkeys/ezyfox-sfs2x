@@ -18,7 +18,6 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
         ResponseToRoomImpl command = new ResponseToRoomImpl(context, api, extension);
         command.command("hello")
             .data(new VideoPokerRoom())
-            .sender(user)
             .room(room)
             .exclude(user)
             .param("a", "b")
@@ -30,7 +29,6 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
         ResponseToRoomImpl command = new ResponseToRoomImpl(context, api, extension);
         command.command("hello")
             .data(null)
-            .sender(user)
             .room(room)
             .execute();
     }
@@ -40,7 +38,6 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
         ResponseToRoomImpl command = new ResponseToRoomImpl(context, api, extension);
         command.command("")
             .data(null)
-            .sender(user)
             .room(room)
             .execute();
     }
@@ -50,7 +47,6 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
         ResponseToRoomImpl command = new ResponseToRoomImpl(context, api, extension);
         command.command(null)
             .data(null)
-            .sender(user)
             .room(room)
             .execute();
     }
@@ -60,7 +56,6 @@ public class ResponseToRoomImplTest extends BaseCommandTest2 {
         ResponseToRoomImpl command = new ResponseToRoomImpl(context, api, extension);
         command.command("hello")
             .data(new VideoPokerRoom())
-            .sender(user)
             .room(new ApiRoom() {
                 /* (non-Javadoc)
                  * @see com.tvd12.ezyfox.core.entities.ApiRoom#getName()

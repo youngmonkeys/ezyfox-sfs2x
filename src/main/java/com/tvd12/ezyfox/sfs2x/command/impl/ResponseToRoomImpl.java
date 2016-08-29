@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +31,13 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     private Object data;
     private String command;
     private String roomName;
-    private String sender;
-    private List<String> excludedUsers = 
-            new ArrayList<>();
-    private Map<String, SFSDataWrapper> addition 
-            = new HashMap<>();
+    private boolean useUDP = false;
+    
+    private List<String> includedVars = new ArrayList<>();
+    private List<String> excludedVars = new ArrayList<>();
+    
+    private List<String> excludedUsers = new ArrayList<>();
+    private Map<String, SFSDataWrapper> addition = new HashMap<>();
     
     /**
      * @param context
@@ -73,15 +76,6 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     }
     
     /* (non-Javadoc)
-     * @see com.lagente.core.command.ResponseToRoom#sender(com.lagente.core.model.ApiBaseUser)
-     */
-    @Override
-    public ResponseToRoom sender(ApiBaseUser user) {
-        this.sender = user.getName();
-        return this;
-    }
-    
-    /* (non-Javadoc)
      * @see com.lagente.core.command.ResponseToRoom#room(com.lagente.core.model.ApiRoom)
      */
     @Override
@@ -100,6 +94,33 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     }
     
     /* (non-Javadoc)
+     * @see com.lagente.core.command.ResponseToRoom#useUDP(boolean)
+     */
+    @Override
+    public ResponseToRoom useUDP(boolean value) {
+        this.useUDP = value;
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#only(java.lang.String[])
+     */
+    @Override
+    public ResponseToRoom only(String... params) {
+        includedVars.addAll(Arrays.asList(params));
+        return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#ignore(java.lang.String[])
+     */
+    @Override
+    public ResponseToRoom ignore(String... params) {
+        excludedVars.addAll(Arrays.asList(params));
+        return this;
+    }
+    
+    /* (non-Javadoc)
      * @see com.lagente.core.command.BaseCommand#execute()
      */
     @SuppressWarnings("unchecked")
@@ -108,12 +129,11 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
         validateCommand();
         Room room = CommandUtil.getSfsRoom(roomName, extension);
         validateRoom(room);
-        User sfsSender = CommandUtil.getSfsUser(sender, api);
         List<User> recipients = room.getUserList();
         for(String exUser : excludedUsers) 
             recipients.remove(room.getUserByName(exUser));
         ISFSObject params = createResponseParams();
-        api.sendObjectMessage(room, sfsSender, params, recipients);
+        api.sendExtensionResponse(command, params, recipients, room, useUDP);
         return Boolean.TRUE;
     }
     
@@ -129,6 +149,8 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
                 : new SFSObject();
         for(Entry<String, SFSDataWrapper> entry : addition.entrySet())
             answer.put(entry.getKey(), entry.getValue());
+        answer = onlyAcceptParams(answer);
+        removeExcludedParams(answer);
         return answer;
     }
     
@@ -150,6 +172,18 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     private void validateRoom(Room room) {
         if(room == null)
             throw new IllegalStateException("Room name " + roomName + " not found");
+    }
+    
+    private ISFSObject onlyAcceptParams(ISFSObject obj) {
+        if(includedVars.size() == 0) return obj;
+        ISFSObject answer = new SFSObject();
+        for(String p : includedVars)
+            answer.put(p, obj.get(p));
+        return answer;
+    }
+    
+    private void removeExcludedParams(ISFSObject obj) {
+        for(String p : excludedVars) obj.removeElement(p);
     }
  
 }
