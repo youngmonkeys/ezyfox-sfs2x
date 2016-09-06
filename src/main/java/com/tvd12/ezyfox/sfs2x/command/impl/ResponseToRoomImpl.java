@@ -5,21 +5,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
-import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.ResponseToRoom;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.data.impl.SimpleTransformer;
-import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
+import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
 
 /**
  * @author tavandung12
@@ -37,7 +33,7 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     private List<String> excludedVars = new ArrayList<>();
     
     private List<String> excludedUsers = new ArrayList<>();
-    private Map<String, SFSDataWrapper> addition = new HashMap<>();
+    private Map<String, Object> addition = new HashMap<>();
     
     /**
      * @param context
@@ -71,7 +67,7 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
      */
     @Override
     public ResponseToRoom param(String name, Object value) {
-        addition.put(name, new SimpleTransformer(context).transform(value));
+        addition.put(name, value);
         return this;
     }
     
@@ -143,15 +139,13 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
      * @return smartfox parameter object
      */
     private ISFSObject createResponseParams() {
-        ISFSObject answer = (data != null) 
-                ? ResponseParamSerializer.getInstance()
-                        .object2params(context.getResponseParamsClass(data.getClass()), data)
-                : new SFSObject();
-        for(Entry<String, SFSDataWrapper> entry : addition.entrySet())
-            answer.put(entry.getKey(), entry.getValue());
-        answer = onlyAcceptParams(answer);
-        removeExcludedParams(answer);
-        return answer;
+        return ResponseParamsBuilder.create()
+                .addition(addition)
+                .excludedVars(excludedVars)
+                .includedVars(includedVars)
+                .transformer(new ParamTransformer(context))
+                .data(data)
+                .build();
     }
     
     /**
@@ -174,16 +168,4 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
             throw new IllegalStateException("Room name " + roomName + " not found");
     }
     
-    private ISFSObject onlyAcceptParams(ISFSObject obj) {
-        if(includedVars.size() == 0) return obj;
-        ISFSObject answer = new SFSObject();
-        for(String p : includedVars)
-            answer.put(p, obj.get(p));
-        return answer;
-    }
-    
-    private void removeExcludedParams(ISFSObject obj) {
-        for(String p : excludedVars) obj.removeElement(p);
-    }
- 
 }

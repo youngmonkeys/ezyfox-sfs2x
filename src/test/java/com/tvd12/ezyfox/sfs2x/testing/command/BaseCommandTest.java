@@ -10,22 +10,29 @@ import com.tvd12.test.base.BaseTest;
 
 public class BaseCommandTest extends BaseTest {
 
-    protected AppContextImpl context 
-        = new AppContextImpl(AppEntryPoint.class);
+    protected AppContextImpl context;
     protected ISFSApi api;
     protected ISFSExtension extension;
 
     public BaseCommandTest() {
-    try {
-        api = ApiModelFactory.createSFSApi();
-        extension = ApiModelFactory.createExtension();
-        
-        context.setApi(api);
-        context.setExtension(extension);
-    } catch (SFSCreateRoomException e) {
-        e.printStackTrace();
-    }
+        try {
+            context = newAppContext();
+            api = ApiModelFactory.createSFSApi();
+            extension = ApiModelFactory.createExtension();
+            
+            context.setApi(api);
+            context.setExtension(extension);
+        } 
+        catch (SFSCreateRoomException e) {
+            e.printStackTrace();
+        }
    
-}
+    }
+    
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        return answer;
+    }
     
 }

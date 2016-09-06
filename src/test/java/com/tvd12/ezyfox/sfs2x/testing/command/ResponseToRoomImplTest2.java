@@ -50,8 +50,9 @@ public class ResponseToRoomImplTest2 extends BaseCommandTest2 {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 ISFSObject params = (ISFSObject) invocation.getArguments()[1];
-                assertEquals(params.size(), 1);
+                assertEquals(params.size(), 2);
                 assertEquals(params.getUtfString("a"), "a");
+                assertEquals(params.getUtfString("b"), "b");
                 return null;
             }
         }).when(api).sendExtensionResponse(

@@ -22,9 +22,15 @@ public class RoomExtensionTest {
     
     @Test
     public void test2() {
-        AppContextImpl ctx = new AppContextImpl(AppEntryPoint.class);
+        AppContextImpl ctx = newAppContext();
         ContextProvider.getInstance().addContext(AppEntryPoint.class, ctx);
         new ExRoomExtension2().init();
+    }
+    
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        return answer;
     }
     
 }

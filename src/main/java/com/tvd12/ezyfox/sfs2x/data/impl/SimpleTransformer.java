@@ -13,7 +13,10 @@ import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.primitiveArrayToS
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.stringArrayToCollection;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toPrimitiveByteArray;
 import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.wrapperArrayToCollection;
-import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.*;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isCollection;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObject;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isObjectArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isTwoDimensionArray;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -28,8 +31,8 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.structure.ResponseParamsClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
@@ -43,10 +46,10 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
  */
 public class SimpleTransformer {
     
-    private AppContextImpl context;
+    protected BaseAppContext context;
 
     // map of types their transformer
-    private Map<Class<?>, Transformer> transformers
+    protected Map<Class<?>, Transformer> transformers
          = new HashMap<>();
     
     
@@ -57,7 +60,7 @@ public class SimpleTransformer {
     /**
      * Call initialize map of transformers
      */
-    public SimpleTransformer(AppContextImpl context) {
+    public SimpleTransformer(BaseAppContext context) {
         init(context);
     }
     
@@ -68,20 +71,24 @@ public class SimpleTransformer {
      * @return a SFSDataWrapper object
      */
     public SFSDataWrapper transform(Object value) {
-        if(value == null)   
-            return new SFSDataWrapper(SFSDataType.NULL, value);
-        if(isCollection(value.getClass())) {
+        if(value == null)
+            return transformNullValue(value);
+        return transformNotNullValue(value);
+    }
+    
+    protected SFSDataWrapper transformNullValue(Object value) {
+        return new SFSDataWrapper(SFSDataType.NULL, value);
+    }
+    
+    protected SFSDataWrapper transformNotNullValue(Object value) {
+        if(isCollection(value.getClass()))
             return transformCollection(value);
-        }
-        else if(isTwoDimensionArray(value.getClass())) {
+        if(isTwoDimensionArray(value.getClass())) 
             return transformTwoDimensionsArray(value);
-        }
-        else if(isObject(value.getClass())) {
+        if(isObject(value.getClass()))
             return transformObject(value);
-        }
-        else if(isObjectArray(value.getClass())) {
+        if(isObjectArray(value.getClass()))
             return transformArrayObject(value);
-        }
         return transformObjectOrArray(value);
     }
     
@@ -218,7 +225,7 @@ public class SimpleTransformer {
     /**
      * Initialize map of transformers
      */
-    protected void init(AppContextImpl context) {
+    protected void init(BaseAppContext context) {
         setContext(context);
         initWithWrapperType();
         initWithPrimitiveTypeArray();
@@ -226,7 +233,7 @@ public class SimpleTransformer {
         initWithStringType();
     }
     
-    private void setContext(AppContextImpl context) {
+    private void setContext(BaseAppContext context) {
         this.context = context;
     }
     

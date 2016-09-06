@@ -36,7 +36,7 @@ public class ListServerEventHandlerTest {
                     && Modifier.isPublic(clazz.getModifiers())
                     && !Modifier.isStatic(clazz.getModifiers())) {
                 ServerEventHandler handler = (ServerEventHandler) clazz.getDeclaredConstructor(
-                        AppContextImpl.class).newInstance(new AppContextImpl(AppEntryPoint.class));
+                        AppContextImpl.class).newInstance(newAppContext());
                 System.out.println(handler.eventName() + "=" + clazz.getName());
                 if(!handler.eventName().equals("SERVER_INIT"))
                     builder.append(handler.eventName() + "=" + clazz.getName()).append("\n");
@@ -44,6 +44,12 @@ public class ListServerEventHandlerTest {
                 
         }
         FileUtils.write(file, Base64Coder.encodeString(builder.toString().trim()));
+    }
+    
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        return answer;
     }
     
 }

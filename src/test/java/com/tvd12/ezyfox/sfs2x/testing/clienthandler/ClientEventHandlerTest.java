@@ -17,28 +17,58 @@ import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.ClientResponseHandler;
 import com.tvd12.ezyfox.core.content.AppContext;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
+import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
+import com.tvd12.ezyfox.core.serialize.ObjectSerializer;
 import com.tvd12.ezyfox.core.structure.RequestResponseClass;
+import com.tvd12.ezyfox.core.transport.Parameters;
+import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppEntryPoint;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 import com.tvd12.ezyfox.sfs2x.testing.context.BaseHandlerTest;
+import com.tvd12.ezyfox.sfs2x.testing.context.BettingRequestListener;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerUser;
 
 public class ClientEventHandlerTest extends BaseHandlerTest {
     
     @Test(priority = 1)
     public void test() {
-        context = new AppContextImpl(AppEntryPoint.class);
+        context = newAppContext();
         ClientEventHandler handler = new ExClientEventHandler(context, "bet");
         ISFSObject params = new SFSObject();
         handler.handleClientRequest(sfsUser, params);
         assertEquals(handler.getCommand(), "bet");
     }
     
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        answer.addObjectDeserializer(BettingRequestListener.class, new ObjectDeserializer() {
+            
+            @SuppressWarnings("unchecked")
+            @Override
+            public BettingRequestListener deserialize(Object object, Parameters params) {
+                BettingRequestListener b = (BettingRequestListener)object;
+                return b;
+            }
+        });
+        answer.addObjectSerializer(BettingRequestListener.class, new ObjectSerializer() {
+            
+            @Override
+            public Parameters serialize(Object object) {
+                BettingRequestListener b = (BettingRequestListener)object;
+                Parameters answer = new ParameterWrapper();
+                answer.set("id", b.getId());
+                return answer;
+            }
+        });
+        return answer;
+    }
+    
     @Test(expectedExceptions = {RuntimeException.class}, priority = 2)
     public void testInvalidCase() {
-        context = new AppContextImpl(AppEntryPoint.class);
+        context = newAppContext();
         context = spy(context);
         when(context.clientRequestListeners("abc")).thenReturn(
                 Lists.newArrayList(new RequestResponseClass(ClassA.class, AppUser.class, new ArrayList<Class<?>>())));
@@ -49,7 +79,7 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     
     @Test(priority = 3)
     public void test2() {
-        context = new AppContextImpl(AppEntryPoint.class);
+        context = newAppContext();
         context = spy(context);
         when(context.clientRequestListeners("abc1")).thenReturn(new ArrayList<RequestResponseClass>());
         ClientEventHandler handler = new ExClientEventHandler(context, "abc1");
@@ -59,7 +89,7 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     
     @Test(priority = 4)
     public void test3() {
-        context = new AppContextImpl(AppEntryPoint.class);
+        context = newAppContext();
         context = spy(context);
         List<Class<?>> gameUserClasses = new ArrayList<>();
         gameUserClasses.add(PokerUser.class);
@@ -72,7 +102,7 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     
     @Test(priority = 5)
     public void test4() {
-        context = new AppContextImpl(AppEntryPoint.class);
+        context = newAppContext();
         context = spy(context);
         List<Class<?>> gameUserClasses = new ArrayList<>();
         gameUserClasses.add(PokerUser.class);
