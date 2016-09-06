@@ -19,7 +19,8 @@ public class RoomExtension extends ZoneExtension {
     @Override
     protected AppContextImpl createAppContext() {
         AppContextImpl context = getAppContext();
-        RoomContextImpl answer = new RoomContextImpl(getClass());
+        RoomContextImpl answer = new RoomContextImpl();
+        answer.initialize(getClass());
         answer.setUserClass(context.getUserClass());
         answer.setGameUserClasses(context.getGameUserClasses());
         answer.setRoomClasses(context.getRoomClasses());

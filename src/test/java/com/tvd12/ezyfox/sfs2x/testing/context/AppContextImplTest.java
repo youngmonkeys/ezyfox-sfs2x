@@ -15,6 +15,7 @@ import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.command.CreateRoom;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
 import com.tvd12.ezyfox.core.reflect.ReflectFieldUtil;
@@ -23,14 +24,13 @@ import com.tvd12.test.reflect.MethodInvoker;
 
 public class AppContextImplTest {
     
-    private AppContextImpl context 
-        = new AppContextImpl(AppEntryPoint.class);
+    private AppContextImpl context;
     
     public AppContextImplTest() {
         try {
             ISFSApi api = ApiModelFactory.createSFSApi();
             ISFSExtension extension = ApiModelFactory.createExtension();
-            
+            context = newAppContext();
             context.setApi(api);
             context.setExtension(extension);
             context.addAppCommand(AppCommand.class, AppCommand.class);
@@ -39,6 +39,12 @@ public class AppContextImplTest {
             e.printStackTrace();
         }
        
+    }
+    
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        return answer;
     }
 
     @Test
@@ -93,7 +99,7 @@ public class AppContextImplTest {
     @SuppressWarnings("unchecked")
     @Test(expectedExceptions = {RuntimeException.class})
     public void getCommandInvalidCase2Test() throws ExtensionException, IllegalArgumentException, IllegalAccessException {
-        Field commandField = ReflectFieldUtil.getField("commands", AppContextImpl.class);
+        Field commandField = ReflectFieldUtil.getField("commands", BaseAppContext.class);
         commandField.setAccessible(true);
         Map<Object, Constructor<?>> value = (Map<Object, Constructor<?>>)
                 commandField.get(context);

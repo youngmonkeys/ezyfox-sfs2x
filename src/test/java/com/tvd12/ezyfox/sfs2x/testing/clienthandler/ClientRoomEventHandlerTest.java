@@ -9,12 +9,19 @@ import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.SFSRoom;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.extensions.SFSExtension;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.content.ContextProvider;
+import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
+import com.tvd12.ezyfox.core.serialize.ObjectSerializer;
+import com.tvd12.ezyfox.core.transport.Parameters;
+import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRoomEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.RoomContextImpl;
+import com.tvd12.ezyfox.sfs2x.testing.command.BaseCommandTest2;
 import com.tvd12.ezyfox.sfs2x.testing.context.AppUser;
 import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;
+import com.tvd12.ezyfox.sfs2x.testing.roomcontext.BetRequestListener;
 import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension2;
 
 /**
@@ -22,7 +29,7 @@ import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension2;
  * Created on Aug 17, 2016
  *
  */
-public class ClientRoomEventHandlerTest {
+public class ClientRoomEventHandlerTest extends BaseCommandTest2 {
 
     @Test
     public void test() {
@@ -31,11 +38,38 @@ public class ClientRoomEventHandlerTest {
         when(sfsUser.getProperty(APIKey.USER)).thenReturn(new AppUser());
         Room sfsRoom = new SFSRoom("abc");
         sfsRoom.setProperty(APIKey.USER, new PokerRoom());
-        RoomContextImpl context = new RoomContextImpl(ExRoomExtension2.class);
+        RoomContextImpl roomContext = newRoomContext();
         ContextProvider.getInstance().addContext(ExRoomExtension2.class, context);
-        ClientRoomEventHandler handler = new ClientRoomEventHandler(context, "abc");
+        ClientRoomEventHandler handler = new ClientRoomEventHandler(roomContext, "abc");
         handler.setRoom(sfsRoom);
+        handler.setParentExtension(mock(SFSExtension.class));
         handler.handleClientRequest(sfsUser, new SFSObject());
+    }
+    
+    private RoomContextImpl newRoomContext() {
+        RoomContextImpl answer = new RoomContextImpl();
+        answer.setAppContext(context);
+        answer.initialize(ExRoomExtension2.class);
+        answer.addObjectDeserializer(BetRequestListener.class, new ObjectDeserializer() {
+            
+            @SuppressWarnings("unchecked")
+            @Override
+            public BetRequestListener deserialize(Object object, Parameters params) {
+                BetRequestListener b = (BetRequestListener)object;
+                return b;
+            }
+        });
+        answer.addObjectSerializer(BetRequestListener.class, new ObjectSerializer() {
+            
+            @Override
+            public Parameters serialize(Object object) {
+                BetRequestListener b = (BetRequestListener)object;
+                Parameters answer = new ParameterWrapper();
+                answer.set("id", b.getId());
+                return answer;
+            }
+        });
+        return answer;
     }
     
 }

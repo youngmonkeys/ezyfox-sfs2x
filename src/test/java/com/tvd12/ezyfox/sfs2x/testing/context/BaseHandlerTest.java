@@ -18,13 +18,14 @@ public class BaseHandlerTest extends BaseTest {
     protected User sfsUser;
     protected SFSExtension sfsExtension;
     
-    protected AppContextImpl context 
-            = new AppContextImpl(AppEntryPoint.class);
+    protected AppContextImpl context;
     
-    protected ApiUser apiUser = UserAgentFactory.newUserAgent("player", 
-            context.getUserAgentClass(), context.getGameUserAgentClasses().values());
+    protected ApiUser apiUser;
     
     public BaseHandlerTest() {
+        context = newAppContext();
+        apiUser = UserAgentFactory.newUserAgent("player", 
+                context.getUserAgentClass(), context.getGameUserAgentClasses().values());
         sfsUser = mock(User.class);
         when(sfsUser.getProperty(APIKey.USER)).thenReturn(apiUser);
         sfsExtension = mock(SFSExtension.class);
@@ -33,6 +34,10 @@ public class BaseHandlerTest extends BaseTest {
         when(sfsExtension.getConfigProperties()).thenReturn(properties);
     }
     
-    
+    private AppContextImpl newAppContext() {
+        AppContextImpl answer = new AppContextImpl();
+        answer.initialize(AppEntryPoint.class);
+        return answer;
+    }
     
 }

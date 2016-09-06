@@ -1,7 +1,6 @@
 package com.tvd12.ezyfox.sfs2x.clienthandler;
 
 import static com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer.requestParamDeserializer;
-import static com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer.responseParamSerializer;
 
 import java.lang.reflect.Method;
 
@@ -14,9 +13,12 @@ import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
+import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
 import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
+import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
 import com.tvd12.ezyfox.sfs2x.util.AgentUtil;
 
 /**
@@ -67,10 +69,24 @@ public class ClientEventHandler extends ClientRequestHandler {
 	 */
 	private void notifyListener(RequestResponseClass clazz, 
 	        ISFSObject params, User user, Object userAgent) throws Exception {
-	    Object listener = requestParamDeserializer()
-	            .deserialize(clazz.getRequestListenerClass(), params);
+	    Object listener = clazz.newInstance();
+	    setDataToListener(clazz, listener, params);
 	    invokeExecuteMethod(clazz.getExecuteMethod(), listener, userAgent);
 	    responseClient(clazz, listener, user);
+	}
+	
+	private void setDataToListener(RequestResponseClass clazz, 
+	        Object listener, ISFSObject params) {
+	    try {
+	        ObjectDeserializer deserializer = 
+	            context.getObjectDeserializer(listener.getClass());
+	        deserializer.deserialize(listener, 
+                    new SfsObjectTransformer(context).transform(params));
+	    } catch(IllegalArgumentException e) {
+	        requestParamDeserializer()
+                .deserialize(clazz.getRequestListenerClass(), params, listener);
+	    }
+	    
 	}
 	
 	/**
@@ -106,11 +122,10 @@ public class ClientEventHandler extends ClientRequestHandler {
 	 * @param user smartfox user
 	 */
 	private void responseClient(RequestResponseClass clazz, Object listener, User user) {
-		if(!clazz.isResponseToClient())
-			return;
+		if(!clazz.isResponseToClient()) return;
 		String command = clazz.getResponseCommand();
-		ISFSObject params = responseParamSerializer()
-					.object2params(clazz.getResponseHandlerClass(), listener);
+		ISFSObject params = (ISFSObject) new ParamTransformer(context)
+		        .transform(listener).getObject();
 		send(command, params, user);
 	}
 	

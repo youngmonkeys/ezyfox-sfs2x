@@ -48,8 +48,43 @@ public class ResponseImplTest2 extends BaseCommandTest2 {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 ISFSObject params = (ISFSObject) invocation.getArguments()[1];
-                assertEquals(params.size(), 1);
+                assertEquals(params.size(), 2);
                 assertEquals(params.getUtfString("a"), "a");
+                assertEquals(params.getUtfString("b"), "b");
+                return null;
+            }
+        }).when(extension).send(
+                any(String.class), 
+                any(ISFSObject.class), 
+                any(List.class), 
+                any(boolean.class));
+        return extension;
+    }
+    
+    @Test(priority = 1)
+    public void test1() {
+        ResponseImpl command = new ResponseImpl(context, api, mockExtension1());
+        command.command("hello")
+            .data(new MyUser())
+            .recipients(user)
+            .recipients("dungtv")
+            .useUDP(false)
+            .param("d", "d")
+            .ignore("b")
+            .execute();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public ISFSExtension mockExtension1() {
+        extension = mock(ISFSExtension.class);
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                ISFSObject params = (ISFSObject) invocation.getArguments()[1];
+                assertEquals(params.size(), 3);
+                assertEquals(params.getUtfString("a"), "a");
+                assertEquals(params.getUtfString("c"), "c");
+                assertEquals(params.getUtfString("d"), "d");
                 return null;
             }
         }).when(extension).send(

@@ -18,8 +18,8 @@ public class LeaveRoomImpl extends BaseCommandImpl implements LeaveRoom {
 
     private String user;
     private String room;
-    private boolean fireClientEvent;
-    private boolean fireServerEvent;
+    private boolean fireClientEvent = true;
+    private boolean fireServerEvent = true;
     
     /**
      * @param context

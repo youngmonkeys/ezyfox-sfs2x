@@ -135,7 +135,13 @@ public class ZoneExtension extends SFSExtension {
 	protected AppContextImpl createAppContext() {
 	    return (AppContextImpl)ContextProvider
                 .getInstance()
-                .addContext(getClass(), new AppContextImpl(getClass()));
+                .addContext(getClass(), newAppContext());
+	}
+	
+	protected AppContextImpl newAppContext() {
+	    AppContextImpl answer = new AppContextImpl();
+	    answer.initialize(getClass());
+	    return answer;
 	}
 	
 	/**
