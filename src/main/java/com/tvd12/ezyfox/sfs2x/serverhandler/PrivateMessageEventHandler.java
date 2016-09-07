@@ -10,11 +10,11 @@ import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiPrivateMessage;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.entities.ApiZone;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.entities.impl.ApiPrivateMessageImpl;
 
 /**
@@ -29,7 +29,7 @@ public class PrivateMessageEventHandler extends MessageEventHandler {
     /**
      * @param context
      */
-    public PrivateMessageEventHandler(AppContextImpl context) {
+    public PrivateMessageEventHandler(BaseAppContext context) {
         super(context);
     }
 

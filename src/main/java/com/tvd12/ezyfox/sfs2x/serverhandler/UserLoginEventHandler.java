@@ -19,13 +19,13 @@ import com.smartfoxserver.v2.exceptions.SFSLoginException;
 import com.tvd12.ezyfox.core.config.UserLoginEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiLogin;
 import com.tvd12.ezyfox.core.entities.ApiLoginImpl;
 import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.UserLoginHandlerClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.entities.impl.ApiSessionImpl;
 
 /**
@@ -43,7 +43,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
     /**
      * @param context
      */
-    public UserLoginEventHandler(AppContextImpl context) {
+    public UserLoginEventHandler(BaseAppContext context) {
         super(context);
     }
     

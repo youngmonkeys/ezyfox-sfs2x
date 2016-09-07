@@ -10,9 +10,9 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiBuddyProperties;
 import com.tvd12.ezyfox.core.entities.ApiUser;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle buddy list initializing event 
@@ -25,7 +25,7 @@ public class BuddyListInitEventHandler extends UserZoneEventHandler {
     /**
      * @param context
      */
-    public BuddyListInitEventHandler(AppContextImpl context) {
+    public BuddyListInitEventHandler(BaseAppContext context) {
         super(context);
     }
     

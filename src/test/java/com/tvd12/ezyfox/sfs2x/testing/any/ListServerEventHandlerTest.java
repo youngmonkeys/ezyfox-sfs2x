@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
 import com.tvd12.ezyfox.sfs2x.testing.ClassFinder;
@@ -36,7 +37,7 @@ public class ListServerEventHandlerTest {
                     && Modifier.isPublic(clazz.getModifiers())
                     && !Modifier.isStatic(clazz.getModifiers())) {
                 ServerEventHandler handler = (ServerEventHandler) clazz.getDeclaredConstructor(
-                        AppContextImpl.class).newInstance(newAppContext());
+                        BaseAppContext.class).newInstance(newAppContext());
                 System.out.println(handler.eventName() + "=" + clazz.getName());
                 if(!handler.eventName().equals("SERVER_INIT"))
                     builder.append(handler.eventName() + "=" + clazz.getName()).append("\n");

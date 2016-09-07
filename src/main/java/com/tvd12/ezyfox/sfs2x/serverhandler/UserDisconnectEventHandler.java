@@ -18,6 +18,7 @@ import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiDisconnection;
 import com.tvd12.ezyfox.core.entities.ApiDisconnectionImpl;
 import com.tvd12.ezyfox.core.entities.ApiUser;
@@ -25,7 +26,6 @@ import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.command.impl.CommandUtil;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * This handler handles user disconnect from server event
@@ -38,7 +38,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
     /**
      * @param context
      */
-    public UserDisconnectEventHandler(AppContextImpl context) {
+    public UserDisconnectEventHandler(BaseAppContext context) {
         super(context);
     }
     

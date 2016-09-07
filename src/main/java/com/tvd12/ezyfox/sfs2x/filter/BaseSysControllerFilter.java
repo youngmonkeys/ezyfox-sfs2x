@@ -6,8 +6,8 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.filter.FilterAction;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * @author tavandung12
@@ -22,7 +22,7 @@ public class BaseSysControllerFilter extends SysControllerFilter {
      * @param context application context
      * @param request request name
      */
-    public BaseSysControllerFilter(AppContextImpl context, 
+    public BaseSysControllerFilter(BaseAppContext context, 
             SystemRequest request) {
         handler = new ClientEventHandler(context, request.toString());
     }

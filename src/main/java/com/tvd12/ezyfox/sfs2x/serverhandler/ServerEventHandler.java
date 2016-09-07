@@ -3,7 +3,7 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 import java.util.List;
 
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 
 /**
  * Support to handler server event
@@ -16,7 +16,7 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 public abstract class ServerEventHandler extends BaseServerEventHandler {
 
     // application context
-	protected AppContextImpl context;
+	protected BaseAppContext context;
 	
 	// list of handler classes
 	protected List<Class<?>> handlerClasses;
@@ -24,7 +24,7 @@ public abstract class ServerEventHandler extends BaseServerEventHandler {
 	/**
 	 * @param context
 	 */
-	public ServerEventHandler(AppContextImpl context) {
+	public ServerEventHandler(BaseAppContext context) {
 		this.context = context;
 		this.initHandlerClasses();
 		this.init();

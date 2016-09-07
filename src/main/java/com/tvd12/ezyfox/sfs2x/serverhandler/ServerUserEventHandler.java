@@ -3,10 +3,10 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 import java.util.List;
 
 import com.tvd12.ezyfox.core.config.ServerUserEventHandlerCenter;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.structure.ServerUserHandlerClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle event related to user
@@ -23,7 +23,7 @@ public abstract class ServerUserEventHandler extends ServerBaseEventHandler {
     /**
      * @param context
      */
-    public ServerUserEventHandler(AppContextImpl context) {
+    public ServerUserEventHandler(BaseAppContext context) {
         super(context);
     }
     
@@ -45,7 +45,7 @@ public abstract class ServerUserEventHandler extends ServerBaseEventHandler {
      * @return user agent or game user agent object
      */
     protected Object checkUserAgent(ServerUserHandlerClass handler, ApiUser userAgent) {
-        if(handler.getUserClass() == userAgent.getClass())
+        if(handler.getUserClass().isAssignableFrom(userAgent.getClass()))
             return userAgent;
         return UserAgentUtil.getGameUser(userAgent, handler.getUserClass());
     }
