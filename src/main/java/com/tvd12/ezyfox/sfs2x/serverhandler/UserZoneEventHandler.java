@@ -10,11 +10,11 @@ import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.tvd12.ezyfox.core.config.ZoneEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ZoneHandlerClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle user join zone or leave zone event
@@ -30,7 +30,7 @@ public abstract class UserZoneEventHandler extends ServerUserEventHandler {
     /**
      * @param context
      */
-    public UserZoneEventHandler(AppContextImpl context) {
+    public UserZoneEventHandler(BaseAppContext context) {
         super(context);
 
     }

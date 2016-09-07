@@ -6,9 +6,9 @@ import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle server initializing event
@@ -26,7 +26,7 @@ public class ServerInitializingEventHandler extends ServerEventHandler {
 	/**
 	 * @param context
 	 */
-	public ServerInitializingEventHandler(AppContextImpl context) {
+	public ServerInitializingEventHandler(BaseAppContext context) {
 		super(context);
 	}
 	

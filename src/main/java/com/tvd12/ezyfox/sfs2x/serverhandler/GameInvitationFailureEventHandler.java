@@ -1,7 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import com.tvd12.ezyfox.core.constants.ServerEvent;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 
 /**
  * @author tavandung12
@@ -13,7 +13,7 @@ public class GameInvitationFailureEventHandler extends ZoneRoomBaseEventHandler 
     /**
      * @param context
      */
-    public GameInvitationFailureEventHandler(AppContextImpl context) {
+    public GameInvitationFailureEventHandler(BaseAppContext context) {
         super(context);
     }
     

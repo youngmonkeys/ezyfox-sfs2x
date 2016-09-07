@@ -10,13 +10,13 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
 import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
 import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
 import com.tvd12.ezyfox.sfs2x.util.AgentUtil;
@@ -36,7 +36,7 @@ public class ClientEventHandler extends ClientRequestHandler {
      * @param context application context
      * @param command request's command
      */
-	public ClientEventHandler(AppContextImpl context, String command) {
+	public ClientEventHandler(BaseAppContext context, String command) {
 		super(context, command);
 	}
 
@@ -109,7 +109,7 @@ public class ClientEventHandler extends ClientRequestHandler {
 	 * @return instance of user agent
 	 */
 	private Object checkUserAgent(RequestResponseClass clazz, ApiUser userAgent) {
-        if(clazz.getUserClass() == userAgent.getClass())
+        if(clazz.getUserClass().isAssignableFrom(userAgent.getClass()))
             return userAgent;
         return UserAgentUtil.getGameUser(userAgent, clazz.getUserClass());
     }

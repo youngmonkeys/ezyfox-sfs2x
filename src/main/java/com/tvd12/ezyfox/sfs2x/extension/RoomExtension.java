@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.extension;
 
 import com.tvd12.ezyfox.core.content.ContextProvider;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRoomEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
@@ -17,14 +18,14 @@ public class RoomExtension extends ZoneExtension {
      * @see com.tvd12.ezyfox.sfs2x.extension.ZoneExtension#createAppContext()
      */
     @Override
-    protected AppContextImpl createAppContext() {
+    protected BaseAppContext createAppContext() {
         AppContextImpl context = getAppContext();
         RoomContextImpl answer = new RoomContextImpl();
+        answer.setAppContext(context);
         answer.initialize(getClass());
         answer.setUserClass(context.getUserClass());
         answer.setGameUserClasses(context.getGameUserClasses());
         answer.setRoomClasses(context.getRoomClasses());
-        answer.setAppContext(context);
         return answer;
     }
     

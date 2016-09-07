@@ -17,7 +17,7 @@ import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
  *
  */
 
-public class AppContextImpl extends BaseAppContext {
+public class AppContextImpl extends BaseAppContext implements SmartFoxContext {
 
     // smartfox api
 	private ISFSApi api;
@@ -55,6 +55,7 @@ public class AppContextImpl extends BaseAppContext {
 	 * 
 	 * @param api smartfox api
 	 */
+	@Override
 	public void setApi(ISFSApi api) {
 		this.api = api;
 	}
@@ -64,6 +65,7 @@ public class AppContextImpl extends BaseAppContext {
 	 * 
 	 * @param extension smartfox extension
 	 */
+	@Override
 	public void setExtension(ISFSExtension extension) {
 		this.extension = extension;
 	}

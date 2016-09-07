@@ -4,7 +4,7 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import com.tvd12.ezyfox.core.constants.ServerEvent;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 
 /**
  * Support to handle buddy add event
@@ -17,7 +17,7 @@ public class BuddyAddEventHandler extends BuddyEventHandler {
     /**
      * @param context
      */
-    public BuddyAddEventHandler(AppContextImpl context) {
+    public BuddyAddEventHandler(BaseAppContext context) {
         super(context);
     }
 

@@ -6,10 +6,10 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
 import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerUserHandlerClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle event related to user action
@@ -23,7 +23,7 @@ public abstract class UserActionEventHandler extends ServerUserEventHandler {
     /**
      * @param context
      */
-	public UserActionEventHandler(AppContextImpl context) {
+	public UserActionEventHandler(BaseAppContext context) {
 		super(context);
 	}
 	
@@ -58,10 +58,9 @@ public abstract class UserActionEventHandler extends ServerUserEventHandler {
      */
     @Override
     protected Object checkUserAgent(ServerUserHandlerClass handler, ApiUser userAgent) {
-        Object agent = null;
         if(userAgent != null)
-            agent = super.checkUserAgent(handler, userAgent);
-        return handler.getUserClass().cast(agent);
+            return super.checkUserAgent(handler, userAgent);
+        return null;
     }
     
 }

@@ -9,9 +9,9 @@ import com.tvd12.ezyfox.core.command.UserInfo;
 import com.tvd12.ezyfox.core.constants.APIEvent;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.factory.UserAgentFactory;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.entities.impl.ApiSessionImpl;
 
 /**
@@ -26,7 +26,7 @@ public class UserJoinZoneEventHandler extends UserZoneEventHandler {
     /**
      * @param context
      */
-	public UserJoinZoneEventHandler(AppContextImpl context) {
+	public UserJoinZoneEventHandler(BaseAppContext context) {
 		super(context);
 		
 	}

@@ -3,9 +3,9 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 import java.util.List;
 
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 /**
  * Support to handle server event and notify to listeners
@@ -22,7 +22,7 @@ public abstract class ServerBaseEventHandler extends ServerEventHandler {
     /**
      * @param context
      */
-    public ServerBaseEventHandler(AppContextImpl context) {
+    public ServerBaseEventHandler(BaseAppContext context) {
         super(context);
     }
     

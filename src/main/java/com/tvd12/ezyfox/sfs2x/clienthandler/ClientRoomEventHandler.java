@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 
 import com.smartfoxserver.v2.entities.Room;
 import com.tvd12.ezyfox.core.constants.APIKey;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 
 import lombok.Setter;
 
@@ -23,7 +23,7 @@ public class ClientRoomEventHandler extends ClientEventHandler {
      * @param context
      * @param command
      */
-    public ClientRoomEventHandler(AppContextImpl context, String command) {
+    public ClientRoomEventHandler(BaseAppContext context, String command) {
         super(context, command);
     }
     

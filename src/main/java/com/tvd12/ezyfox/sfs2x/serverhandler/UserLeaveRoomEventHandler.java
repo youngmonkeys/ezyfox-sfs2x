@@ -1,7 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import com.tvd12.ezyfox.core.constants.ServerEvent;
-import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 
 /**
  * Support to handle user leave room event
@@ -15,7 +15,7 @@ public class UserLeaveRoomEventHandler extends ServerRoomEventHandler {
     /**
      * @param context
      */
-	public UserLeaveRoomEventHandler(AppContextImpl context) {
+	public UserLeaveRoomEventHandler(BaseAppContext context) {
 		super(context);
 	}
 	
