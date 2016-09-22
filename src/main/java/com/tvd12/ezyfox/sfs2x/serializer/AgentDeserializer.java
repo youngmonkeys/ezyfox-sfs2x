@@ -1,8 +1,26 @@
 package com.tvd12.ezyfox.sfs2x.serializer;
 
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.arrayToList;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.byteArrayToCharArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.byteArrayToCharList;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveBoolArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveDoubleArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveFloatArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveIntArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveLongArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToPrimitiveShortArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToStringArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperBoolArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperDoubleArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperFloatArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperIntArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperLongArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.collectionToWrapperShortArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toByteWrapperArray;
+import static com.tvd12.ezyfox.core.reflect.ReflectConvertUtil.toCharWrapperArray;
+
 import java.util.List;
 
-import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.variables.Variable;
 import com.tvd12.ezyfox.core.structure.AgentClassWrapper;
 import com.tvd12.ezyfox.core.structure.SetterMethodCover;
@@ -55,32 +73,93 @@ public class AgentDeserializer extends ParameterDeserializer {
      * @return a value
      */
     protected Object getValue(SetterMethodCover method, Variable variable) {
-        Object value = variable.getValue();
-        if(method.isArray()) {
-            value = assignValuesToArray(method, value);
-        }
-        else if(method.isColection()) {
-            value = assignValuesToCollection(method, value);
-        }
-        else if(method.isObject()) {
-            value = assignValuesToObject(method, (ISFSObject)value);
-        }
-        else if(method.isByte()) {
-            value = variable.getIntValue().byteValue();
-        }
-        else if(method.isChar()) {
-            value = (char)variable.getIntValue().byteValue();
-        }
-        else if(method.isFloat()) {
-            value = variable.getDoubleValue().floatValue();
-        }
-        else if(method.isLong()) {
-            value = variable.getDoubleValue().longValue();
-        }
-        else if(method.isShort()) {
-            value = variable.getIntValue().shortValue();
-        }
-        return value;
+        if(method.isTwoDimensionsArray()) 
+            return assignValuesToTwoDimensionsArray(method, variable.getSFSArrayValue());
+        if(method.isArray())
+            return assignValuesToArray(method, variable);
+        
+        if(method.isColection())
+            return assignValuesToCollection(method, variable);
+
+        if(method.isObject())
+            return assignValuesToObject(method, variable.getSFSObjectValue());
+        if(method.isByte())
+            return variable.getIntValue().byteValue();
+        if(method.isChar())
+            return (char)variable.getIntValue().byteValue();
+        if(method.isFloat())
+            return variable.getDoubleValue().floatValue();
+        if(method.isLong())
+            return variable.getDoubleValue().longValue();
+        if(method.isShort())
+            return variable.getIntValue().shortValue();
+        return variable.getValue();
     }
     
+    private Object assignValuesToArray(SetterMethodCover method, Variable variable) {
+        if(method.isObjectArray())
+            return assignValuesToObjectArray(method, variable.getSFSArrayValue());
+        if(method.isPrimitiveBooleanArray())
+            return collectionToPrimitiveBoolArray(variable.getSFSArrayValue().getBoolArray(0));
+        if(method.isPrimitiveByteArray())
+            return variable.getSFSArrayValue().getByteArray(0);
+        if(method.isPrimitiveCharArray())
+            return byteArrayToCharArray(variable.getSFSArrayValue().getByteArray(0));
+        if(method.isPrimitiveDoubleArray())
+            return collectionToPrimitiveDoubleArray(variable.getSFSArrayValue().getDoubleArray(0));
+        if(method.isPrimitiveFloatArray())
+            return collectionToPrimitiveFloatArray(variable.getSFSArrayValue().getFloatArray(0));
+        if(method.isPrimitiveIntArray())
+            return collectionToPrimitiveIntArray(variable.getSFSArrayValue().getIntArray(0));
+        if(method.isPrimitiveLongArray())
+            return collectionToPrimitiveLongArray(variable.getSFSArrayValue().getLongArray(0));
+        if(method.isPrimitiveShortArray())
+            return collectionToPrimitiveShortArray(variable.getSFSArrayValue().getShortArray(0));
+        if(method.isStringArray())
+            return collectionToStringArray(variable.getSFSArrayValue().getUtfStringArray(0));
+        
+        if(method.isWrapperBooleanArray())
+            return collectionToWrapperBoolArray(variable.getSFSArrayValue().getBoolArray(0));
+        if(method.isWrapperByteArray())
+            return toByteWrapperArray(variable.getSFSArrayValue().getByteArray(0));
+        if(method.isWrapperCharArray())
+            return toCharWrapperArray(variable.getSFSArrayValue().getByteArray(0));
+        if(method.isWrapperDoubleArray())
+            return collectionToWrapperDoubleArray(variable.getSFSArrayValue().getDoubleArray(0));
+        if(method.isWrapperFloatArray())
+            return collectionToWrapperFloatArray(variable.getSFSArrayValue().getFloatArray(0));
+        if(method.isWrapperIntArray())
+            return collectionToWrapperIntArray(variable.getSFSArrayValue().getIntArray(0));
+        if(method.isWrapperLongArray())
+            return collectionToWrapperLongArray(variable.getSFSArrayValue().getLongArray(0));
+//        if(method.isWrapperShortArray())
+        return collectionToWrapperShortArray(variable.getSFSArrayValue().getShortArray(0));
+    }
+    
+    private Object assignValuesToCollection(SetterMethodCover method, Variable variable) {
+        if(method.isArrayObjectCollection())
+            return assignValuesToArrayObjectCollection(method, variable.getSFSArrayValue());
+        if(method.isObjectCollection())
+            return assignValuesToObjectCollection(method, variable.getSFSArrayValue());
+        if(method.isBooleanCollection())
+            return variable.getSFSArrayValue().getBoolArray(0);
+        if(method.isByteCollection())
+            return arrayToList(variable.getSFSArrayValue().getByteArray(0));
+        if(method.isCharCollection())
+            return byteArrayToCharList(variable.getSFSArrayValue().getByteArray(0));
+        if(method.isDoubleCollection())
+            return variable.getSFSArrayValue().getDoubleArray(0);
+        if(method.isFloatCollection())
+            return variable.getSFSArrayValue().getFloatArray(0);
+        if(method.isIntCollection())
+            return variable.getSFSArrayValue().getIntArray(0);
+        if(method.isLongCollection())
+            return variable.getSFSArrayValue().getLongArray(0);
+        if(method.isShortCollection())
+            return variable.getSFSArrayValue().getShortArray(0);
+        if(method.isStringCollection())
+            return variable.getSFSArrayValue().getUtfStringArray(0);
+//        if(method.isArrayCollection())
+        return assignValuesToArrayCollection(method, variable.getSFSArrayValue());
+    }
 }
