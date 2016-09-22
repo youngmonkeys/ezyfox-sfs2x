@@ -1,25 +1,22 @@
 package com.tvd12.ezyfox.sfs2x.testing.parameterparser;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
+import com.google.common.collect.Lists;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
-import com.smartfoxserver.v2.entities.data.SFSDataType;
-import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.structure.RequestListenerClass;
 import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
 import com.tvd12.test.performance.Performance;
 import com.tvd12.test.performance.Script;
-
-import static org.testng.Assert.*;
 
 public class ParameterParserTest {
 	
@@ -28,26 +25,34 @@ public class ParameterParserTest {
 
 	@Test
 	public void testValidObjectCase() {
-		ISFSObject first = mock(ISFSObject.class);
-		when(first.get("name")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "dung"));
-		when(first.get("adr")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "bg"));
+		ISFSObject first = new SFSObject();
+		first.putUtfString("name", "dung");
+		first.putUtfString("adr", "bg");
 		
-		ISFSObject second = mock(ISFSObject.class);
-		when(second.get("name")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "dung1"));
-		when(second.get("adr")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "bg1"));
+		ISFSArray idssArray = new SFSArray();
+		idssArray.addIntArray(Lists.newArrayList(1, 2, 3));
+		idssArray.addIntArray(Lists.newArrayList(4, 5, 6));
+		first.putSFSArray("idss", idssArray);
 		
-		ISFSObject third = mock(ISFSObject.class);
-		when(third.get("name")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "dung2"));
-		when(third.get("adr")).thenReturn(new SFSDataWrapper(SFSDataType.UTF_STRING, "bg2"));
+		ISFSObject second = new SFSObject();
+		second.putUtfString("name", "dung1");
+		second.putUtfString("adr", "bg1");
 		
-		when(first.get("user")).thenReturn(new SFSDataWrapper(SFSDataType.SFS_OBJECT, second));
-		when(second.get("user")).thenReturn(new SFSDataWrapper(SFSDataType.SFS_OBJECT, third));
-
+		ISFSObject third = new SFSObject();
+		third.putUtfString("name", "dung2");
+		third.putUtfString("adr", "bg2");
+		
+		first.putSFSObject("user", second);
+		second.putSFSObject("user", third);
+		
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
 		User user = (User) RequestParamDeserializer.getInstance().deserialize(clazz, first);
 		assertNotNull(user);
 		assertNotNull(user.getUser());
 		assertNotNull(user.getUser().getUser());
+		
+		assertEquals(user.getIdss().length, 2);
+		assertEquals(user.getIdss()[1][0], 4);
 		
 		assertEquals(user, new User("dung", "bg"));
 		assertEquals(user.getUser(), new User("dung1", "bg1"));

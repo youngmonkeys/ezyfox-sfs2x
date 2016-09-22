@@ -36,6 +36,9 @@ public class User {
 
 	@RequestParam
 	private List<User> users;
+	
+	@RequestParam
+	private int[][] idss;
 
 	@Override
 	public boolean equals(Object obj) {

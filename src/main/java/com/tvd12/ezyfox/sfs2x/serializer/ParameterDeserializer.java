@@ -42,7 +42,6 @@ import java.util.List;
 
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
-import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.tvd12.ezyfox.core.structure.ClassWrapper;
 import com.tvd12.ezyfox.core.structure.SetterMethodCover;
 
@@ -79,10 +78,8 @@ public class ParameterDeserializer {
             ISFSObject params, Object result) {
         List<SetterMethodCover> methods = wrapper.getMethods();
         for(SetterMethodCover method : methods) {
-            SFSDataWrapper data = params.get(method.getKey());
-            if(data == null)
-                continue;
-            assignValuesToMethod(result, method, data);
+            if(params.containsKey(method.getKey()))
+                assignValuesToMethod(result, method, params);
         }
         return result;
     }
@@ -107,21 +104,35 @@ public class ParameterDeserializer {
      * @param data value to set
      */
     protected void assignValuesToMethod(Object instance,
-            SetterMethodCover method, 
-            SFSDataWrapper data) {
-            Object value = data.getObject();
-            if(method.isColection()) {
-                value = assignValuesToCollection(method, value);
-            }
-            if(method.isArray()) {
-                value = assignValuesToArray(method, value);
-            }
-            else if(method.isObject()) {
-                value = assignValuesToObject(method, (ISFSObject)value);
-            }
-            else if(method.isChar()) {
-                value = (char)((Number)value).byteValue();
-            }
+            SetterMethodCover method, ISFSObject data) {
+            Object value = null;
+            String key = method.getKey();
+            if(method.isColection())
+                value = assignValuesToCollection(method, data);
+            else if(method.isTwoDimensionsArray())
+                value = assignValuesToTwoDimensionsArray(method, data);
+            else if(method.isArray())
+                value = assignValuesToArray(method, data);
+            else if(method.isObject())
+                value = assignValuesToObject(method, data.getSFSObject(key));
+            else if(method.isBoolean())
+                value = data.getBool(key);
+            else if(method.isByte())
+                value = data.getByte(key);
+            else if(method.isChar())
+                value = (char)data.getByte(key).byteValue();
+            else if(method.isDouble())
+                value = data.getDouble(key);
+            else if(method.isFloat())
+                value = data.getFloat(key);
+            else if(method.isInt())
+                value = data.getInt(key);
+            else if(method.isLong())
+                value = data.getLong(key);
+            else if(method.isShort())
+                value = data.getShort(key);
+            else
+                value = data.getUtfString(key);
                 
             method.invoke(instance, value);
     }
@@ -130,91 +141,114 @@ public class ParameterDeserializer {
      * Get value from SFSObject and call setter method to set value to java object
      * 
      * @param method setter method
-     * @param array the value as array to set
+     * @param data the SFSObject
      * @return the java object
      */
-    @SuppressWarnings("unchecked")
+    protected Object assignValuesToTwoDimensionsArray(SetterMethodCover method, 
+            ISFSObject data) {
+        return assignValuesToTwoDimensionsArray(method, data.getSFSArray(method.getKey()));
+    }
+    
+    /**
+     * Get value from SFSArray and call setter method to set value to java object
+     * 
+     * @param method setter method
+     * @param array the SFSArray object
+     * @return the java object
+     */
+    protected Object assignValuesToTwoDimensionsArray(SetterMethodCover method, 
+            ISFSArray array) {
+        Class<?> componentType = method.getComponentType();
+        Class<?> type = componentType.getComponentType();
+        Object result = Array.newInstance(componentType, array.size());
+        for(int i = 0 ; i < array.size() ; i++)
+            Array.set(result, i, parseValueByType(type, array.get(i).getObject()));
+        return result;
+    }
+    
+    /**
+     * Get value from SFSObject and call setter method to set value to java object
+     * 
+     * @param method setter method
+     * @param data the value as array to set
+     * @return the java object
+     */
     protected Object assignValuesToArray(SetterMethodCover method, 
-            Object array) {
-        if(method.isObjectArray()) {
-            return assignValuesToObjectArray(method, (ISFSArray)array);
-        }
-        else if(method.isPrimitiveBooleanArray()) {
-            return collectionToPrimitiveBoolArray((Collection<Boolean>)array);
-        }
-        else if(method.isPrimitiveCharArray()) {
-            return byteArrayToCharArray((byte[])array);
-        }
-        else if(method.isPrimitiveDoubleArray()) {
-            return collectionToPrimitiveDoubleArray((Collection<Double>)array);
-        }
-        else if(method.isPrimitiveFloatArray()) {
-            return collectionToPrimitiveFloatArray((Collection<Float>)array);
-        }
-        else if(method.isPrimitiveIntArray()) {
-            return collectionToPrimitiveIntArray((Collection<Integer>)array);
-        }
-        else if(method.isPrimitiveLongArray()) {
-            return collectionToPrimitiveLongArray((Collection<Long>)array);
-        }
-        else if(method.isPrimitiveShortArray()) {
-            return collectionToPrimitiveShortArray((Collection<Short>)array);
-        }
-        else if(method.isStringArray()) {
-            return collectionToStringArray((Collection<String>)array);
-        }
-        else if(method.isWrapperByteArray()) {
-            return toByteWrapperArray((byte[])array);
-        }
-        else if(method.isWrapperCharArray()) {
-            return toCharWrapperArray((byte[])array);
-        }
-        else if(method.isWrapperBooleanArray()) {
-            return collectionToWrapperBoolArray((Collection<Boolean>)array);
-        }
-        else if(method.isWrapperDoubleArray()) {
-            return collectionToWrapperDoubleArray((Collection<Double>)array);
-        }
-        else if(method.isWrapperFloatArray()) {
-            return collectionToWrapperFloatArray((Collection<Float>)array);
-        }
-        else if(method.isWrapperIntArray()) {
-            return collectionToWrapperIntArray((Collection<Integer>)array);
-        }
-        else if(method.isWrapperLongArray()) {
-            return collectionToWrapperLongArray((Collection<Long>)array);
-        }
-        else if(method.isWrapperShortArray()) {
-            return collectionToWrapperShortArray((Collection<Short>)array);
-        }
-        return array;
+            ISFSObject data) {
+        String key = method.getKey();
+        if(method.isObjectArray())
+            return assignValuesToObjectArray(method, data.getSFSArray(key));
+        if(method.isPrimitiveBooleanArray())
+            return collectionToPrimitiveBoolArray(data.getBoolArray(key));
+        if(method.isPrimitiveByteArray())
+            return data.getByteArray(key);
+        if(method.isPrimitiveCharArray())
+            return byteArrayToCharArray(data.getByteArray(key));
+        if(method.isPrimitiveDoubleArray())
+            return collectionToPrimitiveDoubleArray(data.getDoubleArray(key));
+        if(method.isPrimitiveFloatArray())
+            return collectionToPrimitiveFloatArray(data.getFloatArray(key));
+        if(method.isPrimitiveIntArray())
+            return collectionToPrimitiveIntArray(data.getIntArray(key));
+        if(method.isPrimitiveLongArray())
+            return collectionToPrimitiveLongArray(data.getLongArray(key));
+        if(method.isPrimitiveShortArray())
+            return collectionToPrimitiveShortArray(data.getShortArray(key));
+        if(method.isStringArray())
+            return collectionToStringArray(data.getUtfStringArray(key));
+        
+        if(method.isWrapperBooleanArray())
+            return collectionToWrapperBoolArray(data.getBoolArray(key));
+        if(method.isWrapperByteArray())
+            return toByteWrapperArray(data.getByteArray(key));
+        if(method.isWrapperCharArray())
+            return toCharWrapperArray(data.getByteArray(key));
+        if(method.isWrapperDoubleArray())
+            return collectionToWrapperDoubleArray(data.getDoubleArray(key));
+        if(method.isWrapperFloatArray())
+            return collectionToWrapperFloatArray(data.getFloatArray(key));
+        if(method.isWrapperIntArray())
+            return collectionToWrapperIntArray(data.getIntArray(key));
+        if(method.isWrapperLongArray())
+            return collectionToWrapperLongArray(data.getLongArray(key));
+//        if(method.isWrapperShortArray())
+            return collectionToWrapperShortArray(data.getShortArray(key));
     }
     
     /**
      * Get value from SFSObject and call setter method to set value to java object
      * 
      * @param method structure of setter method
-     * @param array the value as collection
+     * @param data the value as collection
      * @return the java object
      */
     protected Object assignValuesToCollection(SetterMethodCover method, 
-            Object array) {
-        if(method.isArrayObjectCollection()) {
-            return assignValuesToArrayObjectCollection(method, (ISFSArray)array);
-        }
-        else if(method.isObjectCollection()) {
-            return assignValuesToObjectCollection(method, (ISFSArray)array);
-        }
-        else if(method.isByteCollection()) {
-            return arrayToList(array);
-        }
-        else if(method.isCharCollection()) {
-            return byteArrayToCharList((byte[])array);
-        }
-        else if(method.isArrayCollection()) {
-            return assignValuesToArrayCollection(method, (ISFSArray)array);
-        }
-        return array;
+            ISFSObject data) {
+        String key = method.getKey();
+        if(method.isArrayObjectCollection())
+            return assignValuesToArrayObjectCollection(method, data.getSFSArray(key));
+        if(method.isObjectCollection())
+            return assignValuesToObjectCollection(method, data.getSFSArray(key));
+        if(method.isBooleanCollection())
+            return data.getBoolArray(key);
+        if(method.isByteCollection())
+            return arrayToList(data.getByteArray(key));
+        if(method.isCharCollection())
+            return byteArrayToCharList(data.getByteArray(key));
+        if(method.isDoubleCollection())
+            return data.getDoubleArray(key);
+        if(method.isFloatCollection())
+            return data.getFloatArray(key);
+        if(method.isIntCollection())
+            return data.getIntArray(key);
+        if(method.isLongCollection())
+            return data.getLongArray(key);
+        if(method.isShortCollection())
+            return data.getShortArray(key);
+        if(method.isStringCollection())
+            return data.getUtfStringArray(key);
+//        if(method.isArrayCollection())
+        return assignValuesToArrayCollection(method, data.getSFSArray(key));
     }
     
     /**
@@ -237,7 +271,7 @@ public class ParameterDeserializer {
      * @param sfsArray smartfox array
      * @return the java object
      */
-    private Object assignValuesToObjectArray(SetterMethodCover method, 
+    protected Object assignValuesToObjectArray(SetterMethodCover method, 
             ISFSArray sfsArray) {
         return assignValuesToObjectArray(method.getParameterClass(), 
                 sfsArray);
@@ -270,7 +304,7 @@ public class ParameterDeserializer {
      * @return the java object
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private Object assignValuesToObjectCollection(
+    protected Object assignValuesToObjectCollection(
             SetterMethodCover method, 
             ISFSArray sfsArray) {
         List result = new ArrayList<>();
@@ -290,7 +324,7 @@ public class ParameterDeserializer {
      * @return the java object
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private Object assignValuesToArrayObjectCollection(
+    protected Object assignValuesToArrayObjectCollection(
             SetterMethodCover method, 
             ISFSArray sfsArray) {
         List result = new ArrayList<>();
@@ -310,62 +344,49 @@ public class ParameterDeserializer {
      * @return the java object
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private Object assignValuesToArrayCollection(SetterMethodCover method,
+    protected Object assignValuesToArrayCollection(SetterMethodCover method,
             ISFSArray array) {
         List result = new ArrayList();
         Class<?> type = method.getGenericType().getComponentType();
-        for(int i = 0 ; i < array.size() ; i++) {
-            Object value = array.get(i).getObject();
-            if(isPrimitiveBool(type)) {
-                value = collectionToPrimitiveBoolArray((Collection)value);
-            }
-            else if(isPrimitiveChar(type)) {
-                value = byteArrayToCharArray((byte[])value);
-            }
-            else if(isPrimitiveDouble(type)) {
-                value = collectionToPrimitiveDoubleArray((Collection)value);
-            }
-            else if(isPrimitiveFloat(type)) {
-                value = collectionToPrimitiveFloatArray((Collection)value);
-            }
-            else if(isPrimitiveInt(type)) {
-                value = collectionToPrimitiveIntArray((Collection)value);
-            }
-            else if(isPrimitiveLong(type)) {
-                value = collectionToPrimitiveLongArray((Collection)value);
-            }
-            else if(isPrimitiveShort(type)) {
-                value = collectionToPrimitiveShortArray((Collection)value);
-            }
-            else if(isString(type)) {
-                value = collectionToStringArray((Collection)value);
-            }
-            else if(isWrapperBool(type)) {
-                value = collectionToWrapperBoolArray((Collection)value);
-            }
-            else if(isWrapperByte(type)) {
-                value = toByteWrapperArray((byte[])value);
-            }
-            else if(isWrapperChar(type)) {
-                value = toCharWrapperArray((byte[])value);
-            }
-            else if(isWrapperDouble(type)) {
-                value = collectionToWrapperDoubleArray((Collection)value);
-            }
-            else if(isWrapperFloat(type)) {
-                value = collectionToWrapperFloatArray((Collection)value);
-            }
-            else if(isWrapperInt(type)) {
-                value = collectionToWrapperIntArray((Collection)value);
-            }
-            else if(isWrapperLong(type)) {
-                value = collectionToWrapperLongArray((Collection)value);
-            }
-            else if(isWrapperShort(type)) {
-                value = collectionToWrapperShortArray((Collection)value);
-            }
-            result.add(value);
-        }
+        for(int i = 0 ; i < array.size() ; i++)
+            result.add(parseValueByType(type, array.get(i).getObject()));
         return result;
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private Object parseValueByType(Class<?> type, Object value) {
+        if(isPrimitiveBool(type))
+            return collectionToPrimitiveBoolArray((Collection)value);
+        if(isPrimitiveChar(type))
+            return byteArrayToCharArray((byte[])value);
+        if(isPrimitiveDouble(type))
+            return collectionToPrimitiveDoubleArray((Collection)value);
+        if(isPrimitiveFloat(type))
+            return collectionToPrimitiveFloatArray((Collection)value);
+        if(isPrimitiveInt(type))
+            return collectionToPrimitiveIntArray((Collection)value);
+        if(isPrimitiveLong(type))
+            return collectionToPrimitiveLongArray((Collection)value);
+        if(isPrimitiveShort(type))
+            return collectionToPrimitiveShortArray((Collection)value);
+        if(isString(type))
+            return collectionToStringArray((Collection)value);
+        if(isWrapperBool(type))
+            return collectionToWrapperBoolArray((Collection)value);
+        if(isWrapperByte(type))
+            return toByteWrapperArray((byte[])value);
+        if(isWrapperChar(type))
+            return toCharWrapperArray((byte[])value);
+        if(isWrapperDouble(type))
+            return collectionToWrapperDoubleArray((Collection)value);
+        if(isWrapperFloat(type))
+            return collectionToWrapperFloatArray((Collection)value);
+        if(isWrapperInt(type))
+            return collectionToWrapperIntArray((Collection)value);
+        if(isWrapperLong(type))
+            return collectionToWrapperLongArray((Collection)value);
+        if(isWrapperShort(type))
+            return collectionToWrapperShortArray((Collection)value);
+        return value;
     }
 }
