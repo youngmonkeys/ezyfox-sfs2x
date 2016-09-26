@@ -21,7 +21,7 @@ import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 public abstract class ZoneRoomBaseEventHandler extends ServerBaseEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public ZoneRoomBaseEventHandler(BaseAppContext context) {
         super(context);

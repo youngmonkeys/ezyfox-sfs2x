@@ -48,9 +48,8 @@ public class ClientRoomEventHandlerTest extends BaseCommandTest2 {
     
     private RoomContextImpl newRoomContext() {
         RoomContextImpl answer = new RoomContextImpl();
-        answer.setAppContext(context);
-        answer.initialize(ExRoomExtension2.class);
-        answer.addObjectDeserializer(BetRequestListener.class, new ObjectDeserializer() {
+        answer.init(context, ExRoomExtension2.class);
+        context.addObjectDeserializer(BetRequestListener.class, new ObjectDeserializer() {
             
             @SuppressWarnings("unchecked")
             @Override
@@ -59,7 +58,7 @@ public class ClientRoomEventHandlerTest extends BaseCommandTest2 {
                 return b;
             }
         });
-        answer.addObjectSerializer(BetRequestListener.class, new ObjectSerializer() {
+        context.addObjectSerializer(BetRequestListener.class, new ObjectSerializer() {
             
             @Override
             public Parameters serialize(Object object) {

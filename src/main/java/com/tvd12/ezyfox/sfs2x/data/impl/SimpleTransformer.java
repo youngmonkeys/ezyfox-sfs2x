@@ -31,7 +31,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.structure.ResponseParamsClass;
 import com.tvd12.ezyfox.sfs2x.data.Transformer;
 import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
@@ -46,7 +46,7 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
  */
 public class SimpleTransformer {
     
-    protected BaseAppContext context;
+    protected BaseContext context;
 
     // map of types their transformer
     protected Map<Class<?>, Transformer> transformers
@@ -59,8 +59,10 @@ public class SimpleTransformer {
     
     /**
      * Call initialize map of transformers
+     * 
+     * @param context the context
      */
-    public SimpleTransformer(BaseAppContext context) {
+    public SimpleTransformer(BaseContext context) {
         init(context);
     }
     
@@ -224,8 +226,10 @@ public class SimpleTransformer {
     
     /**
      * Initialize map of transformers
+     * 
+     * @param context the context
      */
-    protected void init(BaseAppContext context) {
+    protected void init(BaseContext context) {
         setContext(context);
         initWithWrapperType();
         initWithPrimitiveTypeArray();
@@ -233,7 +237,7 @@ public class SimpleTransformer {
         initWithStringType();
     }
     
-    private void setContext(BaseAppContext context) {
+    private void setContext(BaseContext context) {
         this.context = context;
     }
     

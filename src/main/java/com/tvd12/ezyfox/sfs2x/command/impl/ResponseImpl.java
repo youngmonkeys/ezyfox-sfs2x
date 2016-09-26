@@ -39,9 +39,9 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     private Map<String, Object> addition = new HashMap<>();
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public ResponseImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
@@ -85,12 +85,11 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.Response#recipients(java.util.List)
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T extends Response, U extends ApiBaseUser> T recipients(List<U> users) {
+    public <U extends ApiBaseUser> Response recipients(List<U> users) {
         for(ApiBaseUser user : users)
             this.usernames.add(user.getName());
-        return (T)this;
+        return this;
     }
     
     /* (non-Javadoc)

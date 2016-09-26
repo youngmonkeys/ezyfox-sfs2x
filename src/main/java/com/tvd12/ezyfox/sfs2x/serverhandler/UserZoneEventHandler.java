@@ -28,7 +28,7 @@ public abstract class UserZoneEventHandler extends ServerUserEventHandler {
     private List<ZoneHandlerClass> handlers;
 
     /**
-     * @param context
+     * @param context the context
      */
     public UserZoneEventHandler(BaseAppContext context) {
         super(context);
@@ -42,8 +42,10 @@ public abstract class UserZoneEventHandler extends ServerUserEventHandler {
      */
     @Override
     protected void init() {
-        handlers = new ZoneEventHandlerCenter().addHandlers(handlerClasses, context.getUserClass(),
-                context.getGameUserClasses());
+        handlers = new ZoneEventHandlerCenter()
+                .addHandlers(handlerClasses, 
+                        context.getUserClass(),
+                        context.getGameUserClasses());
     }
 
     /*

@@ -1,8 +1,9 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
@@ -31,7 +32,7 @@ public abstract class ServerRoomEventHandler extends ServerUserEventHandler {
     private List<RoomHandlerClass> handlers;
     
     /**
-     * @param context
+     * @param context the context
      */
     public ServerRoomEventHandler(BaseAppContext context) {
         super(context);
@@ -42,13 +43,14 @@ public abstract class ServerRoomEventHandler extends ServerUserEventHandler {
      */
     @Override
     protected void init() {
-        List<Class<?>> roomClasses = new ArrayList<>();
+        Set<Class<?>> roomClasses = new HashSet<>();
         roomClasses.add(ApiRoom.class);
         roomClasses.addAll(context.getRoomClasses());
         handlers = new RoomEventHandlerCenter().addHandlers(
                 handlerClasses, 
                 roomClasses, 
-                context.getUserClass(), context.getGameUserClasses());
+                context.getUserClass(), 
+                context.getGameUserClasses());
     }
 
     /**

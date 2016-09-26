@@ -22,9 +22,9 @@ public class KickUserImpl extends BaseCommandImpl implements KickUser {
     private int delaySeconds = 0;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public KickUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

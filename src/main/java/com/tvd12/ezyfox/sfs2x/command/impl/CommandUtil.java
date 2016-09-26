@@ -35,9 +35,7 @@ public class CommandUtil {
 	 * @return smartfox user
 	 */
 	public static User getSfsUser(ApiBaseUser agent, ISFSApi api) {
-	    if(agent == null)
-	        return null;
-		return getSfsUser(agent.getName(), api);
+		return agent == null ? null : getSfsUser(agent.getName(), api);
 	}
 	
 	/**
@@ -91,6 +89,7 @@ public class CommandUtil {
     /**
      * Get user agent list from smartfox user list
      * 
+     * @param <T> the user type
      * @param users smartfox room list
      * @return list of user agents
      */
@@ -106,6 +105,7 @@ public class CommandUtil {
     /**
      * Get user agent list from smartfox user list
      * 
+     * @param <T> the game user type
      * @param clazz class of game user
      * @param users smartfox room list
      * @return list of user agents
@@ -124,6 +124,7 @@ public class CommandUtil {
     /**
      * Get list of smartfox users from collection of user agents
      * 
+     * @param <T> the user type
      * @param users the collection of user agents
      * @param api the api
      * @return list of smartfox users

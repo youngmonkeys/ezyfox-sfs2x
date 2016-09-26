@@ -2,13 +2,13 @@ package com.tvd12.ezyfox.sfs2x.testing.serverhandler;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Set;
 
 import org.testng.annotations.Test;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.smartfoxserver.bitswarm.sessions.ISession;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.core.SFSEventParam;
@@ -46,8 +46,8 @@ public class UserLoginEventHandlerTest extends BaseHandlerTest {
     @Test(priority = 2, expectedExceptions = {SFSLoginException.class})
     public void test2() throws SFSException {
         context = mock(AppContextImpl.class);
-        when(context.serverEventHandlerClasses(ServerEvent.USER_LOGIN))
-            .thenReturn((List)Lists.newArrayList(ClassA.class));
+        when(context.getServerEventHandlerClasses(ServerEvent.USER_LOGIN))
+            .thenReturn((Set)Sets.newHashSet(ClassA.class));
         UserLoginEventHandler handler = new UserLoginEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
         ISession session = mock(ISession.class);
@@ -65,8 +65,8 @@ public class UserLoginEventHandlerTest extends BaseHandlerTest {
     @Test(priority = 3, expectedExceptions = {SFSLoginException.class})
     public void test3() throws SFSException {
         context = mock(AppContextImpl.class);
-        when(context.serverEventHandlerClasses(ServerEvent.USER_LOGIN))
-            .thenReturn((List)Lists.newArrayList(ClassB.class));
+        when(context.getServerEventHandlerClasses(ServerEvent.USER_LOGIN))
+            .thenReturn((Set)Sets.newHashSet(ClassB.class));
         UserLoginEventHandler handler = new UserLoginEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
         ISession session = mock(ISession.class);
@@ -84,8 +84,8 @@ public class UserLoginEventHandlerTest extends BaseHandlerTest {
     @Test(priority = 5)
     public void test5() throws SFSException {
         context = mock(AppContextImpl.class);
-        when(context.serverEventHandlerClasses(ServerEvent.USER_LOGIN))
-            .thenReturn((List)Lists.newArrayList(ClassA.class));
+        when(context.getServerEventHandlerClasses(ServerEvent.USER_LOGIN))
+            .thenReturn((Set)Sets.newHashSet(ClassA.class));
         UserLoginEventHandler handler = new UserLoginEventHandler(context);
         ISFSEvent event = mock(ISFSEvent.class);
         ISession session = mock(ISession.class);

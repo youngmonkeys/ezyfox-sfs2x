@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smartfoxserver.v2.controllers.SystemRequest;
 import com.smartfoxserver.v2.controllers.filter.ISystemFilterChain;
 import com.smartfoxserver.v2.controllers.filter.SysControllerFilterChain;
@@ -18,10 +15,7 @@ import com.tvd12.ezyfox.core.content.ContextProvider;
 import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
-import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
-import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRequestHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
-import com.tvd12.ezyfox.sfs2x.content.impl.SmartFoxContext;
 import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.filter.BaseSysControllerFilter;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
@@ -34,14 +28,8 @@ import com.tvd12.ezyfox.sfs2x.serverhandler.ServerInitializingEventHandler;
  * Created on Jun 1, 2016
  *
  */
-public class ZoneExtension extends SFSExtension {
+public class ZoneExtension extends BaseExtension {
 
-    // application context
-	protected BaseAppContext context;
-	
-	private static final Logger LOGGER
-	        = LoggerFactory.getLogger(ZoneExtension.class);
-	
 	/**
 	 * @see SFSExtension#init()
 	 */
@@ -57,23 +45,6 @@ public class ZoneExtension extends SFSExtension {
 		config();
 		after();
 	}
-	
-	/**
-	 * Override this function to add custom configuration
-	 */
-	protected void config() {
-	    
-	}
-	
-	/**
-	 * Invoke after initializing application and before initialize anything
-	 */
-	protected void before() {}
-	
-	/**
-	 * Invoke after initialized all
-	 */
-	protected void after() {}
 	
 	/**
 	 * Add server event handlers
@@ -96,7 +67,7 @@ public class ZoneExtension extends SFSExtension {
 	 */
 	protected void startServerInitializingEventHandler() {
 		ServerInitializingEventHandler handler = 
-				new ServerInitializingEventHandler(context);
+				new ServerInitializingEventHandler(appContext());
 		handler.handle();
 	}
 	
@@ -114,28 +85,18 @@ public class ZoneExtension extends SFSExtension {
 					ReflectClassUtil.newInstance(
 					clazz, BaseAppContext.class, context);
 		} catch (ExtensionException e) {
-		    LOGGER.error("Error when create server event handlers", e);
+		    getLogger().error("Error when create server event handlers", e);
 			throw new RuntimeException("Can not create event handler of class "
 					+ clazz, e);
 		}
 	}
 	
-	/**
-	 * Initialize application context
+	/*
+	 * (non-Javadoc)
+	 * @see com.tvd12.ezyfox.sfs2x.extension.BaseExtension#createContext()
 	 */
-	private void initContext() {
-		context = createAppContext();
-		SmartFoxContext sfsContext = (SmartFoxContext)context;
-		sfsContext.setApi(getApi());
-		sfsContext.setExtension(this);
-	}
-	
-	/**
-	 * Create application context
-	 * 
-	 * @return the context
-	 */
-	protected BaseAppContext createAppContext() {
+	@Override
+	protected BaseAppContext createContext() {
 	    return (BaseAppContext)ContextProvider
                 .getInstance()
                 .addContext(getClass(), newAppContext());
@@ -145,44 +106,6 @@ public class ZoneExtension extends SFSExtension {
 	    AppContextImpl answer = new AppContextImpl();
 	    answer.initialize(getClass());
 	    return answer;
-	}
-	
-	/**
-	 * Add client request handlers
-	 */
-	protected void addClientRequestHandlers() {
-		Set<String> commands = 
-				context.clientRequestCommands();
-		for(String command : commands)
-			addClientRequestHandler(command);
-	}
-	
-	/**
-	 * Add client request handler and map its to the command
-	 * 
-	 * @param command the command
-	 */
-	protected void addClientRequestHandler(String command) {
-		addClientRequestHandler(newClientEventHandler(command));
-	}
-	
-	/**
-	 * Create new client event handler
-	 * 
-	 * @param command the command
-	 * @return the client event handler
-	 */
-	protected ClientEventHandler newClientEventHandler(String command) {
-        return new ClientEventHandler(context, command);
-    }
-	
-	/**
-	 * Add client request handle
-	 * 
-	 * @param handler client request handle
-	 */
-	protected void addClientRequestHandler(ClientRequestHandler handler) {
-		addRequestHandler(handler.getCommand(), handler);
 	}
 	
 	/**
@@ -196,13 +119,17 @@ public class ZoneExtension extends SFSExtension {
 	/**
 	 * Add System Controller Filters
 	 */
-	private void addSysControllerFilters() {
+	public void addSysControllerFilters() {
 	    for(SystemRequest rq : SystemRequest.values()) {
 	        ISystemFilterChain filterChain = new SysControllerFilterChain();
 	        filterChain.addFilter("EzyFoxFilterChain#" + rq, 
-	                new BaseSysControllerFilter(context, rq));
+	                new BaseSysControllerFilter(appContext(), rq));
 	        getParentZone().setFilterChain(rq, filterChain);
 	    }
+	}
+	
+	private BaseAppContext appContext() {
+	    return (BaseAppContext)context;
 	}
 	
 }

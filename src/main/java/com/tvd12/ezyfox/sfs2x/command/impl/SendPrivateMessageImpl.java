@@ -26,9 +26,9 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
     private Object params;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public SendPrivateMessageImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

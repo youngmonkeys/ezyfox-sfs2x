@@ -27,9 +27,9 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     private Object params;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public SendBuddyMessageImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

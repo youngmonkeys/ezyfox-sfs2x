@@ -11,7 +11,7 @@ import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 public class GameInvitationFailureEventHandler extends ZoneRoomBaseEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public GameInvitationFailureEventHandler(BaseAppContext context) {
         super(context);

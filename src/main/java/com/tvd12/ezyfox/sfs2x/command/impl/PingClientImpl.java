@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
-import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.TaskScheduler;
@@ -39,9 +38,9 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
     private static final boolean DONT_INTERRUPT_IF_RUNNING = false;
 
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public PingClientImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
@@ -120,8 +119,8 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
     
     private void sendPingCommand() {
         User sfsUser = CommandUtil.getSfsUser(user, api);
-        ISFSObject params = new SFSObject();
-        extension.send(ApiRequest.PING, params, sfsUser);
+        if(sfsUser != null)
+            extension.send(ApiRequest.PING, new SFSObject(), sfsUser);
     }
 
     /**

@@ -23,9 +23,9 @@ public class FetchUserImpl extends BaseCommandImpl implements FetchUser {
     private String room;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public FetchUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

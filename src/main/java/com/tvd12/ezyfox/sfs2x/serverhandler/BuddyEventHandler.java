@@ -26,7 +26,7 @@ import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyImpl;
 public abstract class BuddyEventHandler extends ServerBaseEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public BuddyEventHandler(BaseAppContext context) {
         super(context);

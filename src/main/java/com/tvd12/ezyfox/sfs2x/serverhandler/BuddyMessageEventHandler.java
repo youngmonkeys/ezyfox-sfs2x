@@ -25,7 +25,7 @@ import com.tvd12.ezyfox.sfs2x.entities.impl.ApiBuddyMessageImpl;
 public class BuddyMessageEventHandler extends MessageEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public BuddyMessageEventHandler(BaseAppContext context) {
         super(context);

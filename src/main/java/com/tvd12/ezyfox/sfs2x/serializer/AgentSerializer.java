@@ -23,6 +23,7 @@ public abstract class AgentSerializer extends ParameterSerializer {
     /**
      * Create new variable object
      * 
+     * @param <T> the variable type
      * @param name name of variable
      * @param value value of variable
      * @param isHidden hidden or visible?

@@ -23,9 +23,9 @@ public class DisconnectUserImpl extends BaseCommandImpl implements DisconnectUse
     private byte reasonId;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public DisconnectUserImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

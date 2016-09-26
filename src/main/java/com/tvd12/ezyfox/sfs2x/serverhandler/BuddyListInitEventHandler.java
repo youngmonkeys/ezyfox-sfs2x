@@ -23,7 +23,7 @@ import com.tvd12.ezyfox.core.entities.ApiUser;
 public class BuddyListInitEventHandler extends UserZoneEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public BuddyListInitEventHandler(BaseAppContext context) {
         super(context);

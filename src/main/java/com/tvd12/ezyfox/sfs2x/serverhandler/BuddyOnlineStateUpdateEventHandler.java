@@ -19,7 +19,7 @@ import com.tvd12.ezyfox.core.entities.ApiBaseUser;
  */
 public class BuddyOnlineStateUpdateEventHandler extends UserZoneEventHandler {
     /**
-     * @param context
+     * @param context the context
      */
     public BuddyOnlineStateUpdateEventHandler(BaseAppContext context) {
         super(context);

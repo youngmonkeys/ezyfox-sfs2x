@@ -38,6 +38,7 @@ public class AgentDeserializer extends ParameterDeserializer {
     /**
      * Deserialize list of smartfox variables to agent object
      * 
+     * @param <T> the variable type
      * @param wrapper structure of agent class
      * @param variables list of smartfox variables
      * @return a agent object
@@ -50,6 +51,7 @@ public class AgentDeserializer extends ParameterDeserializer {
     /**
      * Deserialize list of smartfox variables to agent object
      * 
+     * @param <T> the variable type
      * @param wrapper structure of agent class
      * @param agent the agent object
      * @param variables list of smartfox variables

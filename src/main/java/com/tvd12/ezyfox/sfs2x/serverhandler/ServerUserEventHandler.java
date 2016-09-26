@@ -21,7 +21,7 @@ public abstract class ServerUserEventHandler extends ServerBaseEventHandler {
     protected List<ServerUserHandlerClass> serverUserEventHandler;
     
     /**
-     * @param context
+     * @param context the context
      */
     public ServerUserEventHandler(BaseAppContext context) {
         super(context);
@@ -34,7 +34,8 @@ public abstract class ServerUserEventHandler extends ServerBaseEventHandler {
     protected void init() {
         serverUserEventHandler = new ServerUserEventHandlerCenter()
                 .addHandlers(handlerClasses, 
-                context.getUserClass(), context.getGameUserClasses());
+                context.getUserClass(), 
+                context.getGameUserClasses());
     }
     
     /**

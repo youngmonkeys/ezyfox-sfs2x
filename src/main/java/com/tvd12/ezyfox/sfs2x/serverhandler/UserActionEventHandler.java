@@ -21,7 +21,7 @@ import com.tvd12.ezyfox.core.structure.ServerUserHandlerClass;
 public abstract class UserActionEventHandler extends ServerUserEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
 	public UserActionEventHandler(BaseAppContext context) {
 		super(context);

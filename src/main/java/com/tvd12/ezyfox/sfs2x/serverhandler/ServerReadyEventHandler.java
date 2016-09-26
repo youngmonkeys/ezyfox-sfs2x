@@ -19,7 +19,7 @@ import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 public class ServerReadyEventHandler extends ServerBaseEventHandler {
     
     /**
-     * @param context
+     * @param context the context
      */
 	public ServerReadyEventHandler(BaseAppContext context) {
 		super(context);

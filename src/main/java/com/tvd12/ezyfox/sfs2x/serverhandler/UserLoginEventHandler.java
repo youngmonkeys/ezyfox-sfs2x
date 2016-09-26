@@ -41,7 +41,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
     private List<UserLoginHandlerClass> loginHandlers;
     
     /**
-     * @param context
+     * @param context the context
      */
     public UserLoginEventHandler(BaseAppContext context) {
         super(context);

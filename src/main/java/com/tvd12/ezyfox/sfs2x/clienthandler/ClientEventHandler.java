@@ -10,7 +10,7 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.constants.APIKey;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
@@ -36,7 +36,7 @@ public class ClientEventHandler extends ClientRequestHandler {
      * @param context application context
      * @param command request's command
      */
-	public ClientEventHandler(BaseAppContext context, String command) {
+	public ClientEventHandler(BaseContext context, String command) {
 		super(context, command);
 	}
 

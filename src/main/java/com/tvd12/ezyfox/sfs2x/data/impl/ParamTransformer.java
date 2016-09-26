@@ -9,7 +9,7 @@ import com.smartfoxserver.v2.entities.data.SFSArray;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.serialize.ObjectSerializer;
 import com.tvd12.ezyfox.core.transport.Parameters;
 
@@ -23,7 +23,7 @@ public class ParamTransformer extends SimpleTransformer {
         super();
     }
     
-    public ParamTransformer(BaseAppContext context) {
+    public ParamTransformer(BaseContext context) {
         super(context);
     }
 

@@ -19,7 +19,7 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 public abstract class MessageEventHandler extends ServerBaseEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public MessageEventHandler(BaseAppContext context) {
         super(context);
