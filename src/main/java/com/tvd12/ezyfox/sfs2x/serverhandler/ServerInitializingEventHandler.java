@@ -24,7 +24,7 @@ public class ServerInitializingEventHandler extends ServerEventHandler {
 	protected List<ServerHandlerClass> handlers;
 
 	/**
-	 * @param context
+	 * @param context the context
 	 */
 	public ServerInitializingEventHandler(BaseAppContext context) {
 		super(context);

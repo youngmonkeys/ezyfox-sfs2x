@@ -1,7 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.extension;
 
 import com.tvd12.ezyfox.core.content.ContextProvider;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRoomEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
@@ -12,20 +12,17 @@ import com.tvd12.ezyfox.sfs2x.content.impl.RoomContextImpl;
  * Created on Aug 16, 2016
  *
  */
-public class RoomExtension extends ZoneExtension {
+public class RoomExtension extends BaseExtension {
 
-    /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.sfs2x.extension.ZoneExtension#createAppContext()
+    /*
+     * (non-Javadoc)
+     * @see com.tvd12.ezyfox.sfs2x.extension.BaseExtension#createContext()
      */
     @Override
-    protected BaseAppContext createAppContext() {
+    protected BaseContext createContext() {
         AppContextImpl context = getAppContext();
         RoomContextImpl answer = new RoomContextImpl();
-        answer.setAppContext(context);
-        answer.initialize(getClass());
-        answer.setUserClass(context.getUserClass());
-        answer.setGameUserClasses(context.getGameUserClasses());
-        answer.setRoomClasses(context.getRoomClasses());
+        answer.init(context, getClass());
         return answer;
     }
     
@@ -49,9 +46,4 @@ public class RoomExtension extends ZoneExtension {
         return getParentRoom().getZone().getExtension().getClass();
     }
     
-    /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.sfs2x.extension.ZoneExtension#addAgent()
-     */
-    @Override
-    protected void addAgent() {}
 }

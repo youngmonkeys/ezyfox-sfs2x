@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
-import com.tvd12.ezyfox.core.annotation.RoomContextConfiguration;
+import com.tvd12.ezyfox.core.annotation.ContextConfiguration;
 import com.tvd12.ezyfox.core.content.ContextProvider;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.extension.RoomExtension;
@@ -17,7 +17,7 @@ import com.tvd12.ezyfox.sfs2x.testing.context.AppEntryPoint;
  * Created on Aug 16, 2016
  *
  */
-@RoomContextConfiguration(clazz = RoomConfig.class)
+@ContextConfiguration(clazz = RoomConfig.class)
 public class ExRoomExtension extends RoomExtension {
     
     private Zone zone;
@@ -33,10 +33,6 @@ public class ExRoomExtension extends RoomExtension {
         ContextProvider.getInstance().addContext(AppEntryPoint.class, newAppContext());
     }
 
-    /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.sfs2x.extension.RoomExtension#getAppContext()
-     */
-    @Override
     protected AppContextImpl newAppContext() {
         AppContextImpl answer = new AppContextImpl();
         answer.initialize(AppEntryPoint.class);

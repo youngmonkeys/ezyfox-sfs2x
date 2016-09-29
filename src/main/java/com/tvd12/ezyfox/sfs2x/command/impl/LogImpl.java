@@ -19,10 +19,10 @@ public class LogImpl extends BaseCommandImpl implements Log {
 	private Class<?> from = api.getClass(); 
 	
 	/**
-	 * @param context
-	 * @param api
-	 * @param extension
-	 */
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
+     */
 	public LogImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
 	}
@@ -30,7 +30,6 @@ public class LogImpl extends BaseCommandImpl implements Log {
 	/* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.command.Log#error(java.lang.Object)
      */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Log from(Object obj) {
 		this.from = obj.getClass();

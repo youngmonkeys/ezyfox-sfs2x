@@ -31,7 +31,7 @@ public class UserAgentUnwrapperTest extends BaseTest {
         unwrapper 
             = new AgentClassUnwrapper(ClassA.class);
         List<UserVariable> vars = 
-                UserAgentSerializer.userAgentSerializer()
+                new UserAgentSerializer()
                     .serialize(unwrapper, new ClassA());
         assertEquals(vars.get(0).getStringValue(), "1");
         assertEquals(vars.get(1).getBoolValue(), Boolean.TRUE);
@@ -260,7 +260,7 @@ public class UserAgentUnwrapperTest extends BaseTest {
                 .test(new Script() {
                     @Override
                     public void execute() {
-                        UserAgentSerializer.getInstance()
+                        new UserAgentSerializer()
                         .object2params(unwrapper, new ClassC());
                     }
                 }).getTime();

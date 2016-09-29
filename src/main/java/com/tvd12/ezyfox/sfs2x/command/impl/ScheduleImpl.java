@@ -33,9 +33,9 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     private static final boolean DONT_INTERRUPT_IF_RUNNING = false;
 
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public ScheduleImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

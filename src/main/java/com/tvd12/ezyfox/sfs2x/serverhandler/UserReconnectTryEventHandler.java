@@ -17,7 +17,7 @@ import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 public class UserReconnectTryEventHandler extends UserZoneEventHandler {
     
     /**
-     * @param context
+     * @param context the context
      */
     public UserReconnectTryEventHandler(BaseAppContext context) {
         super(context);

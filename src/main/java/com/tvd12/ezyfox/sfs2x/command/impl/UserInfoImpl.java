@@ -35,9 +35,9 @@ public class UserInfoImpl extends BaseCommandImpl implements UserInfo {
     private User sfsUser;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public UserInfoImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

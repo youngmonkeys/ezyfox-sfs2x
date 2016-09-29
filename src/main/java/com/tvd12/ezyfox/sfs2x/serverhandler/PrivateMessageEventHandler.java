@@ -27,7 +27,7 @@ import com.tvd12.ezyfox.sfs2x.entities.impl.ApiPrivateMessageImpl;
 public class PrivateMessageEventHandler extends MessageEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public PrivateMessageEventHandler(BaseAppContext context) {
         super(context);

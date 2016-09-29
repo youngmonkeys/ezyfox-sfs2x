@@ -1,7 +1,5 @@
 package com.tvd12.ezyfox.sfs2x.clienthandler;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer.requestParamDeserializer;
-
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -10,7 +8,7 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.constants.APIKey;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
@@ -19,6 +17,7 @@ import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
 import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
+import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
 import com.tvd12.ezyfox.sfs2x.util.AgentUtil;
 
 /**
@@ -36,7 +35,7 @@ public class ClientEventHandler extends ClientRequestHandler {
      * @param context application context
      * @param command request's command
      */
-	public ClientEventHandler(BaseAppContext context, String command) {
+	public ClientEventHandler(BaseContext context, String command) {
 		super(context, command);
 	}
 
@@ -83,7 +82,7 @@ public class ClientEventHandler extends ClientRequestHandler {
 	        deserializer.deserialize(listener, 
                     new SfsObjectTransformer(context).transform(params));
 	    } catch(IllegalArgumentException e) {
-	        requestParamDeserializer()
+	        new RequestParamDeserializer()
                 .deserialize(clazz.getRequestListenerClass(), params, listener);
 	    }
 	    

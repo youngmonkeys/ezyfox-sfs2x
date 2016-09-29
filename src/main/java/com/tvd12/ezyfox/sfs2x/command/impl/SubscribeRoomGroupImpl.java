@@ -19,9 +19,9 @@ public class SubscribeRoomGroupImpl extends BaseCommandImpl implements Subscribe
     private String groupId;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public SubscribeRoomGroupImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

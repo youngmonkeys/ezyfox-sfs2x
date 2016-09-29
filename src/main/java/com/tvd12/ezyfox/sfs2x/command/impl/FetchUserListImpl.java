@@ -21,9 +21,9 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 public class FetchUserListImpl extends BaseCommandImpl implements FetchUserList {
 
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public FetchUserListImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

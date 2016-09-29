@@ -1,7 +1,5 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.RoomAgentSerializer.roomAgentSerializer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +14,7 @@ import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.serializer.RoomAgentSerializer;
 
 /**
  * @see UpdateRoom
@@ -32,11 +31,11 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
 	private List<String> includedVars = new ArrayList<>();
     private List<String> excludedVars = new ArrayList<>();
 	
-	/**
-	 * @param context
-	 * @param api
-	 * @param extension
-	 */
+    /**
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
+     */
 	public UpdateRoomImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
 	}
@@ -57,7 +56,7 @@ public class UpdateRoomImpl extends BaseCommandImpl implements UpdateRoom {
         AgentClassUnwrapper unwrapper = context.getRoomAgentClass(
                 agent.getClass()).getUnwrapper();
         List<RoomVariable> variables = 
-                roomAgentSerializer().serialize(unwrapper, agent);
+                new RoomAgentSerializer().serialize(unwrapper, agent);
         
         List<RoomVariable> answer = variables;
         if(includedVars.size() > 0) 

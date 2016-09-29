@@ -1,11 +1,12 @@
 package com.tvd12.ezyfox.sfs2x.testing.clienthandler;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.testng.annotations.Test;
 
@@ -70,8 +71,11 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     public void testInvalidCase() {
         context = newAppContext();
         context = spy(context);
-        when(context.clientRequestListeners("abc")).thenReturn(
-                Lists.newArrayList(new RequestResponseClass(ClassA.class, AppUser.class, new ArrayList<Class<?>>())));
+        RequestResponseClass rclass = new RequestResponseClass();
+        rclass.init(ClassA.class);
+        rclass.checkExecuteMethod(AppUser.class, new HashSet<Class<?>>());
+        when(context.getClientRequestListeners("abc")).thenReturn(
+                Lists.newArrayList(rclass));
         ClientEventHandler handler = new ExClientEventHandler(context, "abc");
         ISFSObject params = new SFSObject();
         handler.handleClientRequest(sfsUser, params);
@@ -81,7 +85,7 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     public void test2() {
         context = newAppContext();
         context = spy(context);
-        when(context.clientRequestListeners("abc1")).thenReturn(new ArrayList<RequestResponseClass>());
+        when(context.getClientRequestListeners("abc1")).thenReturn(new ArrayList<RequestResponseClass>());
         ClientEventHandler handler = new ExClientEventHandler(context, "abc1");
         ISFSObject params = new SFSObject();
         handler.handleClientRequest(sfsUser, params);
@@ -91,10 +95,13 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     public void test3() {
         context = newAppContext();
         context = spy(context);
-        List<Class<?>> gameUserClasses = new ArrayList<>();
+        Set<Class<?>> gameUserClasses = new HashSet<>();
         gameUserClasses.add(PokerUser.class);
-        when(context.clientRequestListeners("xyz")).thenReturn(
-                Lists.newArrayList(new RequestResponseClass(ClassB.class, AppUser.class, gameUserClasses)));
+        RequestResponseClass rclass = new RequestResponseClass();
+        rclass.init(ClassB.class);
+        rclass.checkExecuteMethod(AppUser.class, gameUserClasses);
+        when(context.getClientRequestListeners("xyz")).thenReturn(
+                Lists.newArrayList(rclass));
         ClientEventHandler handler = new ExClientEventHandler(context, "xyz");
         ISFSObject params = new SFSObject();
         handler.handleClientRequest(sfsUser, params);
@@ -104,10 +111,13 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     public void test4() {
         context = newAppContext();
         context = spy(context);
-        List<Class<?>> gameUserClasses = new ArrayList<>();
+        Set<Class<?>> gameUserClasses = new HashSet<>();
         gameUserClasses.add(PokerUser.class);
-        when(context.clientRequestListeners("xyz")).thenReturn(
-                Lists.newArrayList(new RequestResponseClass(ClassC.class, AppUser.class, gameUserClasses)));
+        RequestResponseClass rclass = new RequestResponseClass();
+        rclass.init(ClassC.class);
+        rclass.checkExecuteMethod(AppUser.class, gameUserClasses);
+        when(context.getClientRequestListeners("xyz")).thenReturn(
+                Lists.newArrayList(rclass));
         ClientEventHandler handler = new ExClientEventHandler(context, "xyz");
         ISFSObject params = new SFSObject();
         handler.handleClientRequest(sfsUser, params);

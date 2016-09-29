@@ -12,10 +12,6 @@ import com.smartfoxserver.v2.entities.variables.UserVariable;
  */
 public final class UserAgentSerializer extends AgentSerializer {
 	
-	private static UserAgentSerializer instance;
-	
-	private UserAgentSerializer() {}
-	
 	/**
 	 * @see AgentSerializer#newVariable(String, Object, boolean)
 	 */
@@ -25,16 +21,6 @@ public final class UserAgentSerializer extends AgentSerializer {
 	    UserVariable var = new SFSUserVariable(name, value);
 	    var.setHidden(isHidden);
 	    return var;
-	}
-	
-	public static UserAgentSerializer getInstance() {
-		if(instance == null) 
-			instance = new UserAgentSerializer();
-		return instance;
-	}
-	
-	public static UserAgentSerializer userAgentSerializer() {
-		return getInstance();
 	}
 	
 }

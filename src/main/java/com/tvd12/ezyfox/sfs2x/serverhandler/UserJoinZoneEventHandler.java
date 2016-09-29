@@ -24,7 +24,7 @@ import com.tvd12.ezyfox.sfs2x.entities.impl.ApiSessionImpl;
 public class UserJoinZoneEventHandler extends UserZoneEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
 	public UserJoinZoneEventHandler(BaseAppContext context) {
 		super(context);
@@ -59,7 +59,7 @@ public class UserJoinZoneEventHandler extends UserZoneEventHandler {
         ApiUser answer = UserAgentFactory.newUserAgent(
                 sfsUser.getName(),
                 context.getUserAgentClass(), 
-                context.getGameUserAgentClasses().values());
+                context.getGameUserAgentClasses());
         sfsUser.setProperty(APIKey.USER, answer);
         answer.setId(sfsUser.getId());
         answer.setIp(sfsUser.getIpAddress());

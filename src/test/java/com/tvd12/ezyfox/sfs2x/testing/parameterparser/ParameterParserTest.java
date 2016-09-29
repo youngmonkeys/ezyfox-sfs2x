@@ -46,7 +46,7 @@ public class ParameterParserTest {
 		second.putSFSObject("user", third);
 		
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		User user = (User) RequestParamDeserializer.getInstance().deserialize(clazz, first);
+		User user = (User) new RequestParamDeserializer().deserialize(clazz, first);
 		assertNotNull(user);
 		assertNotNull(user.getUser());
 		assertNotNull(user.getUser().getUser());
@@ -75,7 +75,7 @@ public class ParameterParserTest {
 		first.putSFSArray("users", array);
 		
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		User user = (User)(RequestParamDeserializer.getInstance().deserialize(clazz, first));
+		User user = (User)(new RequestParamDeserializer().deserialize(clazz, first));
 		assertNotNull(user);
 		assertEquals(user.getUsers().size(), 3);
 		
@@ -89,7 +89,7 @@ public class ParameterParserTest {
 		ISFSObject obj = new SFSObject();
 		obj.putUtfString("name", "dung");
 		RequestListenerClass clazz = new RequestListenerClass(User.class);
-		RequestParamDeserializer.getInstance().deserialize(clazz, obj);
+		new RequestParamDeserializer().deserialize(clazz, obj);
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class ParameterParserTest {
 		ISFSObject obj = new SFSObject();
 		obj.putUtfString("name", "dung");
 		RequestListenerClass clazz = new RequestListenerClass(NoParam.class);
-		RequestParamDeserializer.getInstance().deserialize(clazz, obj);
+		new RequestParamDeserializer().deserialize(clazz, obj);
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ public class ParameterParserTest {
                     @Override
                     public void execute() {
     					try {
-    					    RequestParamDeserializer.getInstance().deserialize(clazz, first);
+    					    new RequestParamDeserializer().deserialize(clazz, first);
     					} catch (Exception e) {
     						e.printStackTrace();
     					}
@@ -152,7 +152,7 @@ public class ParameterParserTest {
                 .test(new Script() {
                     @Override
                     public void execute() {
-                        RequestParamDeserializer.getInstance().deserialize(rlc, first);
+                        new RequestParamDeserializer().deserialize(rlc, first);
 //                      User user = (User)RequestParamParser2.getInstance().assignValues(rlc, first);
 //                      System.out.println(user.getAddress());
 //                      System.out.println(user.getName());

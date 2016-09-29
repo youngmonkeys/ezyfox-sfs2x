@@ -22,9 +22,9 @@ public class GoOnlineImpl extends BaseCommandImpl implements GoOnline {
     private boolean fireServerEvent;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public GoOnlineImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

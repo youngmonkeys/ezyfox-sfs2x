@@ -20,9 +20,7 @@ public class PingClientImplTest extends BaseCommandTest2 {
     public void test() {
         final PingClientImpl sImpl = new PingClientImpl(context, api, extension)
             .delay(0)
-            .oneTime(true)
-            .user(user)
-            .period(1);
+            .user(user);
         Runnable task = new Runnable() {
             @Override
             public void run() {
@@ -48,9 +46,7 @@ public class PingClientImplTest extends BaseCommandTest2 {
     @Test
     public void test2() throws Exception {
         final PingClientImpl sImpl = new PingClientImpl(context, api, extension)
-                .delay(0)
-                .oneTime(false)
-                .period(1);
+                .delay(0);
             Runnable task = new Runnable() {
                 @Override
                 public void run() {
@@ -69,16 +65,13 @@ public class PingClientImplTest extends BaseCommandTest2 {
         field.setAccessible(true);
         ScheduledFuture<?> scheduledFuture = mock(ScheduledFuture.class);
         field.set(sImpl, scheduledFuture);
-        sImpl.oneTime(false);
         sImpl.stop();
     }
     
     @Test
     public void test4() throws Exception {
         final PingClientImpl sImpl = new PingClientImpl(context, api, extension)
-                .delay(0)
-                .oneTime(true)
-                .period(1);
+                .delay(0);
             Runnable task = new Runnable() {
                 @Override
                 public void run() {

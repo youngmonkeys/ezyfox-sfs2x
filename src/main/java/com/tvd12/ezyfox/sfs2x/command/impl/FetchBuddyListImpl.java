@@ -21,9 +21,9 @@ public class FetchBuddyListImpl extends BaseCommandImpl implements FetchBuddyLis
     private String user;
 
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public FetchBuddyListImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

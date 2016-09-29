@@ -18,13 +18,12 @@ public class LogoutImpl extends BaseCommandImpl implements Logout {
     private String username;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public LogoutImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        // TODO Auto-generated constructor stub
     }
 
     /* (non-Javadoc)

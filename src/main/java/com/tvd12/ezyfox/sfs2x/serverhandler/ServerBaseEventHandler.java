@@ -20,7 +20,7 @@ public abstract class ServerBaseEventHandler extends ServerEventHandler {
     protected List<ServerHandlerClass> handlers;
 
     /**
-     * @param context
+     * @param context the context
      */
     public ServerBaseEventHandler(BaseAppContext context) {
         super(context);

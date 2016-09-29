@@ -27,9 +27,9 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
     private Object params;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public SendBuddyMessageImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
@@ -50,7 +50,7 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
         if(params != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(params.getClass());
             if(clazz != null) 
-                sfsParams = ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), params);
+                sfsParams = new ResponseParamSerializer().object2params(clazz.getUnwrapper(), params);
         }
         if(sfsParams == null) sfsParams = new SFSObject();
         try {

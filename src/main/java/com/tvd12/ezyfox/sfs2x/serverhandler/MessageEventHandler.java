@@ -19,7 +19,7 @@ import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 public abstract class MessageEventHandler extends ServerBaseEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public MessageEventHandler(BaseAppContext context) {
         super(context);
@@ -50,11 +50,11 @@ public abstract class MessageEventHandler extends ServerBaseEventHandler {
         Object object = handler.newInstance();
         MessageParamsClass paramsClass = context.getMessageParamsClass(object.getClass());
         if(paramsClass == null) paramsClass = new MessageParamsClass(object.getClass());
-        RequestParamDeserializer.getInstance().deserialize(paramsClass.getWrapper(), params, object);
+        new RequestParamDeserializer().deserialize(paramsClass.getWrapper(), params, object);
         ReflectMethodUtil.invokeHandleMethod(
                 handler.getHandleMethod(), 
                 object,  context, message);
-        ResponseParamSerializer.getInstance().object2params(paramsClass.getUnwrapper(), object, params);
+        new ResponseParamSerializer().object2params(paramsClass.getUnwrapper(), object, params);
     }
     
 }

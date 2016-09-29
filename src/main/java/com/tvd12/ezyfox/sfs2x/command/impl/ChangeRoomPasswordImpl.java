@@ -22,9 +22,9 @@ public class ChangeRoomPasswordImpl extends BaseCommandImpl implements ChangeRoo
     private String password;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public ChangeRoomPasswordImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

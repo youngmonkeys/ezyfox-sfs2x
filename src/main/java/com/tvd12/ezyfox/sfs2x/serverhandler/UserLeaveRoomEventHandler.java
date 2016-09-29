@@ -13,7 +13,7 @@ import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 public class UserLeaveRoomEventHandler extends ServerRoomEventHandler {
 	
     /**
-     * @param context
+     * @param context the context
      */
 	public UserLeaveRoomEventHandler(BaseAppContext context) {
 		super(context);

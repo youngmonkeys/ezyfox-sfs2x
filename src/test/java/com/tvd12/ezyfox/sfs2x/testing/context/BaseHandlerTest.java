@@ -25,7 +25,7 @@ public class BaseHandlerTest extends BaseTest {
     public BaseHandlerTest() {
         context = newAppContext();
         apiUser = UserAgentFactory.newUserAgent("player", 
-                context.getUserAgentClass(), context.getGameUserAgentClasses().values());
+                context.getUserAgentClass(), context.getGameUserAgentClasses());
         sfsUser = mock(User.class);
         when(sfsUser.getProperty(APIKey.USER)).thenReturn(apiUser);
         sfsExtension = mock(SFSExtension.class);

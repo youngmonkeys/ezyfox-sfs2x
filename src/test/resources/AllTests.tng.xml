@@ -111,4 +111,10 @@
     	</packages>
     </test>
     
+    <test name="V117">
+        <packages>
+            <package name="com.tvd12.ezyfox.sfs2x.testing.v117"/>
+        </packages>
+    </test>
+    
 </suite>

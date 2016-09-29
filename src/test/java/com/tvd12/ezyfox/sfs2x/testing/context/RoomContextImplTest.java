@@ -21,9 +21,8 @@ public class RoomContextImplTest {
         AppContextImpl context = newAppContext();
         context.addAppCommand(AppCommand.class, AppCommand.class);
         RoomContextImpl roomContext = newRoomContext();
-        roomContext.setAppContext(context);
+        roomContext.init(context, ExRoomExtension.class);
         roomContext.set("hello", "world");
-        assertEquals(roomContext.getAppContext(), context);
         assertNotNull(roomContext.command(AppCommand.class));
         assertEquals(context.get("hello", String.class), "world");
         assertEquals(roomContext.get("hello", String.class), "world");
@@ -37,7 +36,6 @@ public class RoomContextImplTest {
     
     private RoomContextImpl newRoomContext() {
         RoomContextImpl answer = new RoomContextImpl();
-        answer.initialize(ExRoomExtension.class);
         return answer;
     }
 }

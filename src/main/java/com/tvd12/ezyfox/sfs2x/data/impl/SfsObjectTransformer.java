@@ -16,7 +16,7 @@ import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSDataType;
 import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.transport.Parameters;
 import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.data.SfsTransformer;
@@ -34,7 +34,7 @@ public class SfsObjectTransformer {
         this(null);
     }
     
-    public SfsObjectTransformer(BaseAppContext context) {
+    public SfsObjectTransformer(BaseContext context) {
         this.init();
     }
     

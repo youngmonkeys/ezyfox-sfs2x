@@ -42,9 +42,9 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
             = new HashSet<>();
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public SendObjectMessageImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
@@ -81,7 +81,7 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
         if(messageObject != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(messageObject.getClass());
             if(clazz != null) 
-                return ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), messageObject);
+                return new ResponseParamSerializer().object2params(clazz.getUnwrapper(), messageObject);
         }
         if(jsonMessage != null)
             return SFSObject.newFromJsonData(jsonMessage);

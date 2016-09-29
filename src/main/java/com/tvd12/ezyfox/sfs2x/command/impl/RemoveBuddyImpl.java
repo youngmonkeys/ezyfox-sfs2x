@@ -29,9 +29,9 @@ public class RemoveBuddyImpl extends BaseCommandImpl implements RemoveBuddy {
     protected ApiZone zone;
     
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
     public RemoveBuddyImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);

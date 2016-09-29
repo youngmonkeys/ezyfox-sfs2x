@@ -15,7 +15,7 @@ import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 public class BuddyAddEventHandler extends BuddyEventHandler {
 
     /**
-     * @param context
+     * @param context the context
      */
     public BuddyAddEventHandler(BaseAppContext context) {
         super(context);

@@ -5,6 +5,7 @@ import com.smartfoxserver.v2.api.CreateRoomSettings.RoomExtensionSettings;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.SFSRoomRemoveMode;
+import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.exceptions.SFSCreateRoomException;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.annotation.RoomAgent;
@@ -25,9 +26,9 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
 
     /**
-     * @param context
-     * @param api
-     * @param extension
+     * @param context the context
+     * @param api the api
+     * @param extension the extension
      */
 	public CreateRoomImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
 		super(context, api, extension);
@@ -54,7 +55,7 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
      */
     private AgentClass validateRoomAgentClass(ApiRoom agent) {
 	    AgentClass roomAgentClass = context
-	            .getRoomAgentClasses().get(agent.getClass());
+	            .getRoomAgentClass(agent.getClass());
 	    if(roomAgentClass == null)
 	        throw new IllegalStateException("You mus annotate class " + agent.getClass()
 	                + " with @" + RoomAgent.class.getSimpleName());
@@ -82,7 +83,8 @@ public class CreateRoomImpl extends BaseCommandImpl implements CreateRoom {
         ApiRoom agent = agents[index];
         try {
             CreateRoomSettings settings = createRoomSettings(agent);
-            Room room = api.createRoom(extension.getParentZone(), settings, null);
+            User owner = CommandUtil.getSfsUser(agent.getOwner(), api);
+            Room room = api.createRoom(extension.getParentZone(), settings, owner);
             room.setProperty(APIKey.ROOM, agent);
             agent.setId(room.getId());
             agent.setPasswordProtected(room.isPasswordProtected());

@@ -13,10 +13,6 @@ import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 
 public final class RoomAgentSerializer extends AgentSerializer {
 	
-	private static RoomAgentSerializer instance;
-	
-	private RoomAgentSerializer() {}
-	
 	/**
 	 * @see AgentSerializer#newVariable(String, Object, boolean)
 	 */
@@ -28,15 +24,5 @@ public final class RoomAgentSerializer extends AgentSerializer {
         var.setHidden(isHidden);
         return var;
 	}
-	
-	public static RoomAgentSerializer getInstance() {
-        if(instance == null) 
-            instance = new RoomAgentSerializer();
-        return instance;
-    }
-    
-    public static RoomAgentSerializer roomAgentSerializer() {
-        return getInstance();
-    }
 
 }
