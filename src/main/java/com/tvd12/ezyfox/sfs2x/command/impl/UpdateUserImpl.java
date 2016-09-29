@@ -1,7 +1,5 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.UserAgentSerializer.userAgentSerializer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +13,7 @@ import com.tvd12.ezyfox.core.command.UpdateUser;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.core.structure.AgentClassUnwrapper;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
+import com.tvd12.ezyfox.sfs2x.serializer.UserAgentSerializer;
 
 /**
  * @see UpdateUser
@@ -50,7 +49,7 @@ public class UpdateUserImpl extends BaseCommandImpl implements UpdateUser {
 		try {
 		    AgentClassUnwrapper unwrapper = context.getUserAgentClass(agent.getClass())
 		            .getUnwrapper();
-			List<UserVariable> variables = userAgentSerializer().serialize(unwrapper, agent);
+			List<UserVariable> variables = new UserAgentSerializer().serialize(unwrapper, agent);
 			List<UserVariable> answer = variables;
 			if(includedVars.size() > 0) 
 			    answer = getVariables(variables, includedVars);

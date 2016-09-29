@@ -15,8 +15,8 @@ public class RoomAgentUnwrapperTest extends BaseTest {
     @Test
     public void test() {
         AgentClassUnwrapper unwrapper = new AgentClassUnwrapper(ClassA.class);
-        RoomAgentSerializer.getInstance();
-        RoomAgentSerializer.roomAgentSerializer()
+        new RoomAgentSerializer();
+        new RoomAgentSerializer()
                 .serialize(unwrapper, new ClassA());
     }
     

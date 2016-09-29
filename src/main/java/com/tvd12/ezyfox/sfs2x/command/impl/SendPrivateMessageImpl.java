@@ -46,7 +46,7 @@ public class SendPrivateMessageImpl extends BaseCommandImpl implements SendPriva
         if(params != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(params.getClass());
             if(clazz != null) 
-                sfsParams = ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), params);
+                sfsParams = new ResponseParamSerializer().object2params(clazz.getUnwrapper(), params);
         }
         if(sfsParams == null) sfsParams = new SFSObject();
         api.sendPrivateMessage(sfsSender, sfsRecipient, message, sfsParams);

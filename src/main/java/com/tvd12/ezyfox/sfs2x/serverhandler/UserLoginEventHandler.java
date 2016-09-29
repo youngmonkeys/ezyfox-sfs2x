@@ -1,8 +1,5 @@
 package com.tvd12.ezyfox.sfs2x.serverhandler;
 
-import static com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer.requestParamDeserializer;
-import static com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer.responseParamSerializer;
-
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -27,6 +24,8 @@ import com.tvd12.ezyfox.core.exception.BadRequestException;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.UserLoginHandlerClass;
 import com.tvd12.ezyfox.sfs2x.entities.impl.ApiSessionImpl;
+import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
+import com.tvd12.ezyfox.sfs2x.serializer.ResponseParamSerializer;
 
 /**
  * Support to handle user login event
@@ -132,13 +131,13 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
      */
     protected void notifyHanlder(UserLoginHandlerClass handler, 
             ApiLogin wrapper, ISFSObject inData, ISFSObject outData) {
-        Object instance = requestParamDeserializer()
+        Object instance = new RequestParamDeserializer()
                 .deserialize(handler.getRequestListenerClass(), inData);
         ReflectMethodUtil.invokeHandleMethod(
                 handler.getHandleMethod(), 
                 instance,
                 context, wrapper);
-        responseParamSerializer()
+        new ResponseParamSerializer()
             .object2params(handler.getResponseHandlerClass(), instance, outData);
     }
 

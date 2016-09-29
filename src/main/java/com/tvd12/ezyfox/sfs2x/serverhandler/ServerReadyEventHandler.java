@@ -3,10 +3,10 @@ package com.tvd12.ezyfox.sfs2x.serverhandler;
 import com.smartfoxserver.v2.core.ISFSEvent;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
-import com.tvd12.ezyfox.core.annotation.parser.ConfigPropertyParser;
 import com.tvd12.ezyfox.core.constants.ServerEvent;
 import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
+import com.tvd12.ezyfox.core.serialize.impl.ConfigPropertyDeserializer;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 
 /**
@@ -52,7 +52,7 @@ public class ServerReadyEventHandler extends ServerBaseEventHandler {
 	 */
 	protected void assignDataToHandler(ServerHandlerClass handler, Object instance) {
 	    if(getParentExtension().getConfigProperties() != null) {
-	        ConfigPropertyParser.assignValue(
+	        new ConfigPropertyDeserializer().deserialize(
 	                handler.getPropertiesClassWrapper(), 
 	                instance, 
 	                getParentExtension().getConfigProperties());

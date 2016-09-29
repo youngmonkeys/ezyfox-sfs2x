@@ -129,8 +129,7 @@ public class SimpleTransformer {
         ResponseParamsClass struct = null;
         if(context != null) struct = context.getResponseParamsClass(value.getClass());
         if(struct == null) struct = new ResponseParamsClass(value.getClass());
-        ISFSObject sfsObject = ResponseParamSerializer
-                .getInstance().object2params(struct, value);
+        ISFSObject sfsObject = new ResponseParamSerializer().object2params(struct, value);
         return new SFSDataWrapper(SFSDataType.SFS_OBJECT, sfsObject);
     }
     

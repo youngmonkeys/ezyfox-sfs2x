@@ -81,7 +81,7 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
         if(messageObject != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(messageObject.getClass());
             if(clazz != null) 
-                return ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), messageObject);
+                return new ResponseParamSerializer().object2params(clazz.getUnwrapper(), messageObject);
         }
         if(jsonMessage != null)
             return SFSObject.newFromJsonData(jsonMessage);

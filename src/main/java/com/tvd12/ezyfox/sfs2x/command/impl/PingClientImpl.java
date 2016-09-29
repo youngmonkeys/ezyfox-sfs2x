@@ -27,8 +27,6 @@ import lombok.AllArgsConstructor;
 public class PingClientImpl extends BaseCommandImpl implements PingClient {
     
     private long delayTime;
-    private boolean onTime;
-    private long period;
     private ApiBaseUser user;
     private RunnableImpl runnable;
     private AtomicBoolean stopped;
@@ -44,7 +42,6 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
      */
     public PingClientImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
-        this.onTime = true;
         this.stopped = new AtomicBoolean(false);
     }
 
@@ -54,24 +51,6 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
     @Override
     public PingClientImpl delay(long time) {
         this.delayTime = time;
-        return this;
-    }
-
-    /**
-     * @see PingClient#oneTime(boolean)
-     */
-    @Override
-    public PingClientImpl oneTime(boolean value) {
-        this.onTime = value;
-        return this;
-    }
-
-    /**
-     * @see PingClient#period(long)
-     */
-    @Override
-    public PingClientImpl period(long value) {
-        this.period = value;
         return this;
     }
 
@@ -111,18 +90,9 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
         TaskScheduler scheduler = SmartFoxServer
                     .getInstance()
                     .getTaskScheduler();
-        if(onTime)
-            scheduleOneTime(scheduler);
-        else 
-            schedule(scheduler);
+        scheduleOneTime(scheduler);
     }
     
-    private void sendPingCommand() {
-        User sfsUser = CommandUtil.getSfsUser(user, api);
-        if(sfsUser != null)
-            extension.send(ApiRequest.PING, new SFSObject(), sfsUser);
-    }
-
     /**
      * @see PingClient#stop()
      */
@@ -181,14 +151,10 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
         scheduledFuture = scheduler.schedule(runnable, (int)delayTime, TimeUnit.MILLISECONDS);
     }
     
-    /**
-     * Schedule forever
-     * 
-     * @param scheduler TaskScheduler object
-     */
-    private void schedule(TaskScheduler scheduler) {
-        scheduledFuture = scheduler.scheduleAtFixedRate(
-                runnable, (int)delayTime, (int)period, TimeUnit.MILLISECONDS);
+    private void sendPingCommand() {
+        User sfsUser = CommandUtil.getSfsUser(user, api);
+        if(sfsUser != null)
+            extension.send(ApiRequest.PING, new SFSObject(), sfsUser);
     }
     
     @AllArgsConstructor

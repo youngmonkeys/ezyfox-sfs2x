@@ -18,8 +18,7 @@ public class UserAgentUnwrapperTest {
 	public void testValidCase() throws ExtensionException {
 		UserAgentForUnwrapper userAgent = new UserAgentForUnwrapper();
 		AgentClassUnwrapper clazz = new AgentClassUnwrapper(UserAgentForUnwrapper.class);
-		List<UserVariable> variables = UserAgentSerializer
-				.getInstance()
+		List<UserVariable> variables = new UserAgentSerializer()
 				.serialize(clazz, userAgent);
 		assertNotNull(variables);
 		assertEquals(3, variables.size());

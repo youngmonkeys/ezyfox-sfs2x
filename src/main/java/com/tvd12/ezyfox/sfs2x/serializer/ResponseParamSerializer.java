@@ -9,18 +9,4 @@ package com.tvd12.ezyfox.sfs2x.serializer;
  */
 
 public final class ResponseParamSerializer extends ParameterSerializer {
-	
-	private static ResponseParamSerializer instance;
-	
-	private ResponseParamSerializer() {}
-    
-    public static ResponseParamSerializer getInstance() {
-        if(instance == null)
-            instance = new ResponseParamSerializer();
-        return instance;
-    }
-    
-    public static ResponseParamSerializer responseParamSerializer() {
-        return getInstance();
-    }
 }

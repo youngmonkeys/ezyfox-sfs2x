@@ -19,13 +19,13 @@ public class ResponseParamsClassTest {
 
     @Test
     public void test() {
-        ISFSObject object = ResponseParamSerializer.getInstance()
+        ISFSObject object = new ResponseParamSerializer()
                 .object2params(new ResponseParamsClass(VideoPokerRoom.class), new VideoPokerRoom());
         assertEquals(object.getIntArray("1").size(), 3);
     }
     
     public static void main(String[] args) {
-        ISFSObject object = ResponseParamSerializer.getInstance()
+        ISFSObject object = new ResponseParamSerializer()
                 .object2params(new ResponseParamsClass(VideoPokerRoom.class), new VideoPokerRoom());
         assertEquals(object.getIntArray("1").size(), 3);
     }

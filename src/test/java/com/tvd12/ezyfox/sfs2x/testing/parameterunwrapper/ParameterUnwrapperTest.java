@@ -35,7 +35,7 @@ public class ParameterUnwrapperTest {
 				ParameterSerializer.class, 
 				Class.class, Object.class);
 		method.setAccessible(true);
-		final Object obj = ResponseParamSerializer.getInstance();
+		final Object obj = new ResponseParamSerializer();
 		long time = Performance.create()
 				.test(new Script() {
                     @Override
@@ -56,7 +56,7 @@ public class ParameterUnwrapperTest {
 				ParameterSerializer.class, 
 				Object.class, Class.class);
 		method.setAccessible(true);
-		final Object obj = ResponseParamSerializer.getInstance();
+		final Object obj = new ResponseParamSerializer();
 		final String[] strs = {"dung", "duong"};
 		long time = Performance.create()
 				.test(new Script() {
@@ -79,7 +79,7 @@ public class ParameterUnwrapperTest {
 				Field.class, Object.class);
 		method.setAccessible(true);
 		final ClassA classA = new ClassA();
-		final Object obj = ResponseParamSerializer.getInstance();
+		final Object obj = new ResponseParamSerializer();
 		final Field field = ReflectFieldUtil.getField("strings", ClassA.class);
 		long time = Performance.create()
 				.test(new Script() {
@@ -102,7 +102,7 @@ public class ParameterUnwrapperTest {
 				ISFSObject.class, Entry.class, Object.class);
 		method.setAccessible(true);
 		final ClassA classA = new ClassA();
-		final Object obj = ResponseParamSerializer.getInstance();
+		final Object obj = new ResponseParamSerializer();
 		final Field field = ReflectFieldUtil.getField("strings", ClassA.class);
 		@SuppressWarnings("unchecked")
 		final Entry<String, Field> entry = mock(Entry.class);

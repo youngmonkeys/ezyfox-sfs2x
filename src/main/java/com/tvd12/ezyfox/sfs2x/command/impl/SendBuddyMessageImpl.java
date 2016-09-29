@@ -50,7 +50,7 @@ public class SendBuddyMessageImpl extends BaseCommandImpl implements SendBuddyMe
         if(params != null) {
             MessageParamsClass clazz = context.getMessageParamsClass(params.getClass());
             if(clazz != null) 
-                sfsParams = ResponseParamSerializer.getInstance().object2params(clazz.getUnwrapper(), params);
+                sfsParams = new ResponseParamSerializer().object2params(clazz.getUnwrapper(), params);
         }
         if(sfsParams == null) sfsParams = new SFSObject();
         try {

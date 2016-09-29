@@ -37,8 +37,7 @@ public class ResponseParamParserTest {
 	public void testValidObject() {
 		UserBettingActionListener listener = new UserBettingActionListener();
 		ResponseHandlerClass clazz = new ResponseHandlerClass(UserBettingActionListener.class);
-		ISFSObject sfsObject = ResponseParamSerializer
-		        .getInstance().object2params(clazz, listener);
+		ISFSObject sfsObject = new ResponseParamSerializer().object2params(clazz, listener);
 		assertTrue(sfsObject.getInt("result") == 100);
 		assertEquals(sfsObject.getUtfString("msg"), "hello");
 		byte[] xyz = (byte[])sfsObject.get("xyz").getObject();
@@ -60,15 +59,13 @@ public class ResponseParamParserTest {
 	@Test(expectedExceptions = {IllegalStateException.class})
 	public void collectionOfCollectionCase() {
 	    ResponseHandlerClass clazz = new ResponseHandlerClass(ClassA.class);
-        ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassA());
+        new ResponseParamSerializer().object2params(clazz, new ClassA());
 	}
 	
 	@Test
     public void collectionOfArrayCase() {
         ResponseHandlerClass clazz = new ResponseHandlerClass(ClassB.class);
-        ISFSObject params = ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassB());
+        ISFSObject params = new ResponseParamSerializer().object2params(clazz, new ClassB());
         assertNotNull(params.getSFSArray("lby"));
         ISFSArray array = params.getSFSArray("lby");
         for(byte i = 0 ; i < 3 ; i++) {
@@ -83,8 +80,7 @@ public class ResponseParamParserTest {
 	@Test
 	public void testBiArrayCase() {
 	    ResponseHandlerClass clazz = new ResponseHandlerClass(ClassC.class);
-        ISFSObject params = ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassC());
+        ISFSObject params = new ResponseParamSerializer().object2params(clazz, new ClassC());
         
         ISFSArray a0 = params.getSFSArray("a0");
         
@@ -122,23 +118,20 @@ public class ResponseParamParserTest {
 	@Test(expectedExceptions = {IllegalStateException.class})
 	public void testBiArrayCase2() {
 	    ResponseHandlerClass clazz = new ResponseHandlerClass(ClassD.class);
-        ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassD());
+        new ResponseParamSerializer().object2params(clazz, new ClassD());
 	}
 	
 	@Test
     public void testNullValueCase() {
         ResponseHandlerClass clazz = new ResponseHandlerClass(ClassE.class);
-        ISFSObject params = ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassE());
+        ISFSObject params = new ResponseParamSerializer().object2params(clazz, new ClassE());
         assertNull(params.getUtfStringArray("strs"));
     }
 	
 	@Test
 	public void collectionStringCase() {
 	    ResponseHandlerClass clazz = new ResponseHandlerClass(ClassF.class);
-        ISFSObject params = ResponseParamSerializer
-                .getInstance().object2params(clazz, new ClassF());
+        ISFSObject params = new ResponseParamSerializer().object2params(clazz, new ClassF());
 	    Collection<String> dreams = params.getUtfStringArray("dreams");
 	    assertEquals(2, dreams.size());
 	    Iterator<String> it = dreams.iterator();
@@ -149,8 +142,7 @@ public class ResponseParamParserTest {
 	@Test
     public void collectionStringCase1() {
 	    ResponseHandlerClass handlerClass = new ResponseHandlerClass(ClassF.class);
-        ISFSObject params = ResponseParamSerializer
-                .getInstance().object2params(handlerClass, new ClassF());
+        ISFSObject params = new ResponseParamSerializer().object2params(handlerClass, new ClassF());
         Collection<String> dreams = params.getUtfStringArray("dreams");
         assertEquals(2, dreams.size());
         Iterator<String> it = dreams.iterator();
@@ -173,7 +165,7 @@ public class ResponseParamParserTest {
 		        .test(new Script() {
                     @Override
                     public void execute() {
-                        ResponseParamSerializer.getInstance().object2params(handlerClass, classF);
+                        new ResponseParamSerializer().object2params(handlerClass, classF);
                     }
 		        })
 		        .getTime();
@@ -194,7 +186,7 @@ public class ResponseParamParserTest {
 		time = System.currentTimeMillis();
 		for(int i = 0 ; i < 1000000 ; i++) {
 			@SuppressWarnings("unused")
-			ISFSObject params = ResponseParamSerializer.getInstance().object2params(clazz, classJ);
+			ISFSObject params = new ResponseParamSerializer().object2params(clazz, classJ);
 		}
 		offset = System.currentTimeMillis() - time;
 		LOGGER.info("ResponseParamParserTest#performanceTest2 with parser time = " + offset);
