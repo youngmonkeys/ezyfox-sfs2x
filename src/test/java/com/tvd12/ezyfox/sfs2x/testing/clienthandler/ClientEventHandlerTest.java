@@ -45,20 +45,20 @@ public class ClientEventHandlerTest extends BaseHandlerTest {
     private AppContextImpl newAppContext() {
         AppContextImpl answer = new AppContextImpl();
         answer.initialize(AppEntryPoint.class);
-        answer.addObjectDeserializer(BettingRequestListener.class, new ObjectDeserializer() {
+        answer.addObjectDeserializer(BettingRequestListener.class, 
+                new ObjectDeserializer<BettingRequestListener>() {
             
-            @SuppressWarnings("unchecked")
             @Override
-            public BettingRequestListener deserialize(Object object, Parameters params) {
+            public BettingRequestListener deserialize(BettingRequestListener object, Parameters params) {
                 BettingRequestListener b = (BettingRequestListener)object;
                 return b;
             }
         });
-        answer.addObjectSerializer(BettingRequestListener.class, new ObjectSerializer() {
+        answer.addObjectSerializer(BettingRequestListener.class, 
+                new ObjectSerializer<BettingRequestListener>() {
             
             @Override
-            public Parameters serialize(Object object) {
-                BettingRequestListener b = (BettingRequestListener)object;
+            public Parameters serialize(BettingRequestListener b) {
                 Parameters answer = new ParameterWrapper();
                 answer.set("id", b.getId());
                 return answer;

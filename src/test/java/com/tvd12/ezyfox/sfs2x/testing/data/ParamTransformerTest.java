@@ -84,20 +84,18 @@ public class ParamTransformerTest extends BaseCommandTest {
         context.addObjectSerializer(ResponseData.class, new ResponseDataSerializer());
     }
     
-    public static class SecondSerializer implements ObjectSerializer {
+    public static class SecondSerializer implements ObjectSerializer<Second> {
         @Override
-        public Parameters serialize(Object object) {
-            Second second = (Second)object;
+        public Parameters serialize(Second second) {
             Parameters answer = new ParameterWrapper();
             answer.set("value", second.getValue());
             return answer;
         }
     }
     
-    public static class ResponseDataSerializer implements ObjectSerializer {
+    public static class ResponseDataSerializer implements ObjectSerializer<ResponseData> {
         @Override
-        public Parameters serialize(Object object) {
-            ResponseData data = (ResponseData)object;
+        public Parameters serialize(ResponseData data) {
             Parameters answer = new ParameterWrapper();
             answer.set("a0", data.isA0());
             answer.set("a1", data.getA1());
