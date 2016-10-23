@@ -36,6 +36,7 @@ public class SfsVariableTransformerTest extends BaseCommandTest {
         init();
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void test() {
         ParamTransformer transformer = new ParamTransformer(context);
@@ -111,24 +112,20 @@ public class SfsVariableTransformerTest extends BaseCommandTest {
         context.addObjectDeserializer(ResponseData.class, new ResponseDataDeserializer());
     }
     
-    public static class SecondDeserializer implements ObjectDeserializer {
+    public static class SecondDeserializer implements ObjectDeserializer<Second> {
         
-        @SuppressWarnings("unchecked")
         @Override
-        public Second deserialize(Object object, Parameters params) {
-            Second second = (Second)object;
+        public Second deserialize(Second second, Parameters params) {
             second.setValue(params.get("value", String.class));
             return second;
         }
         
     }
     
-    public static class ResponseDataDeserializer implements ObjectDeserializer {
+    public static class ResponseDataDeserializer implements ObjectDeserializer<ResponseData> {
         
-        @SuppressWarnings("unchecked")
         @Override
-        public ResponseData deserialize(Object object, Parameters params) {
-            ResponseData data = (ResponseData)object;
+        public ResponseData deserialize(ResponseData data, Parameters params) {
             data.setA0(params.get("a0", boolean.class));
             data.setA1(params.get("a1", byte.class));
             data.setA2((char)params.get("a2", byte.class).byteValue());
@@ -166,20 +163,18 @@ public class SfsVariableTransformerTest extends BaseCommandTest {
         }
     }
     
-    public static class SecondSerializer implements ObjectSerializer {
+    public static class SecondSerializer implements ObjectSerializer<Second> {
         @Override
-        public Parameters serialize(Object object) {
-            Second second = (Second)object;
+        public Parameters serialize(Second second) {
             Parameters answer = new ParameterWrapper();
             answer.set("value", second.getValue());
             return answer;
         }
     }
     
-    public static class ResponseDataSerializer implements ObjectSerializer {
+    public static class ResponseDataSerializer implements ObjectSerializer<ResponseData> {
         @Override
-        public Parameters serialize(Object object) {
-            ResponseData data = (ResponseData)object;
+        public Parameters serialize(ResponseData data) {
             Parameters answer = new ParameterWrapper();
             answer.set("a0", data.isA0());
             answer.set("a1", data.getA1());

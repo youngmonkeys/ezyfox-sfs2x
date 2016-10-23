@@ -40,6 +40,7 @@ public class ParamTransformer extends SimpleTransformer {
         return super.transformNotNullValue(value);
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object serializeObject(Object object) {
         Object value = object;
         ObjectSerializer serializer = getObjectSerializer(object);
@@ -48,6 +49,7 @@ public class ParamTransformer extends SimpleTransformer {
         return value;
     }
     
+    @SuppressWarnings("rawtypes")
     private ObjectSerializer getObjectSerializer(Object value) {
         try {
             if(context == null) return null;

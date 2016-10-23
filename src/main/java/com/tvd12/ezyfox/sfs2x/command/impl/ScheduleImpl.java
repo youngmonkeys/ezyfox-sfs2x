@@ -127,7 +127,7 @@ public class ScheduleImpl extends BaseCommandImpl implements Schedule {
     @Override
     public boolean cancelNow() {
         if(scheduledFuture != null)
-            scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
+            return scheduledFuture.cancel(!DONT_INTERRUPT_IF_RUNNING);
         return true;
     }
     

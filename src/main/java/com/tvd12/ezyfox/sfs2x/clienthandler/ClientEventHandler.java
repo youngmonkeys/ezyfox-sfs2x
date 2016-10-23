@@ -74,7 +74,8 @@ public class ClientEventHandler extends ClientRequestHandler {
 	    responseClient(clazz, listener, user);
 	}
 	
-	private void setDataToListener(RequestResponseClass clazz, 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    private void setDataToListener(RequestResponseClass clazz, 
 	        Object listener, ISFSObject params) {
 	    try {
 	        ObjectDeserializer deserializer = 

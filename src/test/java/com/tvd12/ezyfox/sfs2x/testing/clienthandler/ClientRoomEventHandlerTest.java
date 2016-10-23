@@ -49,20 +49,20 @@ public class ClientRoomEventHandlerTest extends BaseCommandTest2 {
     private RoomContextImpl newRoomContext() {
         RoomContextImpl answer = new RoomContextImpl();
         answer.init(context, ExRoomExtension2.class);
-        context.addObjectDeserializer(BetRequestListener.class, new ObjectDeserializer() {
+        context.addObjectDeserializer(BetRequestListener.class, 
+                new ObjectDeserializer<BetRequestListener>() {
             
-            @SuppressWarnings("unchecked")
             @Override
-            public BetRequestListener deserialize(Object object, Parameters params) {
+            public BetRequestListener deserialize(BetRequestListener object, Parameters params) {
                 BetRequestListener b = (BetRequestListener)object;
                 return b;
             }
         });
-        context.addObjectSerializer(BetRequestListener.class, new ObjectSerializer() {
+        context.addObjectSerializer(BetRequestListener.class, 
+                new ObjectSerializer<BetRequestListener>() {
             
             @Override
-            public Parameters serialize(Object object) {
-                BetRequestListener b = (BetRequestListener)object;
+            public Parameters serialize(BetRequestListener b) {
                 Parameters answer = new ParameterWrapper();
                 answer.set("id", b.getId());
                 return answer;
