@@ -6,6 +6,7 @@ import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRoomEventHandler;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.content.impl.RoomContextImpl;
+import com.tvd12.ezyfox.sfs2x.serverhandler.RoomExtensionDestroyEventHandler;
 
 /**
  * @author tavandung12
@@ -44,6 +45,24 @@ public class RoomExtension extends BaseExtension {
     
     protected Class<?> getZoneExtensionClass() {
         return getParentRoom().getZone().getExtension().getClass();
+    }
+    
+    /* (non-Javadoc)
+     * @see com.smartfoxserver.v2.extensions.SFSExtension#destroy()
+     */
+    @Override
+    public void destroy() {
+        super.destroy();
+        this.startZoneExtensionDestroyEventHandler();
+    }
+    
+    /**
+     * Handle initializing event
+     */
+    protected void startZoneExtensionDestroyEventHandler() {
+        RoomExtensionDestroyEventHandler handler = 
+                new RoomExtensionDestroyEventHandler(getAppContext());
+        handler.handle(getParentRoom());
     }
     
 }

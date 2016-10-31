@@ -24,7 +24,9 @@ public class RoomExtensionTest {
     public void test2() {
         AppContextImpl ctx = newAppContext();
         ContextProvider.getInstance().addContext(AppEntryPoint.class, ctx);
-        new ExRoomExtension2().init();
+        ExRoomExtension2 ex2 = new ExRoomExtension2();
+        ex2.init();
+        ex2.destroy();
     }
     
     private AppContextImpl newAppContext() {

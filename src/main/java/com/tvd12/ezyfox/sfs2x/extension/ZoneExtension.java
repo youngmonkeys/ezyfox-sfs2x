@@ -20,6 +20,7 @@ import com.tvd12.ezyfox.sfs2x.entities.impl.ApiZoneImpl;
 import com.tvd12.ezyfox.sfs2x.filter.BaseSysControllerFilter;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.ServerInitializingEventHandler;
+import com.tvd12.ezyfox.sfs2x.serverhandler.ZoneExtensionDestroyEventHandler;
 
 /**
  * Application entry point, any extensions should extends this class
@@ -131,5 +132,23 @@ public class ZoneExtension extends BaseExtension {
 	private BaseAppContext appContext() {
 	    return (BaseAppContext)context;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.smartfoxserver.v2.extensions.SFSExtension#destroy()
+	 */
+	@Override
+	public void destroy() {
+	    super.destroy();
+	    this.startZoneExtensionDestroyEventHandler();
+	}
+	
+	/**
+     * Handle initializing event
+     */
+    protected void startZoneExtensionDestroyEventHandler() {
+        ZoneExtensionDestroyEventHandler handler = 
+                new ZoneExtensionDestroyEventHandler(appContext());
+        handler.handle(getParentZone());
+    }
 	
 }

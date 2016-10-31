@@ -52,6 +52,7 @@ public class ZoneExtensionTest extends BaseCommandTest {
         AppEntryPoint entryPoint = new AppEntryPoint();
         entryPoint.setParentZone(zone);
         entryPoint.init();
+        entryPoint.destroy();
     }
     
     @Test(expectedExceptions = {RuntimeException.class})
