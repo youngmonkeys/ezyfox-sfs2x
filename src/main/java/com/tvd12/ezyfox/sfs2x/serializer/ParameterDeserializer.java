@@ -37,7 +37,6 @@ import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isWrapperShort;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.smartfoxserver.v2.entities.data.ISFSArray;
@@ -162,7 +161,7 @@ public class ParameterDeserializer {
         Class<?> type = componentType.getComponentType();
         Object result = Array.newInstance(componentType, array.size());
         for(int i = 0 ; i < array.size() ; i++)
-            Array.set(result, i, parseValueByType(type, array.get(i).getObject()));
+            Array.set(result, i, parseValueByType(type, array, i));
         return result;
     }
     
@@ -349,44 +348,43 @@ public class ParameterDeserializer {
         List result = new ArrayList();
         Class<?> type = method.getGenericType().getComponentType();
         for(int i = 0 ; i < array.size() ; i++)
-            result.add(parseValueByType(type, array.get(i).getObject()));
+            result.add(parseValueByType(type, array, i));
         return result;
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private Object parseValueByType(Class<?> type, Object value) {
+    private Object parseValueByType(Class<?> type, ISFSArray array, int index) {
         if(isPrimitiveBool(type))
-            return collectionToPrimitiveBoolArray((Collection)value);
+            return collectionToPrimitiveBoolArray(array.getBoolArray(index));
         if(isPrimitiveChar(type))
-            return byteArrayToCharArray((byte[])value);
+            return byteArrayToCharArray(array.getByteArray(index));
         if(isPrimitiveDouble(type))
-            return collectionToPrimitiveDoubleArray((Collection)value);
+            return collectionToPrimitiveDoubleArray(array.getDoubleArray(index));
         if(isPrimitiveFloat(type))
-            return collectionToPrimitiveFloatArray((Collection)value);
+            return collectionToPrimitiveFloatArray(array.getFloatArray(index));
         if(isPrimitiveInt(type))
-            return collectionToPrimitiveIntArray((Collection)value);
+            return collectionToPrimitiveIntArray(array.getIntArray(index));
         if(isPrimitiveLong(type))
-            return collectionToPrimitiveLongArray((Collection)value);
+            return collectionToPrimitiveLongArray(array.getLongArray(index));
         if(isPrimitiveShort(type))
-            return collectionToPrimitiveShortArray((Collection)value);
+            return collectionToPrimitiveShortArray(array.getShortArray(index));
         if(isString(type))
-            return collectionToStringArray((Collection)value);
+            return collectionToStringArray(array.getUtfStringArray(index));
         if(isWrapperBool(type))
-            return collectionToWrapperBoolArray((Collection)value);
+            return collectionToWrapperBoolArray(array.getBoolArray(index));
         if(isWrapperByte(type))
-            return toByteWrapperArray((byte[])value);
+            return toByteWrapperArray(array.getByteArray(index));
         if(isWrapperChar(type))
-            return toCharWrapperArray((byte[])value);
+            return toCharWrapperArray(array.getByteArray(index));
         if(isWrapperDouble(type))
-            return collectionToWrapperDoubleArray((Collection)value);
+            return collectionToWrapperDoubleArray(array.getDoubleArray(index));
         if(isWrapperFloat(type))
-            return collectionToWrapperFloatArray((Collection)value);
+            return collectionToWrapperFloatArray(array.getFloatArray(index));
         if(isWrapperInt(type))
-            return collectionToWrapperIntArray((Collection)value);
+            return collectionToWrapperIntArray(array.getIntArray(index));
         if(isWrapperLong(type))
-            return collectionToWrapperLongArray((Collection)value);
+            return collectionToWrapperLongArray(array.getLongArray(index));
         if(isWrapperShort(type))
-            return collectionToWrapperShortArray((Collection)value);
-        return value;
+            return collectionToWrapperShortArray(array.getShortArray(index));
+        return array.get(index).getObject();
     }
 }
