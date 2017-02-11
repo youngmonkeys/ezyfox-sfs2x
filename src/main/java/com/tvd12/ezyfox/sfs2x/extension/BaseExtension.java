@@ -1,8 +1,12 @@
 package com.tvd12.ezyfox.sfs2x.extension;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
+import com.smartfoxserver.v2.extensions.IClientRequestHandler;
 import com.smartfoxserver.v2.extensions.SFSExtension;
+import com.tvd12.ezyfox.core.bridge.ClientRequestHandlers;
 import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientEventHandler;
 import com.tvd12.ezyfox.sfs2x.clienthandler.ClientRequestHandler;
@@ -13,17 +17,38 @@ import com.tvd12.ezyfox.sfs2x.content.impl.SmartFoxContext;
  * Created on Sep 26, 2016
  *
  */
-public abstract class BaseExtension extends SFSExtension {
+public abstract class BaseExtension extends SFSExtension implements ClientRequestHandlers {
     
     protected BaseContext context;
+    protected Map<Object, Object> clientRequestHandlers;
 
     @Override
     public void init() {
+    	initComponent();
         initContext();
+        addToContext();
         before();
         addClientRequestHandlers();
         config();
         after();
+    }
+    
+    protected void initComponent() {
+    	this.clientRequestHandlers = new ConcurrentHashMap<>();
+    }
+    
+    /**
+     * Initialize application context
+     */
+    protected void initContext() {
+        context = createContext();
+        SmartFoxContext sfsContext = (SmartFoxContext)context;
+        sfsContext.setApi(getApi());
+        sfsContext.setExtension(this);
+    }
+    
+    protected void addToContext() {
+    	this.context.set(ClientRequestHandlers.class, this);
     }
     
     /**
@@ -64,14 +89,39 @@ public abstract class BaseExtension extends SFSExtension {
         addRequestHandler(handler.getCommand(), handler);
     }
     
-    /**
-     * Initialize application context
+    /* (non-Javadoc)
+     * @see com.smartfoxserver.v2.extensions.SFSExtension#addRequestHandler(java.lang.String, com.smartfoxserver.v2.extensions.IClientRequestHandler)
      */
-    protected void initContext() {
-        context = createContext();
-        SmartFoxContext sfsContext = (SmartFoxContext)context;
-        sfsContext.setApi(getApi());
-        sfsContext.setExtension(this);
+    @Override
+    protected void addRequestHandler(String requestId, IClientRequestHandler requestHandler) {
+    	super.addRequestHandler(requestId, requestHandler);
+    	registerClientRequestHandler(requestId, requestHandler);
+    }
+    
+	/**
+	 * Add the handler that handle the request to map
+	 * 
+	 * @param cmd the request command
+	 * @param handler the handler
+	 */
+    protected void registerClientRequestHandler(Object cmd, Object handler) {
+    	this.clientRequestHandlers.put(cmd, handler);
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.bridge.ClientRequestHandlers#getClientRequestHandler(java.lang.Object)
+     */
+    @Override
+    public Object getClientRequestHandler(Object cmd) {
+    	return this.clientRequestHandlers.get(cmd);
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.bridge.ClientRequestHandlers#containsClientRequestHandler(java.lang.Object)
+     */
+    @Override
+    public boolean containsClientRequestHandler(Object cmd) {
+    	return this.clientRequestHandlers.containsKey(cmd);
     }
     
     /**

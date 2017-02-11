@@ -5,17 +5,17 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.extensions.IClientRequestHandler;
 import com.smartfoxserver.v2.extensions.ISFSExtension;
+import com.tvd12.ezyfox.core.bridge.ClientRequestHandlers;
+import com.tvd12.ezyfox.core.command.PropagateRequest;
 import com.tvd12.ezyfox.core.command.Response;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
@@ -27,16 +27,16 @@ import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
  * @author tavandung12
  *
  */
-public class ResponseImpl extends BaseCommandImpl implements Response {
+public class PropagateRequestImpl extends BaseCommandImpl implements PropagateRequest {
 
+	private String user;
+	
     private Object data;
     private String command;
-    private boolean useUDP = false;
     
     private List<String> includedVars = new ArrayList<>();
     private List<String> excludedVars = new ArrayList<>();
     
-    private Set<String> usernames = new HashSet<>();
     private Map<String, Object> addition = new HashMap<>();
     
     /**
@@ -44,87 +44,60 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      * @param api the api
      * @param extension the extension
      */
-    public ResponseImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
+    public PropagateRequestImpl(AppContextImpl context, ISFSApi api, ISFSExtension extension) {
         super(context, api, extension);
     }
 
     /* (non-Javadoc)
-     * @see com.lagente.core.command.Response#command(java.lang.String)
+     * @see com.lagente.core.command.PropagateRequest#command(java.lang.String)
      */
     @Override
-    public Response command(String command) {
+    public PropagateRequest command(String command) {
         this.command = command;
         return this;
     }
     
     /* (non-Javadoc)
-     * @see com.lagente.core.command.Response#data(java.lang.Object)
+     * @see com.lagente.core.command.PropagateRequest#data(java.lang.Object)
      */
     @Override
-    public Response data(Object object) {
+    public PropagateRequest data(Object object) {
         this.data = object;
         return this;
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Response#param(java.lang.String, java.lang.Object)
+     * @see com.tvd12.ezyfox.core.command.PropagateRequest#param(java.lang.String, java.lang.Object)
      */
     @Override
-    public Response param(String name, Object value) {
+    public PropagateRequest param(String name, Object value) {
         addition.put(name, value);
         return this;
     }
     
     /* (non-Javadoc)
-     * @see com.lagente.core.command.Response#user(com.lagente.core.model.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.PropagateRequest#user(com.tvd12.ezyfox.core.entities.ApiBaseUser)
      */
     @Override
-    public Response recipients(ApiBaseUser... users) {
-        return recipients(Arrays.asList(users));
+    public PropagateRequest user(ApiBaseUser user) {
+    	this.user = user.getName();
+    	return this;
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Response#recipients(java.util.List)
+     * @see com.tvd12.ezyfox.core.command.PropagateRequest#only(java.lang.String[])
      */
     @Override
-    public <U extends ApiBaseUser> Response recipients(Collection<U> users) {
-        for(ApiBaseUser user : users)
-            this.usernames.add(user.getName());
-        return this;
-    }
-    
-    /* (non-Javadoc)
-     * @see com.lagente.core.command.Response#recipient(com.lagente.core.model.ApiBaseUser)
-     */
-    @Override
-    public Response recipients(String... usernames) {
-        this.usernames.addAll(Arrays.asList(usernames));
-        return this;
-    }
-    
-    /* (non-Javadoc)
-     * @see com.lagente.core.command.Response#useUDP(boolean)
-     */
-    @Override
-    public Response useUDP(boolean value) {
-        this.useUDP = value;
-        return this;
-    }
-    
-    /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Response#only(java.lang.String[])
-     */
-    @Override
-    public Response only(String... params) {
+    public PropagateRequest only(String... params) {
         includedVars.addAll(Arrays.asList(params));
         return this;
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.Response#ignore(java.lang.String[])
+     * @see com.tvd12.ezyfox.core.command.PropagateRequest#ignore(java.lang.String[])
      */
     @Override
-    public Response ignore(String... params) {
+    public PropagateRequest ignore(String... params) {
         excludedVars.addAll(Arrays.asList(params));
         return this;
     }
@@ -136,15 +109,21 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     @Override
     public Boolean execute() {
         validateCommand();
-        List<User> users = new ArrayList<>();
-        for(String username : usernames) {
-            User sfsUser = CommandUtil.getSfsUser(username, api);
-            if(sfsUser != null) users.add(sfsUser);
-        }
+        User sender = CommandUtil.getSfsUser(user, api);
         ISFSObject params = createResponseParams();
-        extension.send(command, params, users, useUDP);
-
+        getRequestHandler().handleClientRequest(sender, params);
         return Boolean.TRUE;
+    }
+    
+    private IClientRequestHandler getRequestHandler() {
+    	ClientRequestHandlers handlers = getRequestHandlers();
+    	if(handlers.containsClientRequestHandler(command))
+    		return (IClientRequestHandler)handlers.getClientRequestHandler(command);
+    	throw new IllegalStateException("has no handler for command: " + command);
+    }
+    
+    private ClientRequestHandlers getRequestHandlers() {
+    	return context.get(ClientRequestHandlers.class);
     }
     
     /**

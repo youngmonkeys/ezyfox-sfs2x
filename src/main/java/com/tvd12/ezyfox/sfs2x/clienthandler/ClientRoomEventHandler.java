@@ -7,17 +7,12 @@ import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.content.impl.BaseContext;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 
-import lombok.Setter;
-
 /**
  * @author tavandung12
  * Created on Aug 16, 2016
  *
  */
 public class ClientRoomEventHandler extends ClientEventHandler {
-    
-    @Setter
-    private Room room;
     
     /**
      * @param context the room context
@@ -36,7 +31,11 @@ public class ClientRoomEventHandler extends ClientEventHandler {
         ReflectMethodUtil.invokeExecuteMethod(
                 method, 
                 listener, 
-                context, room.getProperty(APIKey.ROOM), userAgent);
+                context, getRoom().getProperty(APIKey.ROOM), userAgent);
+    }
+    
+    protected Room getRoom() {
+        return getParentExtension().getParentRoom();
     }
 
 }

@@ -19,7 +19,7 @@ import com.tvd12.ezyfox.core.entities.ApiInvitation;
 import com.tvd12.ezyfox.core.entities.ApiInvitationImpl;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.MapUtill;
-import com.tvd12.ezyfox.sfs2x.data.impl.ParametersUtil;
+import com.tvd12.ezyfox.sfs2x.data.impl.SfsParameters;
 
 /**
  * @author tavandung12
@@ -67,7 +67,7 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
             @Override
             public void onRefused(Invitation invitation, ISFSObject params) {
                 callback.onRefused(createApiInvitation(invitation), 
-                        ParametersUtil.sfsobject2parameters(params));
+                        new SfsParameters(params));
             }
             
             @Override
@@ -78,7 +78,7 @@ public class SendInvitationImpl extends BaseCommandImpl implements SendInvitatio
             @Override
             public void onAccepted(Invitation invitation, ISFSObject params) {
                 callback.onAccepted(createApiInvitation(invitation), 
-                        ParametersUtil.sfsobject2parameters(params));
+                        new SfsParameters(params));
             }
             
             private ApiInvitation createApiInvitation(Invitation invitation) {

@@ -54,9 +54,10 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     /* (non-Javadoc)
      * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object)
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Object getProperty(Object key) {
-        return properties.get(key);
+    public <T> T getProperty(Object key) {
+        return (T) properties.get(key);
     }
     
     /* (non-Javadoc)

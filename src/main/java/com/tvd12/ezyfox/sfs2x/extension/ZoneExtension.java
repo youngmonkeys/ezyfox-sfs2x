@@ -9,6 +9,7 @@ import com.smartfoxserver.v2.controllers.filter.ISystemFilterChain;
 import com.smartfoxserver.v2.controllers.filter.SysControllerFilterChain;
 import com.smartfoxserver.v2.core.SFSEventType;
 import com.smartfoxserver.v2.extensions.SFSExtension;
+import com.tvd12.ezyfox.core.config.ServerEventHandlerProviderImpl;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerProvider;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.content.ContextProvider;
@@ -36,7 +37,9 @@ public class ZoneExtension extends BaseExtension {
 	 */
 	@Override
 	public final void init() {
+		initComponent();
 		initContext();
+		addToContext();
 		before();
 		addServerEventHandlers();
 		addClientRequestHandlers();
@@ -51,8 +54,8 @@ public class ZoneExtension extends BaseExtension {
 	 * Add server event handlers
 	 */
 	protected void addServerEventHandlers() {
-		Map<Object, Class<?>> handlers = ServerEventHandlerProvider
-				.provide(getClass());
+		Map<Object, Class<?>> handlers = 
+		        getServerEventHandlerProvider().provide();
 		Set<Entry<Object, Class<?>>> entries = handlers.entrySet();
 		for(Entry<Object, Class<?>> entry : entries) {
 			SFSEventType type = SFSEventType.valueOf(
@@ -61,6 +64,15 @@ public class ZoneExtension extends BaseExtension {
 					type, entry.getValue());
 			addEventHandler(type, handler);
 		}
+	}
+	
+	/**
+	 * @return the map of server events and handle classes provider
+	 */
+	protected ServerEventHandlerProvider getServerEventHandlerProvider() {
+	    return ServerEventHandlerProviderImpl.builder()
+	           .contextClass(getClass())
+	           .build();
 	}
 	
 	/**

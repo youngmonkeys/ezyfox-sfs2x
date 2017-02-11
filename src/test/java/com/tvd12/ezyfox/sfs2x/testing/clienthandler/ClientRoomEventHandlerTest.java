@@ -36,12 +36,25 @@ public class ClientRoomEventHandlerTest extends BaseCommandTest2 {
         User sfsUser = mock(User.class);
         when(sfsUser.containsProperty(APIKey.USER)).thenReturn(true);
         when(sfsUser.getProperty(APIKey.USER)).thenReturn(new AppUser());
-        Room sfsRoom = new SFSRoom("abc");
+        final Room sfsRoom = new SFSRoom("abc");
         sfsRoom.setProperty(APIKey.USER, new PokerRoom());
         RoomContextImpl roomContext = newRoomContext();
         ContextProvider.getInstance().addContext(ExRoomExtension2.class, context);
-        ClientRoomEventHandler handler = new ClientRoomEventHandler(roomContext, "abc");
-        handler.setRoom(sfsRoom);
+        ClientRoomEventHandler handler = new ClientRoomEventHandler(roomContext, "abc") {
+
+            @Override
+            public SFSExtension getParentExtension() {
+                return new SFSExtension() {
+                    @Override
+                    public void init() {
+                    }
+                    @Override
+                    public Room getParentRoom() {
+                        return sfsRoom;
+                    }
+                };
+            }
+        };
         handler.setParentExtension(mock(SFSExtension.class));
         handler.handleClientRequest(sfsUser, new SFSObject());
     }

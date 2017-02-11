@@ -26,6 +26,7 @@ public class RoomContextImplTest {
         assertNotNull(roomContext.command(AppCommand.class));
         assertEquals(context.get("hello", String.class), "world");
         assertEquals(roomContext.get("hello", String.class), "world");
+        assertEquals(roomContext.get("hello"), "world");
     }
     
     private AppContextImpl newAppContext() {

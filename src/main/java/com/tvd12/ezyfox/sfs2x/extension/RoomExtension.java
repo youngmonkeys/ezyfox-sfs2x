@@ -32,9 +32,7 @@ public class RoomExtension extends BaseExtension {
      */
     @Override
     protected ClientEventHandler newClientEventHandler(String command) {
-        ClientRoomEventHandler handler = new ClientRoomEventHandler(context, command);
-        handler.setRoom(getParentRoom());
-        return handler;
+        return new ClientRoomEventHandler(context, command);
     }
     
     protected AppContextImpl getAppContext() {
