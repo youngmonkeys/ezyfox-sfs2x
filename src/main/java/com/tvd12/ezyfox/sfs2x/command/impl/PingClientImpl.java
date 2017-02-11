@@ -86,11 +86,11 @@ public class PingClientImpl extends BaseCommandImpl implements PingClient {
     @Override
     public void ping() {
         stopped.set(false);
-        sendPingCommand();
         TaskScheduler scheduler = SmartFoxServer
                     .getInstance()
                     .getTaskScheduler();
         scheduleOneTime(scheduler);
+        sendPingCommand();
     }
     
     /**

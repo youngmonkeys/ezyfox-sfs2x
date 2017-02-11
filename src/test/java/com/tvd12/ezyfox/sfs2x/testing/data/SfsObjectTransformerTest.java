@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.testing.data;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ import com.tvd12.ezyfox.core.serialize.ObjectSerializer;
 import com.tvd12.ezyfox.core.transport.Parameters;
 import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
-import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
+import com.tvd12.ezyfox.sfs2x.data.impl.SfsParameters;
 import com.tvd12.ezyfox.sfs2x.testing.command.BaseCommandTest;
 
 import lombok.Data;
@@ -40,9 +41,7 @@ public class SfsObjectTransformerTest extends BaseCommandTest {
         ISFSObject value = (ISFSObject)wrapper.getObject();
         value.putNull("nullField");
         
-        SfsObjectTransformer sfsTransformer = new SfsObjectTransformer();
-        assertNull(sfsTransformer.transform(null));
-        Parameters params = sfsTransformer.transform(value);
+        Parameters params = new SfsParameters(value);
         
         ResponseData data = new ResponseData();
         context.getObjectDeserializer(ResponseData.class).deserialize(data, params);

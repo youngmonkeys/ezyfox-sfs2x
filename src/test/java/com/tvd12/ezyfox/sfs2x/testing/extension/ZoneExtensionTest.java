@@ -15,6 +15,7 @@ import com.tvd12.ezyfox.sfs2x.testing.context.AppEntryPoint;
 import com.tvd12.test.reflect.MethodInvoker;
 
 import static org.mockito.Mockito.*;
+import static org.testng.Assert.*;
 
 public class ZoneExtensionTest extends BaseCommandTest {
     
@@ -53,6 +54,8 @@ public class ZoneExtensionTest extends BaseCommandTest {
         entryPoint.setParentZone(zone);
         entryPoint.init();
         entryPoint.destroy();
+        assertFalse(entryPoint.containsClientRequestHandler("no comment"));
+        assertNull(entryPoint.getClientRequestHandler("no comment"));
     }
     
     @Test(expectedExceptions = {RuntimeException.class})

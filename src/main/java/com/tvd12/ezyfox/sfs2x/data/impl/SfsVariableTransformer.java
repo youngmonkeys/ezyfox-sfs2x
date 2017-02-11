@@ -8,7 +8,6 @@ import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.variables.Variable;
 import com.smartfoxserver.v2.entities.variables.VariableType;
-import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.transport.Parameters;
 import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.data.SfsTransformer;
@@ -20,23 +19,12 @@ import com.tvd12.ezyfox.sfs2x.data.SfsTransformer;
  */
 public class SfsVariableTransformer {
     
-    private SfsObjectTransformer objectTransformer;
     private Map<VariableType, SfsTransformer> transformers;
     
     public SfsVariableTransformer() {
-        this(null);
+    	this.transformers = defaultTransformers();
     }
-    
-    public SfsVariableTransformer(BaseAppContext context) {
-        init(context);
-    }
-    
-    protected void init(BaseAppContext context) {
-        transformers = defaultTransformers();
-        objectTransformer = new SfsObjectTransformer();
-        
-    }
-    
+
     @SuppressWarnings("unchecked")
     public Parameters transform(Object value) {
         Parameters answer = new ParameterWrapper();
@@ -88,13 +76,13 @@ public class SfsVariableTransformer {
         answer.put(VariableType.ARRAY, new SfsTransformer() {
             @Override
             public Object transform(Object value) {
-                return objectTransformer.transformArray((ISFSArray)value);
+                return new SfsArrayParameters((ISFSArray)value);
             }
         });
         answer.put(VariableType.OBJECT, new SfsTransformer() {
             @Override
             public Object transform(Object value) {
-                return objectTransformer.transformObject((ISFSObject)value);
+                return new SfsParameters((ISFSObject)value);
             }
         });
         return answer;

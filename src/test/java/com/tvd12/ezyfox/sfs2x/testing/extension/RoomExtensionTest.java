@@ -8,6 +8,8 @@ import com.tvd12.ezyfox.sfs2x.testing.context.AppEntryPoint;
 import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension;
 import com.tvd12.ezyfox.sfs2x.testing.roomcontext.ExRoomExtension2;
 
+import static org.testng.Assert.*;
+
 /**
  * @author tavandung12
  * Created on Aug 16, 2016
@@ -26,6 +28,8 @@ public class RoomExtensionTest {
         ContextProvider.getInstance().addContext(AppEntryPoint.class, ctx);
         ExRoomExtension2 ex2 = new ExRoomExtension2();
         ex2.init();
+        assertTrue(ex2.containsClientRequestHandler("abc"));
+        assertNotNull(ex2.getClientRequestHandler("abc"));
         ex2.destroy();
     }
     

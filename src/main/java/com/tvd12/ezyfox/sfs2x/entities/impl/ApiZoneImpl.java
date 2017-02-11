@@ -271,9 +271,10 @@ public class ApiZoneImpl implements ApiZone {
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object)
 	 */
-	@Override
-	public Object getProperty(Object key) {
-	    return sfsZone.getProperty(key);
+	@SuppressWarnings("unchecked")
+    @Override
+	public <T> T getProperty(Object key) {
+	    return (T) sfsZone.getProperty(key);
 	}
 	
 	/* (non-Javadoc)

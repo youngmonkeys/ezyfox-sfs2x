@@ -49,6 +49,8 @@ public class ZoneExtensionDestroyEventHandler extends ServerEventHandler {
 	
 	/**
 	 * Handle event
+	 * 
+	 * @param zone the zone
 	 */
 	public void handle(Zone zone) {
 	    handleServerEvent(new SFSEvent(null, createParams(zone)));
@@ -65,6 +67,8 @@ public class ZoneExtensionDestroyEventHandler extends ServerEventHandler {
 	
 	/**
 	 * Propagate event to handlers
+	 * 
+	 * @param zoneAgent the zone agent
 	 */
 	protected void notifyHandlers(Object zoneAgent) {
 	    for(ServerHandlerClass handler : handlers) {
@@ -76,6 +80,7 @@ public class ZoneExtensionDestroyEventHandler extends ServerEventHandler {
 	 * Propagate event to handler
 	 * 
 	 * @param handler structure of handler class
+	 * @param zoneAgent the zone agent
 	 */
 	protected void notifyHandler(ServerHandlerClass handler, Object zoneAgent) {
 	    ReflectMethodUtil.invokeHandleMethod(handler.getHandleMethod(), 

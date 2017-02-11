@@ -1,6 +1,7 @@
 package com.tvd12.ezyfox.sfs2x.testing.data;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,11 @@ import com.smartfoxserver.v2.entities.variables.Variable;
 import com.tvd12.ezyfox.core.reflect.ReflectConvertUtil;
 import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
 import com.tvd12.ezyfox.core.serialize.ObjectSerializer;
+import com.tvd12.ezyfox.core.transport.Arraymeters;
 import com.tvd12.ezyfox.core.transport.Parameters;
 import com.tvd12.ezyfox.core.transport.impl.ParameterWrapper;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
-import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
+import com.tvd12.ezyfox.sfs2x.data.impl.SfsParameters;
 import com.tvd12.ezyfox.sfs2x.data.impl.SfsVariableTransformer;
 import com.tvd12.ezyfox.sfs2x.testing.command.BaseCommandTest;
 
@@ -46,9 +48,7 @@ public class SfsVariableTransformerTest extends BaseCommandTest {
         ISFSObject value = (ISFSObject)wrapper.getObject();
         value.putNull("nullField");
         
-        SfsObjectTransformer sfsTransformer = new SfsObjectTransformer();
-        assertNull(sfsTransformer.transform(null));
-        Parameters params = sfsTransformer.transform(value);
+        Parameters params = new SfsParameters(value);
         
         ResponseData data = new ResponseData();
         context.getObjectDeserializer(ResponseData.class).deserialize(data, params);
@@ -102,7 +102,7 @@ public class SfsVariableTransformerTest extends BaseCommandTest {
         assertEquals(newVars.get("4"), new Integer(2));
         assertEquals(newVars.get("5"), "3");
         assertEquals(newVars.get("6", Parameters.class).get("a0"), Boolean.TRUE);
-        assertEquals(newVars.get("7", Parameters[].class)[0].get("value"), "value");
+        assertEquals(newVars.get("7", Arraymeters.class).get(0, Parameters.class).get("value"), "value");
     }
     
     private void init() {

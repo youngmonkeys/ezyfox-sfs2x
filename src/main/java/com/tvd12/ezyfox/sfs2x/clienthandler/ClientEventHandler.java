@@ -16,7 +16,7 @@ import com.tvd12.ezyfox.core.serialize.ObjectDeserializer;
 import com.tvd12.ezyfox.core.structure.RequestResponseClass;
 import com.tvd12.ezyfox.core.util.UserAgentUtil;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
-import com.tvd12.ezyfox.sfs2x.data.impl.SfsObjectTransformer;
+import com.tvd12.ezyfox.sfs2x.data.impl.SfsParameters;
 import com.tvd12.ezyfox.sfs2x.serializer.RequestParamDeserializer;
 import com.tvd12.ezyfox.sfs2x.util.AgentUtil;
 
@@ -84,8 +84,7 @@ public class ClientEventHandler extends ClientRequestHandler {
 	    try {
 	        ObjectDeserializer deserializer = 
 	            context.getObjectDeserializer(listener.getClass());
-	        deserializer.deserialize(listener, 
-                    new SfsObjectTransformer(context).transform(params));
+	        deserializer.deserialize(listener, new SfsParameters(params));
 	    } catch(IllegalArgumentException e) {
 	        new RequestParamDeserializer()
                 .deserialize(clazz.getRequestListenerClass(), params, listener);
