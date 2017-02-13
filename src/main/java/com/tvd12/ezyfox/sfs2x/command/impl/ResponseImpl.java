@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -100,6 +101,24 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     public Response recipients(String... usernames) {
         this.usernames.addAll(Arrays.asList(usernames));
         return this;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#exclude(com.tvd12.ezyfox.core.entities.ApiBaseUser[])
+     */
+    @Override
+    public Response exclude(ApiBaseUser... users) {
+    	return exclude(Sets.newHashSet(users));
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#exclude(java.util.Collection)
+     */
+    @Override
+    public <U extends ApiBaseUser> Response exclude(Collection<U> users) {
+    	for(U user : users)
+    		this.usernames.remove(user.getName());
+    	return this;
     }
     
     /* (non-Javadoc)

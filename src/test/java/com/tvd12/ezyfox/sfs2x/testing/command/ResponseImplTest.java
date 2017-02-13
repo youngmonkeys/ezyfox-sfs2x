@@ -21,6 +21,7 @@ public class ResponseImplTest extends BaseCommandTest2 {
             .data(new VideoPokerRoom())
             .recipients(user)
             .recipients("dungtv")
+            .exclude(user)
             .useUDP(false)
             .param("a", "b")
             .execute();
