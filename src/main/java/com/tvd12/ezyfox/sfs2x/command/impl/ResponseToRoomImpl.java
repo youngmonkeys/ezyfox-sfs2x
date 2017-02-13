@@ -2,10 +2,12 @@ package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Sets;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
@@ -81,12 +83,21 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     }
     
     /* (non-Javadoc)
-     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#exclude(com.tvd12.ezyfox.core.entities.ApiBaseUser)
+     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#exclude(com.tvd12.ezyfox.core.entities.ApiBaseUser[])
      */
     @Override
-    public ResponseToRoom exclude(ApiBaseUser user) {
-        this.excludedUsers.add(user.getName());
-        return this;
+    public ResponseToRoom exclude(ApiBaseUser... users) {
+    	return exclude(Sets.newHashSet(users));
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.ResponseToRoom#exclude(java.util.Collection)
+     */
+    @Override
+    public <U extends ApiBaseUser> ResponseToRoom exclude(Collection<U> users) {
+    	for(U user : users)
+    		this.excludedUsers.add(user.getName());
+    	return this;
     }
     
     /* (non-Javadoc)
