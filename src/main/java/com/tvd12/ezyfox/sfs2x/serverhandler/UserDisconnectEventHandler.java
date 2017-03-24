@@ -70,6 +70,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
         apiDisconnection.setPlayerIdsByRoom(convertPlayerIdsByRoom(sfsIds));
         apiDisconnection.setReason(sfsReason.toString());
         notifyHandlers(apiUser, apiDisconnection);
+        detachUserData(sfsUser);
     }
     
     /**
@@ -85,6 +86,15 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
                     context, 
                     disconnection);
         }
+    }
+    
+    /**
+     * detach api user from sfs user
+     * 
+     * @param sfsUser the sfs user
+     */
+    private void detachUserData(User sfsUser) {
+    	sfsUser.removeProperty(APIKey.USER);
     }
     
     /* (non-Javadoc)

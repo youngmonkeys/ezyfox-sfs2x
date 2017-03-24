@@ -35,7 +35,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getId() {
-		return sfsZone.getId();
+		return getZone().getId();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxAllowedRooms() {
-		return sfsZone.getMaxAllowedRooms();
+		return getZone().getMaxAllowedRooms();
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxAllowedUsers() {
-		return sfsZone.getMaxAllowedUsers();
+		return getZone().getMaxAllowedUsers();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxRoomNameChars() {
-		return sfsZone.getMaxRoomNameChars();
+		return getZone().getMaxRoomNameChars();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxRoomsCreatedPerUserLimit() {
-		return sfsZone.getMaxRoomsCreatedPerUserLimit();
+		return getZone().getMaxRoomsCreatedPerUserLimit();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxRoomVariablesAllowed() {
-		return sfsZone.getMaxRoomVariablesAllowed();
+		return getZone().getMaxRoomVariablesAllowed();
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxUserIdleTime() {
-		return sfsZone.getMaxUserIdleTime();
+		return getZone().getMaxUserIdleTime();
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMaxUserVariablesAllowed() {
-		return sfsZone.getMaxUserVariablesAllowed();
+		return getZone().getMaxUserVariablesAllowed();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getMinRoomNameChars() {
-		return sfsZone.getMinRoomNameChars();
+		return getZone().getMinRoomNameChars();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getTotalRoomCount() {
-		return sfsZone.getTotalRoomCount();
+		return getZone().getTotalRoomCount();
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getUserCount() {
-		return sfsZone.getUserCount();
+		return getZone().getUserCount();
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public int getUserReconnectionSeconds() {
-		return sfsZone.getUserReconnectionSeconds();
+		return getZone().getUserReconnectionSeconds();
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public boolean isActive() {
-		return sfsZone.isActive();
+		return getZone().isActive();
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public String getName() {
-		return sfsZone.getName();
+		return getZone().getName();
 	}
 
 	/* (non-Javadoc)
@@ -148,7 +148,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiUser> T getUserById(int id) {
-	    User sfsUser = sfsZone.getUserById(id);
+	    User sfsUser = getZone().getUserById(id);
 	    if(sfsUser != null && sfsUser.containsProperty(APIKey.USER))
 	        return (T) sfsUser.getProperty(APIKey.USER);
 	    return null;
@@ -160,7 +160,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiUser> T getUserByName(String username) {
-	    User sfsUser = sfsZone.getUserByName(username);
+	    User sfsUser = getZone().getUserByName(username);
         if(sfsUser != null && sfsUser.containsProperty(APIKey.USER))
             return (T) sfsUser.getProperty(APIKey.USER);
         return null;
@@ -172,7 +172,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiUser> List<T> getUsersInGroup(String groupId) {
-	    Collection<User> sfsUsers = sfsZone.getUsersInGroup(groupId);
+	    Collection<User> sfsUsers = getZone().getUsersInGroup(groupId);
 	    List<T> anwser = new ArrayList<>();
 	    for(User sfsUser : sfsUsers)
 	        if(sfsUser.containsProperty(APIKey.USER))
@@ -186,7 +186,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiUser> List<T> getUserList() {
-	    Collection<User> sfsUsers = sfsZone.getUserList();
+	    Collection<User> sfsUsers = getZone().getUserList();
         List<T> anwser = new ArrayList<>();
         for(User sfsUser : sfsUsers)
             if(sfsUser.containsProperty(APIKey.USER))
@@ -199,7 +199,7 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public boolean isNPC(String username) {
-	    User sfsUser = sfsZone.getUserByName(username);
+	    User sfsUser = getZone().getUserByName(username);
         if(sfsUser != null)
             return sfsUser.isNpc();
         return false;
@@ -211,7 +211,7 @@ public class ApiZoneImpl implements ApiZone {
     @SuppressWarnings("unchecked")
     @Override
     public <T extends ApiRoom> T getRoomById(int id) {
-        Room sfsRoom = sfsZone.getRoomById(id);
+        Room sfsRoom = getZone().getRoomById(id);
         if(sfsRoom != null && sfsRoom.containsProperty(APIKey.ROOM))
             return (T) sfsRoom.getProperty(APIKey.ROOM);
         return null;
@@ -223,7 +223,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiRoom> T getRoomByName(String name) {
-	    Room sfsRoom = sfsZone.getRoomByName(name);
+	    Room sfsRoom = getZone().getRoomByName(name);
 	    if(sfsRoom != null && sfsRoom.containsProperty(APIKey.ROOM))
 	        return (T) sfsRoom.getProperty(APIKey.ROOM);
 	    return null;
@@ -235,7 +235,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiRoom> List<T> getRoomsInGroup(String groupId) {
-	    List<Room> sfsRooms = sfsZone.getRoomListFromGroup(groupId);
+	    List<Room> sfsRooms = getZone().getRoomListFromGroup(groupId);
 	    List<T> answer = new ArrayList<>();
 	    for(Room sfsRoom : sfsRooms) {
 	        if(sfsRoom.containsProperty(APIKey.ROOM))
@@ -250,7 +250,7 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T extends ApiRoom> List<T> getRoomList() {
-	    List<Room> sfsRooms = sfsZone.getRoomList();
+	    List<Room> sfsRooms = getZone().getRoomList();
         List<T> answer = new ArrayList<>();
         for(Room sfsRoom : sfsRooms) {
             if(sfsRoom.containsProperty(APIKey.ROOM))
@@ -264,8 +264,9 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public void setProperty(Object key, Object value) {
-	    if(key.equals(APIKey.ZONE))    return;
-	    sfsZone.setProperty(key, value);
+	    if(key.equals(APIKey.ZONE))    
+	    	return;
+	    getZone().setProperty(key, value);
 	}
 	
 	/* (non-Javadoc)
@@ -274,15 +275,16 @@ public class ApiZoneImpl implements ApiZone {
 	@SuppressWarnings("unchecked")
     @Override
 	public <T> T getProperty(Object key) {
-	    return (T) sfsZone.getProperty(key);
+	    return (T) getZone().getProperty(key);
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#getProperty(java.lang.Object, java.lang.Class)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getProperty(Object key, Class<T> clazz) {
-	    return clazz.cast(getProperty(key));
+	    return (T)getProperty(key);
 	}
 	
 	/* (non-Javadoc)
@@ -290,7 +292,12 @@ public class ApiZoneImpl implements ApiZone {
 	 */
 	@Override
 	public void removeProperty(Object key) {
-	    if(key.equals(APIKey.ZONE))    return;
-	    sfsZone.removeProperty(key);
+	    if(key.equals(APIKey.ZONE))    
+	    	return;
+	    getZone().removeProperty(key);
+	}
+	
+	protected Zone getZone() {
+		return sfsZone;
 	}
 }
