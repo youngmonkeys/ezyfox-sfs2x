@@ -65,7 +65,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
         ApiLogin wrapper = wrapLoginData(event);
         ISFSObject inData = (ISFSObject)event.getParameter(SFSEventParam.LOGIN_IN_DATA);
         ISFSObject outData = (ISFSObject)event.getParameter(SFSEventParam.LOGIN_OUT_DATA);
-        notifyHandler(wrapper, inData, outData);
+        notifyHandlers(wrapper, inData, outData);
     }
     
     /**
@@ -95,7 +95,7 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
      * @param outData login out data
      * @throws SFSLoginException when has any errors
      */
-    protected void notifyHandler(ApiLogin wrapper, 
+    protected void notifyHandlers(ApiLogin wrapper, 
             ISFSObject inData, ISFSObject outData) throws SFSLoginException {
         try {
             for (UserLoginHandlerClass handler : loginHandlers)
@@ -113,10 +113,19 @@ public class UserLoginEventHandler extends ServerBaseEventHandler {
         if(!isBadRequestException(e)) 
             return new SFSLoginException();
         final BadRequestException ex = getBadRequestException(e);
-        return new SFSLoginException(ex.getMessage(), new SFSErrorData(new IErrorCode() {
+        return newLoginException(ex.getMessage(), ex.getCode());
+    }
+    
+    /**
+     * @param msg the error message
+     * @param code the error code
+     * @return a new login exception
+     */
+    protected SFSLoginException newLoginException(final String msg, final int code) {
+    	return new SFSLoginException(msg, new SFSErrorData(new IErrorCode() {
             @Override
             public short getId() {
-                return (short)ex.getCode();
+                return (short)code;
             }
         }));
     }

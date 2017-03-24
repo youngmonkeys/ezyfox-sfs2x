@@ -14,6 +14,7 @@ import com.tvd12.ezyfox.core.config.ServerEventHandlerProvider;
 import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.content.ContextProvider;
 import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
+import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.exception.ExtensionException;
 import com.tvd12.ezyfox.core.reflect.ReflectClassUtil;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
@@ -54,8 +55,7 @@ public class ZoneExtension extends BaseExtension {
 	 * Add server event handlers
 	 */
 	protected void addServerEventHandlers() {
-		Map<Object, Class<?>> handlers = 
-		        getServerEventHandlerProvider().provide();
+		Map<Object, Class<?>> handlers =  getServerEventHandlers();
 		Set<Entry<Object, Class<?>>> entries = handlers.entrySet();
 		for(Entry<Object, Class<?>> entry : entries) {
 			SFSEventType type = SFSEventType.valueOf(
@@ -64,6 +64,13 @@ public class ZoneExtension extends BaseExtension {
 					type, entry.getValue());
 			addEventHandler(type, handler);
 		}
+	}
+	
+	/**
+	 * @return server event handlers
+	 */
+	protected Map<Object, Class<?>> getServerEventHandlers() {
+		return getServerEventHandlerProvider().provide();
 	}
 	
 	/**
@@ -125,8 +132,11 @@ public class ZoneExtension extends BaseExtension {
 	 * Initialize ApiZone object and bind it to smartfox zone
 	 */
 	protected void addAgent() {
-		getParentZone().setProperty(APIKey.ZONE, 
-				new ApiZoneImpl(getParentZone()));
+		getParentZone().setProperty(APIKey.ZONE, newZoneAgent());
+	}
+	
+	protected ApiZone newZoneAgent() {
+		return new ApiZoneImpl(getParentZone());
 	}
 	
 	/**
