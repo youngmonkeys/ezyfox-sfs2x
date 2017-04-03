@@ -9,11 +9,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.smartfoxserver.v2.core.ISFSEvent;
+import com.smartfoxserver.v2.core.ISFSEventParam;
 import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Zone;
 import com.smartfoxserver.v2.exceptions.SFSException;
+import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.smartfoxserver.v2.util.ClientDisconnectionReason;
 import com.tvd12.ezyfox.core.config.ServerEventHandlerCenter;
 import com.tvd12.ezyfox.core.constants.APIKey;
@@ -66,8 +68,8 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
         ClientDisconnectionReason sfsReason = (ClientDisconnectionReason)event.getParameter(SFSEventParam.DISCONNECTION_REASON);
         ApiUser apiUser = (ApiUser) sfsUser.getProperty(APIKey.USER);
         List<ApiRoom> apiRooms = CommandUtil.getApiRoomList(sfsRooms);
-        apiUser.setProperty(APIKey.USER_JOOMS_JOINED, apiRooms);
-        apiUser.setProperty(Constants.USER_ROOMS_JOINED, sfsRooms);
+        apiUser.setProperty(APIKey.USER_JOINED_ROOMS, apiRooms);
+        apiUser.setProperty(Constants.USER_JOINED_ROOMS, sfsRooms);
         ApiDisconnectionImpl apiDisconnection = new ApiDisconnectionImpl();
         apiDisconnection.setZone((ApiZone) sfsZone.getProperty(APIKey.ZONE));
         apiDisconnection.setUser(apiUser);
@@ -75,7 +77,30 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
         apiDisconnection.setPlayerIdsByRoom(convertPlayerIdsByRoom(sfsIds));
         apiDisconnection.setReason(sfsReason.toString());
         notifyHandlers(apiUser, apiDisconnection);
+        notifyToRooms(sfsZone, sfsRooms, sfsUser);
         detachUserData(sfsUser);
+    }
+    
+    protected void notifyToRoom(Zone zone, Room room, User user) {
+    	ISFSExtension ext = room.getExtension();
+    	Map<ISFSEventParam, Object> params = newDisconnectEventParams(zone, room, user);
+    	if(ext instanceof InternalEventHandler)
+    		((InternalEventHandler)ext).handleEvent(ServerEvent.ROOM_USER_DISCONNECT, params);
+    }
+    
+    protected void notifyToRooms(Zone zone, List<Room> rooms, User user) {
+    	for(Room room : rooms)
+    		if(room.getExtension() != null)
+    			notifyToRoom(zone, room, user);
+    }
+    
+    protected Map<ISFSEventParam, Object> newDisconnectEventParams(
+    		Zone zone, Room room, User user) {
+    	Map<ISFSEventParam, Object> params = new HashMap<>();
+    	params.put(SFSEventParam.ZONE, zone);
+    	params.put(SFSEventParam.ROOM, room);
+    	params.put(SFSEventParam.USER, user);
+    	return params;
     }
     
     /**
