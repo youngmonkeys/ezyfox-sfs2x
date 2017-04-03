@@ -103,6 +103,8 @@ public class ApiZoneImplTest {
         assertEquals(apiZone.isActive(), true);
         assertEquals(apiZone.getName(), "world");
         assertEquals(apiZone.getProperty("a"), "b");
+        assertTrue(apiZone.containsKey("a"));
+        assertFalse(apiZone.containsKey("nonono"));
         
         assertNotNull(apiZone.getUserById(1));
         assertNull(apiZone.getUserById(2));

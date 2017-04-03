@@ -21,8 +21,10 @@ public class ApiBuddyImplTest {
         buddy.setTemp(true);
         assertTrue(buddy.isTemp());
         buddy.setProperty("1", "2");
+        assertTrue(buddy.containsKey("1"));
         assertEquals(buddy.getProperty("1", String.class), "2");
         buddy.removeProperty("1");
+        assertFalse(buddy.containsKey("1"));
         assertNull(buddy.getProperty("1"));
         buddy.setOwner(new AppUser());
         buddy.setUser(new AppUser());

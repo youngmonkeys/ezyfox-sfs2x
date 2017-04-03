@@ -9,7 +9,9 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.extensions.BaseClientRequestHandler;
 import com.tvd12.ezyfox.core.bridge.ClientRequestHandlers;
+import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.sfs2x.command.impl.PropagateRequestImpl;
+import com.tvd12.ezyfox.sfs2x.testing.ExampleUser;
 import com.tvd12.ezyfox.sfs2x.testing.context.VideoPokerRoom;
 
 /**
@@ -56,9 +58,11 @@ public class PropagateRequestImplTest extends BaseCommandTest2 {
     @Test(priority = 2)
     public void test2() {
     	PropagateRequestImpl command = new PropagateRequestImpl(context, api, extension);
+    	ApiUser apiUser = new ExampleUser();
+    	apiUser.setName("unknown");
         command.command("hello")
             .data(null)
-            .user(user)
+            .user(apiUser)
             .execute();
     }
     

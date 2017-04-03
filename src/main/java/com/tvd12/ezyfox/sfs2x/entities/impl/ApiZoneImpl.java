@@ -297,6 +297,14 @@ public class ApiZoneImpl implements ApiZone {
 	    getZone().removeProperty(key);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.tvd12.ezyfox.core.entities.ApiProperties#containsKey(java.lang.Object)
+	 */
+	@Override
+	public boolean containsKey(Object key) {
+		return getProperty(key) != null;
+	}
+	
 	protected Zone getZone() {
 		return sfsZone;
 	}

@@ -75,4 +75,12 @@ public class ApiBuddyImpl extends SFSBuddy implements ApiBuddy {
     public void removeProperty(Object key) {
         properties.remove(key);
     }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.entities.ApiProperties#containsKey(java.lang.Object)
+     */
+    @Override
+    public boolean containsKey(Object key) {
+    	return properties.containsKey(key);
+    }
 }
