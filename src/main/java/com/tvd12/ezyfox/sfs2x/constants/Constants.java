@@ -7,6 +7,6 @@ package com.tvd12.ezyfox.sfs2x.constants;
  */
 public interface Constants {
 
-	String USER_ROOMS_JOINED	= "USER_ROOMS_JOINED";
+	String USER_JOINED_ROOMS	= "USER_JOINED_ROOMS";
 	
 }

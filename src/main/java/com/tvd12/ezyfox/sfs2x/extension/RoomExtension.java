@@ -17,6 +17,7 @@ import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.content.impl.RoomContextImpl;
 import com.tvd12.ezyfox.sfs2x.serverhandler.InternalEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.RoomExtensionDestroyEventHandler;
+import com.tvd12.ezyfox.sfs2x.serverhandler.RoomUserDisconnectEventHandler;
 import com.tvd12.ezyfox.sfs2x.serverhandler.RoomUserReconnectEventHandler;
 
 /**
@@ -45,6 +46,9 @@ public class RoomExtension extends BaseExtension implements InternalEventHandler
 		addExtendedEventHandler(
 				ServerEvent.ROOM_USER_RECONNECT, 
 				new RoomUserReconnectEventHandler(getAppContext()));
+		addExtendedEventHandler(
+				ServerEvent.ROOM_USER_DISCONNECT, 
+				new RoomUserDisconnectEventHandler(getAppContext()));
 	}
 
 	/*

@@ -43,6 +43,7 @@ public class ListServerEventHandlerTest {
                 if(!handler.eventName().equals(ServerEvent.SERVER_INITIALIZING) &&
                         !handler.eventName().equals(ServerEvent.ZONE_EXTENSION_DESTROY) &&
                         !handler.eventName().equals(ServerEvent.ROOM_EXTENSION_DESTROY) &&
+                        !handler.eventName().equals(ServerEvent.ROOM_USER_DISCONNECT) &&
                 		!handler.eventName().equals(ServerEvent.ROOM_USER_RECONNECT))
                     builder.append(handler.eventName() + "=" + clazz.getName()).append("\n");
             }
