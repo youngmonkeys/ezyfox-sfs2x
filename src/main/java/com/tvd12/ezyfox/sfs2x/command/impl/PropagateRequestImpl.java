@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.smartfoxserver.bitswarm.sessions.Session;
 import com.smartfoxserver.v2.api.ISFSApi;
+import com.smartfoxserver.v2.entities.SFSUser;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.extensions.IClientRequestHandler;
@@ -17,6 +19,7 @@ import com.smartfoxserver.v2.extensions.ISFSExtension;
 import com.tvd12.ezyfox.core.bridge.ClientRequestHandlers;
 import com.tvd12.ezyfox.core.command.PropagateRequest;
 import com.tvd12.ezyfox.core.command.Response;
+import com.tvd12.ezyfox.core.constants.APIKey;
 import com.tvd12.ezyfox.core.entities.ApiBaseUser;
 import com.tvd12.ezyfox.sfs2x.content.impl.AppContextImpl;
 import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
@@ -29,7 +32,7 @@ import com.tvd12.ezyfox.sfs2x.data.impl.ParamTransformer;
  */
 public class PropagateRequestImpl extends BaseCommandImpl implements PropagateRequest {
 
-	private String user;
+	private ApiBaseUser user;
 	
     private Object data;
     private String command;
@@ -80,7 +83,7 @@ public class PropagateRequestImpl extends BaseCommandImpl implements PropagateRe
      */
     @Override
     public PropagateRequest user(ApiBaseUser user) {
-    	this.user = user.getName();
+    	this.user = user;
     	return this;
     }
     
@@ -110,9 +113,17 @@ public class PropagateRequestImpl extends BaseCommandImpl implements PropagateRe
     public Boolean execute() {
         validateCommand();
         User sender = CommandUtil.getSfsUser(user, api);
+        sender = sender != null ? sender : newFakeUser();
         ISFSObject params = createResponseParams();
         getRequestHandler().handleClientRequest(sender, params);
         return Boolean.TRUE;
+    }
+    
+    private User newFakeUser() {
+    	FakeUser sfsUser = new FakeUser();
+    	sfsUser.setName(user.getName());
+    	sfsUser.setProperty(APIKey.USER, user);
+    	return sfsUser;
     }
     
     private IClientRequestHandler getRequestHandler() {
@@ -149,6 +160,14 @@ public class PropagateRequestImpl extends BaseCommandImpl implements PropagateRe
     private void validateCommand() {
         if(command == null || command.trim().isEmpty())
             throw new IllegalStateException("Invalid command");
+    }
+    
+    public static class FakeUser extends SFSUser {
+
+    	public FakeUser() {
+			super(new Session());
+		}
+    	
     }
     
 }

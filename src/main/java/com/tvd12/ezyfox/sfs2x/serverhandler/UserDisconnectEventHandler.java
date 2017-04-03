@@ -21,11 +21,13 @@ import com.tvd12.ezyfox.core.constants.ServerEvent;
 import com.tvd12.ezyfox.core.content.impl.BaseAppContext;
 import com.tvd12.ezyfox.core.entities.ApiDisconnection;
 import com.tvd12.ezyfox.core.entities.ApiDisconnectionImpl;
+import com.tvd12.ezyfox.core.entities.ApiRoom;
 import com.tvd12.ezyfox.core.entities.ApiUser;
 import com.tvd12.ezyfox.core.entities.ApiZone;
 import com.tvd12.ezyfox.core.reflect.ReflectMethodUtil;
 import com.tvd12.ezyfox.core.structure.ServerHandlerClass;
 import com.tvd12.ezyfox.sfs2x.command.impl.CommandUtil;
+import com.tvd12.ezyfox.sfs2x.constants.Constants;
 
 /**
  * This handler handles user disconnect from server event
@@ -63,10 +65,13 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
         Map<Room, Integer> sfsIds = (Map<Room, Integer>)event.getParameter(SFSEventParam.PLAYER_IDS_BY_ROOM);
         ClientDisconnectionReason sfsReason = (ClientDisconnectionReason)event.getParameter(SFSEventParam.DISCONNECTION_REASON);
         ApiUser apiUser = (ApiUser) sfsUser.getProperty(APIKey.USER);
+        List<ApiRoom> apiRooms = CommandUtil.getApiRoomList(sfsRooms);
+        apiUser.setProperty(APIKey.USER_JOOMS_JOINED, apiRooms);
+        apiUser.setProperty(Constants.USER_ROOMS_JOINED, sfsRooms);
         ApiDisconnectionImpl apiDisconnection = new ApiDisconnectionImpl();
         apiDisconnection.setZone((ApiZone) sfsZone.getProperty(APIKey.ZONE));
         apiDisconnection.setUser(apiUser);
-        apiDisconnection.setJoinedRooms(CommandUtil.getApiRoomList(sfsRooms));
+        apiDisconnection.setJoinedRooms(apiRooms);
         apiDisconnection.setPlayerIdsByRoom(convertPlayerIdsByRoom(sfsIds));
         apiDisconnection.setReason(sfsReason.toString());
         notifyHandlers(apiUser, apiDisconnection);
@@ -78,7 +83,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
      * 
      * @param apiUser user agent object
      */
-    private void notifyHandlers(ApiUser apiUser, ApiDisconnectionImpl disconnection) {
+    protected void notifyHandlers(ApiUser apiUser, ApiDisconnectionImpl disconnection) {
         for(ServerHandlerClass handler : handlers) {
             ReflectMethodUtil.invokeHandleMethod(
                     handler.getHandleMethod(), 
@@ -93,7 +98,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
      * 
      * @param sfsUser the sfs user
      */
-    private void detachUserData(User sfsUser) {
+    protected void detachUserData(User sfsUser) {
     	sfsUser.removeProperty(APIKey.USER);
     }
     
@@ -106,7 +111,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private Map convertPlayerIdsByRoom(Map<Room, Integer> sfsIds) {
+    protected Map convertPlayerIdsByRoom(Map<Room, Integer> sfsIds) {
         Map answer = new HashMap<>();
         for(Entry<Room, Integer> entry : sfsIds.entrySet()) {
             if(entry.getKey().containsProperty(APIKey.ROOM))

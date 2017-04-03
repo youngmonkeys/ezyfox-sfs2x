@@ -51,10 +51,19 @@ public class ClientEventHandler extends ClientRequestHandler {
 	            notifyListener(clazz, params, user, userAgent);
 	        }
 		} catch(Exception e) {
-		    if(isBadRequestException(e)) 
-		        responseErrorToClient(e, user);
-		    else throw new RuntimeException(e);
+			processHandlerException(e, user);
 		}
+	}
+	
+	protected void processHandlerException(Exception e, User user) {
+		if(isBadRequestException(e)) { 
+	    	getLogger().debug("handle client request error", e);
+	        responseErrorToClient(e, user);
+	    }
+	    else {
+	    	getLogger().error("handle client request error", e);
+	    	throw new RuntimeException(e);
+	    }
 	}
 	
 	protected ApiUser getUserAgent(User user) {
