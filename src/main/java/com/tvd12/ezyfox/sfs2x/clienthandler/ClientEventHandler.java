@@ -44,8 +44,9 @@ public class ClientEventHandler extends ClientRequestHandler {
 	 */
 	@Override
 	public void handleClientRequest(User user, ISFSObject params) {
-		ApiUser apiUser = getUserAgent(user);
 		try {
+			debugLogRequestInfo(user, params);
+			ApiUser apiUser = getUserAgent(user);
 	        for(RequestResponseClass clazz : listeners) {
 	            Object userAgent = checkUserAgent(clazz, apiUser);
 	            notifyListener(clazz, params, user, userAgent);
@@ -64,6 +65,15 @@ public class ClientEventHandler extends ClientRequestHandler {
 	    	getLogger().error("handle client request error", e);
 	    	throw new RuntimeException(e);
 	    }
+	}
+	
+	protected void debugLogRequestInfo(User user, ISFSObject params) {
+		getLogger().debug("user {} request command = {}, data = {}", 
+				user.getName(), command, paramsToJson(params));
+	}
+	
+	protected String paramsToJson(ISFSObject params) {
+		return params.toJson();
 	}
 	
 	protected ApiUser getUserAgent(User user) {

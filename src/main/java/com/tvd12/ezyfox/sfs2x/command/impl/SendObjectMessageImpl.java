@@ -1,7 +1,6 @@
 package com.tvd12.ezyfox.sfs2x.command.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.Sets;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
@@ -186,7 +186,7 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
      * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipients(java.util.List)
      */
     @Override
-    public SendObjectMessage recipients(List<ApiBaseUser> recipients) {
+    public SendObjectMessage recipients(Collection<? extends ApiBaseUser> recipients) {
         for(ApiBaseUser user : recipients) {
             this.recipients.add(user.getName());
         }
@@ -198,8 +198,16 @@ public class SendObjectMessageImpl extends BaseCommandImpl implements SendObject
      */
     @Override
     public SendObjectMessage recipients(String... recipients) {
-        this.recipients.addAll(Arrays.asList(recipients));
-        return this;
+        return recipients(Sets.newHashSet(recipients));
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.SendObjectMessage#recipients(java.lang.Iterable)
+     */
+    @Override
+    public SendObjectMessage recipients(Iterable<String> recipients) {
+    	this.recipients.addAll(Sets.newHashSet(recipients));
+    	return this;
     }
     
     /* (non-Javadoc)

@@ -107,6 +107,7 @@ public class UserDisconnectEventHandler extends UserActionEventHandler {
      * Propagate event to handlers
      * 
      * @param apiUser user agent object
+     * @param disconnection the disconnection info
      */
     protected void notifyHandlers(ApiUser apiUser, ApiDisconnectionImpl disconnection) {
         for(ServerHandlerClass handler : handlers) {

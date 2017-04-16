@@ -1,7 +1,5 @@
 package com.tvd12.ezyfox.sfs2x.testing.command;
 
-import java.util.List;
-
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Lists;
@@ -17,7 +15,6 @@ import com.tvd12.ezyfox.sfs2x.testing.context.PokerRoom;
  */
 public class SendObjectMessageImplTest extends BaseCommandTest2 {
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -27,7 +24,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room(ROOM_NAME)
             .room(1)
@@ -35,7 +32,6 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .execute();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test2() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -45,7 +41,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room("")
             .room(1)
@@ -53,7 +49,6 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .execute();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test3() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -63,7 +58,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room(ROOM_NAME)
             .room(1)
@@ -71,7 +66,6 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .execute();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test4() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -81,7 +75,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room(ROOM_NAME)
             .room(1)
@@ -89,7 +83,6 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .execute();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test5() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -99,7 +92,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room(ROOM_NAME)
             .room(1)
@@ -107,7 +100,6 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .execute();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void test6() {
         SendObjectMessageImpl command = new SendObjectMessageImpl(context, api, extension);
@@ -117,7 +109,7 @@ public class SendObjectMessageImplTest extends BaseCommandTest2 {
             .recipient(user)
             .recipient(USER_NAME)
             .recipients(USER_NAME)
-            .recipients((List)Lists.newArrayList(new AppUser()))
+            .recipients(Lists.newArrayList(new AppUser()))
             .room(new PokerRoom())
             .room(ROOM_NAME)
             .room(1)
