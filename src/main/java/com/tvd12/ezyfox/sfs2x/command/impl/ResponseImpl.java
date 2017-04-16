@@ -99,8 +99,16 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
      */
     @Override
     public Response recipients(String... usernames) {
-        this.usernames.addAll(Arrays.asList(usernames));
-        return this;
+        return recipients(Sets.newHashSet(usernames));
+    }
+    
+    /* (non-Javadoc)
+     * @see com.tvd12.ezyfox.core.command.Response#recipients(java.lang.Iterable)
+     */
+    @Override
+    public Response recipients(Iterable<String> usernames) {
+    	this.usernames.addAll(Sets.newHashSet(usernames));
+    	return this;
     }
     
     /* (non-Javadoc)
