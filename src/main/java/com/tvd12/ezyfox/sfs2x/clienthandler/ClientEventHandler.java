@@ -187,4 +187,17 @@ public class ClientEventHandler extends ClientRequestHandler {
 	    return (BadRequestException) ExceptionUtils
 	            .getThrowables(ex)[ExceptionUtils.indexOfThrowable(ex, BadRequestException.class)];
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.smartfoxserver.v2.extensions.BaseClientRequestHandler#send(java.lang.String, com.smartfoxserver.v2.entities.data.ISFSObject, com.smartfoxserver.v2.entities.User)
+	 */
+	@Override
+	protected void send(String cmd, ISFSObject params, User recipient) {
+		super.send(cmd, params, recipient);
+		logResponse(cmd, params);
+	}
+	
+	protected void logResponse(String cmd, ISFSObject params) {
+		getLogger().debug("response command: {} with data {}", cmd, params.toJson());
+	}
 }

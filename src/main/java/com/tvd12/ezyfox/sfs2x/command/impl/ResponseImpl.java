@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.Sets;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.User;
@@ -39,6 +42,8 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     
     private Set<String> usernames = new HashSet<>();
     private Map<String, Object> addition = new HashMap<>();
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(Response.class);
     
     /**
      * @param context the context
@@ -170,8 +175,12 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
         }
         ISFSObject params = createResponseParams();
         extension.send(command, params, users, useUDP);
-
+        logResponse(params);
         return Boolean.TRUE;
+    }
+    
+    protected void logResponse(ISFSObject params) {
+    	getLogger().debug("reponse command: {} with data {}", command, params.toJson());
     }
     
     /**
@@ -197,6 +206,10 @@ public class ResponseImpl extends BaseCommandImpl implements Response {
     private void validateCommand() {
         if(command == null || command.trim().isEmpty())
             throw new IllegalStateException("Invalid command");
+    }
+    
+    protected Logger getLogger() {
+    	return LOGGER;
     }
     
 }

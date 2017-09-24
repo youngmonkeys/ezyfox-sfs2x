@@ -41,6 +41,7 @@ import java.util.List;
 
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSArrayLite;
 import com.tvd12.ezyfox.core.structure.ClassWrapper;
 import com.tvd12.ezyfox.core.structure.SetterMethodCover;
 
@@ -127,7 +128,7 @@ public class ParameterDeserializer {
             else if(method.isInt())
                 value = data.getInt(key);
             else if(method.isLong())
-                value = data.getLong(key);
+                value = ((Number)data.get(key).getObject()).longValue();
             else if(method.isShort())
                 value = data.getShort(key);
             else
@@ -241,13 +242,24 @@ public class ParameterDeserializer {
         if(method.isIntCollection())
             return data.getIntArray(key);
         if(method.isLongCollection())
-            return data.getLongArray(key);
+            return getLongArray(data, key);
         if(method.isShortCollection())
             return data.getShortArray(key);
         if(method.isStringCollection())
             return data.getUtfStringArray(key);
-//        if(method.isArrayCollection())
         return assignValuesToArrayCollection(method, data.getSFSArray(key));
+    }
+    
+    private Object getLongArray(ISFSObject data, String key) {
+    	Object value = data.get(key).getObject();
+    	if(value instanceof SFSArrayLite) {
+			SFSArrayLite array = (SFSArrayLite)value;
+    		List<Long> list = new ArrayList<>();
+    		for(int i = 0 ; i < array.size() ; i++)
+    			list.add(((Number)array.get(i).getObject()).longValue());
+    		return list;
+    	}
+    	return data.getLongArray(key);
     }
     
     /**
