@@ -283,6 +283,8 @@ public class ParameterWrapperTest {
         @RequestParam
         public List<Long> a43x1;
         @RequestParam
+        public List<Long> a43x2;
+        @RequestParam
         public List<Short> a44;
  
         @RequestParam

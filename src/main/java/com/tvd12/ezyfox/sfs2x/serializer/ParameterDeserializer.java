@@ -37,6 +37,7 @@ import static com.tvd12.ezyfox.core.reflect.ReflectTypeUtil.isWrapperShort;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.smartfoxserver.v2.entities.data.ISFSArray;
@@ -210,7 +211,7 @@ public class ParameterDeserializer {
         if(method.isWrapperIntArray())
             return collectionToWrapperIntArray(data.getIntArray(key));
         if(method.isWrapperLongArray())
-            return collectionToWrapperLongArray(data.getLongArray(key));
+            return collectionToWrapperLongArray(getLongArray(data, key));
 //        if(method.isWrapperShortArray())
             return collectionToWrapperShortArray(data.getShortArray(key));
     }
@@ -250,16 +251,21 @@ public class ParameterDeserializer {
         return assignValuesToArrayCollection(method, data.getSFSArray(key));
     }
     
-    private Object getLongArray(ISFSObject data, String key) {
+    private Collection<Long> getLongArray(ISFSObject data, String key) {
     	Object value = data.get(key).getObject();
+    	List<Long> list = new ArrayList<>();
     	if(value instanceof SFSArrayLite) {
 			SFSArrayLite array = (SFSArrayLite)value;
-    		List<Long> list = new ArrayList<>();
     		for(int i = 0 ; i < array.size() ; i++)
     			list.add(((Number)array.get(i).getObject()).longValue());
-    		return list;
+    		
     	}
-    	return data.getLongArray(key);
+    	else {
+    		Collection<?> coll = data.getLongArray(key);
+    		for(Object num : coll)
+    			list.add(((Number)num).longValue());
+    	}
+    	return list;
     }
     
     /**
