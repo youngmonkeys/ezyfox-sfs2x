@@ -8,6 +8,9 @@ import com.google.common.collect.Lists;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSArray;
+import com.smartfoxserver.v2.entities.data.SFSArrayLite;
+import com.smartfoxserver.v2.entities.data.SFSDataType;
+import com.smartfoxserver.v2.entities.data.SFSDataWrapper;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.tvd12.ezyfox.core.annotation.ClientRequestListener;
 import com.tvd12.ezyfox.core.annotation.RequestParam;
@@ -79,6 +82,15 @@ public class ParameterWrapperTest {
         params.putFloatArray("a41", Lists.newArrayList(1.0F));
         params.putIntArray("a42", Lists.newArrayList(1));
         params.putLongArray("a43", Lists.newArrayList(1L));
+        
+        
+        SFSArrayLite a43x1 = new SFSArrayLite();
+        a43x1.addInt(1);
+        a43x1.addInt(2);
+        a43x1.addInt(3);
+        params.put("a43x1", new SFSDataWrapper(SFSDataType.SFS_ARRAY, a43x1));
+        
+        
         params.putShortArray("a44", Lists.newArrayList(new Short((short)1)));
         
         ISFSArray array = new SFSArray();
@@ -268,6 +280,10 @@ public class ParameterWrapperTest {
         public List<Integer> a42;
         @RequestParam
         public List<Long> a43;
+        @RequestParam
+        public List<Long> a43x1;
+        @RequestParam
+        public List<Long> a43x2;
         @RequestParam
         public List<Short> a44;
  

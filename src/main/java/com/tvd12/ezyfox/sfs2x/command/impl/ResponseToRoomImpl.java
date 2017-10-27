@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.Sets;
 import com.smartfoxserver.v2.api.ISFSApi;
 import com.smartfoxserver.v2.entities.Room;
@@ -36,6 +39,8 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     
     private List<String> excludedUsers = new ArrayList<>();
     private Map<String, Object> addition = new HashMap<>();
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResponseToRoom.class);
     
     /**
      * @param context the context
@@ -141,7 +146,12 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
             recipients.remove(room.getUserByName(exUser));
         ISFSObject params = createResponseParams();
         api.sendExtensionResponse(command, params, recipients, room, useUDP);
+        logResponse(params);
         return Boolean.TRUE;
+    }
+    
+    protected void logResponse(ISFSObject params) {
+    	getLogger().debug("reponse command: {} with data {}", command, params.toJson());
     }
     
     /**
@@ -177,6 +187,10 @@ public class ResponseToRoomImpl extends BaseCommandImpl implements ResponseToRoo
     private void validateRoom(Room room) {
         if(room == null)
             throw new IllegalStateException("Room name " + roomName + " not found");
+    }
+    
+    protected Logger getLogger() {
+    	return LOGGER;
     }
     
 }
