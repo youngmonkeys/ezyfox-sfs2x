@@ -157,13 +157,7 @@ mvn test
 
 # Contributors
 
-- Project management 
-  - [NamCV](mailto:cungvinhnam@gmail.com)
-- Project development
- - [DungTV](mailto:dungtv192@gmail.com)
-- Project documentation
- - [DungTV](mailto:dungtv192@gmail.com)
- - [DatNT](mailto:dat.fithou@gmail.com)
+- [DungTV](mailto:itprono3@gmail.com)
 
 # License
 
